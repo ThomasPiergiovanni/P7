@@ -2,7 +2,7 @@
 form module
 """
 
-class Form():
+class Form:
     """
     """
     def __init__(self):
@@ -14,7 +14,9 @@ class Form():
     def ask_question(self):
         """
         """
-        self.question = input(self.question_label)
+        #self.question = input(self.question_label)
+        self.question = self.question_label
+
 
     def see_question(self):
         """
