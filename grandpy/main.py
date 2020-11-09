@@ -1,16 +1,17 @@
 """
 Main module
 """
-from form import Form
+from survey import Survey
 
 
 def main():
     """
     Main method launching the programm
     """
-    formular = Form()
-    formular.ask_question()
-    formular.see_question()
+    survey = Survey()
+    survey.split_question()
+    survey.normalize_lists()
+    survey.filter_list()
 
 if __name__ == "__main__":
     main()

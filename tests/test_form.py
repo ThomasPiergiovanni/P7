@@ -1,12 +1,28 @@
 """
 """
-from grandpy.form import Form
+from grandpy.survey import Survey
 
-class TestForm:
+class TestSurvey:
 
-    FORMULAR = Form()
+    survey = Survey()
 
     def test_ask_question(self):
-        self.FORMULAR.ask_question()
-        assert self.FORMULAR.question == "Ask your question here: \n"
+        pass
+
+    def test_parser(self):
+
+        question = "Quelle est l'adresse de l'Elysée"
+
+        def mock_parser
+
+        self.survey.parse_question()
+        assert self.survey.address_answer == "c est ici"
+
+
+
+
+
+
+
+        
 
