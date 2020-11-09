@@ -25,6 +25,10 @@ class Survey:
         """
         self.question = input(self.question_label)
 
+    def validate_question(self):
+        pass
+
+
     def split_question(self):
         """
         """

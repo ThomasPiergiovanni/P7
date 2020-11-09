@@ -10,8 +10,8 @@ class TestSurvey:
         "Quelle est l'adresse du Centre Commercial de Vélizy 2",
         "Comment vas ta mère",
         "",
-        1234,
-        é&1/
+        "1234",
+        "é&/kj\1"
         ]
 
     def test_ask_question(self, monkeypatch):
