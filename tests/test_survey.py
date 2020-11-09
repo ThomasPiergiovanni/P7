@@ -8,20 +8,24 @@ class TestSurvey:
     questions_list = [
         "Où se trouve la Tour Eiffel", 
         "Quelle est l'adresse du Centre Commercial de Vélizy 2",
-        "Comment vas ta mère",
+        "Comment vas ta soeur",
         "",
         "1234",
-        "é&/kj\1"
+        "é&/k"
         ]
 
     def test_ask_question(self, monkeypatch):
         for question in self.questions_list:
             def mock_input(self):
-                return answer
+                return question
+
+            # monkeypatch.setattr("builtins.input", mock_input)
+            # result = input("Quelle est votre question?")
+            # assert result == question
 
             monkeypatch.setattr("builtins.input", mock_input)
-            result = input("Quelle est votre question?")
-            assert result == question
+            self.survey.ask_question()
+            assert self.survey.question == question
 
     def test_parser(self):
         pass

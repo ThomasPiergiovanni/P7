@@ -11,7 +11,7 @@ class Survey:
     """
     """
     def __init__(self):
-        self.question_label = "Ask your question here: \n"
+        self.question_label = "Quelle est votre question?"
         self.question = None
         self.parsing_list = []
         self.normalized_question_word_list = []
