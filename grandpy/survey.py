@@ -1,10 +1,10 @@
 """
 Survey module
 """
-from re import split, escape
+from re import split, escape, search
 
 
-from grandpy.configuration.config import STOPWORDS
+from configuration.config import STOPWORDS
 
 
 class Survey:
@@ -13,7 +13,7 @@ class Survey:
     def __init__(self):
         self.question_label = "Quelle est votre question?"
         self.question = None
-        self.parsing_list = []
+        self.split_list = []
         self.normalized_question_word_list = []
         self.normalized_stop_words_list = []
         self.filtered_list = []
@@ -25,18 +25,13 @@ class Survey:
         """
         self.question = input(self.question_label)
 
-    def validate_question(self):
-        pass
-
 
     def split_question(self):
         """
         """
-        self.question = "Quelle est l'adresse de l'Elysée"
         self.my_delimiters = " ", "'"
         self.regular_expression = '|'.join(map(escape, self.my_delimiters)) 
         self.split_list = split(self.regular_expression, self.question)
-        # print(self.split_list)
 
     def normalize_lists(self):
         for question_word in self.split_list:
@@ -47,10 +42,74 @@ class Survey:
         # print(self.normalized_question_word_list)
         # print(self.normalized_stop_words_list)
 
-    def filter_list(self):
-        for question_word in self.normalized_question_word_list:
-            for stop_word in STOPWORDS:
-                if question_word == stop_word:
-                    self.normalized_question_word_list.remove(question_word)
+    # def filter_list(self):
+    #     for question_word in self.normalized_question_word_list:
+    #         for stop_word in STOPWORDS:
+    #             if question_word == stop_word:
+    #                 self.normalized_question_word_list.remove(question_word)
 
-        print(self.normalized_question_word_list)
+    def write_pattern(self):
+        split_lists = [
+            ["où","se","trouve","la","tour","eiffel"],
+            ["quelle","est","l","adresse","du","centre","commercial","de", "vélizy", "2"],
+            ["où","se","trouve","l","arc","de","triomphe"],
+            ["dis-moi","vieux","con","c","est","où","saint-Laurent-des-mortiers"]
+            ]
+
+        for split_list in split_lists:
+            pattern = []
+            for word_from_split in split_list:
+                word_is_stopword = [word for word in STOPWORDS if word_from_split == word]
+                if word_is_stopword:
+                    pattern.append((0, word_from_split))
+                else:
+                    pattern.append((1,word_from_split))
+            # print(split_list)
+            print(pattern)
+            # print(len(pattern))
+            for elt in pattern:
+                if elt[0] == 1 :
+                    print(elt[1])
+            del pattern
+            print("-------")
+
+    def regular_expression_start(self):
+        pattern = "0011010101110"
+        pattern_len = len(pattern) - 1
+        reversed_pattern= pattern[::-1]
+
+        # point de départ:
+        start_1 = search(r"\b1", pattern)
+        start_2 = search(r"\B1", pattern)
+        end_1 = search(r"\B00", pattern)
+        end_2 = search(r"\b1", reversed_pattern)
+        end_3 = search(r"\B1", reversed_pattern)
+        start_position = None
+
+        if start_1:
+            print("start_1:", start_1.start())
+        elif start_2:
+            print("start_2:", start_2.start())
+        else:
+            print("No stop word")
+
+        if end_1:
+            print("end_1:", end_1.start() -1)
+        elif end_2:
+            print("end_2:", pattern_len - end_2.start())
+        elif end_3:
+            print("end_3:", pattern_len - end_3.start())
+        else:
+            print("No stop word")
+
+    def regular_expression_end(self):
+        pattern = "001101"
+
+        result_1 = search(r"1\b", pattern)
+
+        if result_1:
+            print(result_1.span())
+
+
+
+        # print(self.normalized_question_word_list)
