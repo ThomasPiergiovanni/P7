@@ -6,6 +6,14 @@ from re import split, escape, search
 
 from configuration.config import STOPWORDS, KEYWORDS
 
+class Word:
+    def __init__(self):
+        self.index = None
+        self.name = None
+        self.pattern = None
+        self.selected = False
+        self.start_position = False
+        self.end_position = False
 
 class Survey:
     """
@@ -15,8 +23,9 @@ class Survey:
         self.question = None
         self.split_question_list = None
         self.stop_word_list = None
-        self.prepared_questions_lists = []
+        self.words_list = []
         self.keyword_present = False
+        self.parsed_question = ""
 
 
 
@@ -38,9 +47,11 @@ class Survey:
         self.stop_word_list = [stop_word.lower() for stop_word in STOPWORDS]
 
         
-    def write_pattern(self):
+    def define_pattern(self):
         self.split_question_list = ["où","se","Trouve","l","arc","de","triomphe"]
         self.split_question_list = [question_word.lower() for question_word in self.split_question_list]
+
+
 
         # split_lists = [
         #     ["où","se","trouve","la","tour","eiffel"],
@@ -48,75 +59,56 @@ class Survey:
         #     ["où","se","trouve","l","arc","de","triomphe"],
         #     ["dis-moi","vieux","con","c","est","où","saint-Laurent-des-mortiers"]
         #     ]
-
-        pattern =""
-
+        counter = 0
         for word_from_split in self.split_question_list:
             word_is_stopword = [word for word in STOPWORDS if word_from_split == word]
             word_is_keyword = [word for word in KEYWORDS if word_from_split == word]
+            word = Word()
+            word.index = counter
+
             if word_is_keyword:
-                pattern += str(2)                
+                word.name = word_from_split
+                word.pattern = "2"              
             elif word_is_stopword:
-                pattern += str(0)
+                word.name = word_from_split
+                word.pattern = "0"
             else:
-                pattern += str(1)
-                # pattern.append((1,word_from_split))
-        self.prepared_questions_lists = (self.split_question_list, pattern, 0)
-        print(self.prepared_questions_lists)
+                word.name = word_from_split
+                word.pattern = "1"
 
-    def find_keyword_position(self):
-        pattern = "0211010101110"
-        start_1 = search(r"\b2", pattern)
-        start_2 = search(r"\B2", pattern)
-        self.keyword_present = True
+            self.words_list.append(word)
+            counter += 1
 
 
-    def extract_querryable_pattern(self):
-
-        if self.keyword_present:
-            starts_collection = False
-            for elt in pattern:
-                if elt == "2" and starts_collection == False:
-                    starts_collection = True
-                elif starts_collection:
-                    print(elt)
 
     def regular_expression_start(self):
-        pattern = "0011010101110"
-        pattern_len = len(pattern) - 1
-        reversed_pattern= pattern[::-1]
 
+        starts_analysis = False
+        starts_collection = False
+        for word in self.words_list:
+            if word.pattern == "2":
+                starts_analysis = True
+            if starts_analysis:
+                word_minus_one_pattern = [next_word.pattern for next_word in self.words_list if word.index - 1 ==  next_word.index]
+                word_plus_one_pattern = [next_word.pattern for next_word in self.words_list if word.index + 1 ==  next_word.index]
+                if word.pattern == "1":
+                    word.selected = "1"            
+                elif word.pattern == "0" and word_plus_one_pattern[0] =="1" and word_minus_one_pattern[0] == "1":
+                    word.selected = "1"
+        
+        parsed_list = []
+        for word in self.words_list:
+            if word.selected:
+                parsed_list.append(word.name)
 
-        # point de départ:
-        start_1 = search(r"\b1", pattern)
-        start_2 = search(r"\B1", pattern)
-        end_1 = search(r"\B00", pattern)
-        end_2 = search(r"\b1", reversed_pattern)
-        end_3 = search(r"\B1", reversed_pattern)
-        start_position = None
-        end_position = None
-        valid_word_present = True
+        counter = 1
+        for word in parsed_list:
+            if counter < len(parsed_list):
+                self.parsed_question += str(word)
+                self.parsed_question += str(" ")
+                counter += 1
+            else:
+                self.parsed_question += str(word)
 
-        if start_1:
-            start_position = start_1.start()
-        elif start_2:
-            start_position =  start_2.start()
-        else:
-            valid_word_present = False
-
-        if end_1:
-            end_position = end_1.start() - 1
-        elif end_2:
-            end_position = pattern_len - end_2.start()
-        elif end_3:
-            end_position = pattern_len - end_3.start()
-        else:
-            valid_word_present = False
-
-        if valid_word_present:
-            print ("Starts at index:",start_position,
-            "\nEnds at index:", end_position )
-        else:
-            print("No word is valid")
-
+        print(self.parsed_question)
 
