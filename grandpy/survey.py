@@ -15,7 +15,6 @@ class Survey:
         self.question = None
         self.split_question_list = None
         self.stop_word_list = None
-
         self.prepared_questions_lists = []
         self.keyword_present = False
 
@@ -50,20 +49,20 @@ class Survey:
         #     ["dis-moi","vieux","con","c","est","où","saint-Laurent-des-mortiers"]
         #     ]
 
-        # pattern =""
+        pattern =""
 
-        #     for word_from_split in split_list:
-        #         word_is_stopword = [word for word in STOPWORDS if word_from_split == word]
-        #         word_is_keyword = [word for word in KEYWORDS if word_from_split == word]
-        #         if word_is_keyword:
-        #             pattern += str(2)                
-        #         elif word_is_stopword:
-        #             pattern += str(0)
-        #         else:
-        #             pattern += str(1)
-        #             # pattern.append((1,word_from_split))
-        #     self.self.prepared_questions_lists.append((split_list, pattern, 0))
-        #     del pattern
+        for word_from_split in self.split_question_list:
+            word_is_stopword = [word for word in STOPWORDS if word_from_split == word]
+            word_is_keyword = [word for word in KEYWORDS if word_from_split == word]
+            if word_is_keyword:
+                pattern += str(2)                
+            elif word_is_stopword:
+                pattern += str(0)
+            else:
+                pattern += str(1)
+                # pattern.append((1,word_from_split))
+        self.prepared_questions_lists = (self.split_question_list, pattern, 0)
+        print(self.prepared_questions_lists)
 
     def find_keyword_position(self):
         pattern = "0211010101110"
