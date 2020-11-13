@@ -16,8 +16,6 @@ def main():
     survey.get_start_position()
     survey.get_end_position()
     survey.get_search_element()
-    # survey.regular_expression_start()
-
 
 if __name__ == "__main__":
     main()
