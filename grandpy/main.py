@@ -11,14 +11,11 @@ def main():
     survey = Survey()
     # survey.split_question()
     # survey.normalize_lists()
-    # survey.filter_list()
-    # survey.find_keyword_in_pattern()
     survey.define_pattern()
-    survey.check_keyword()
-    survey.clean_pattern()
-
-
-    survey.regular_expression_start()
+    survey.get_prev_nexts_pattern()
+    survey.get_start_position()
+    survey.get_end_position()
+    # survey.regular_expression_start()
 
 
 if __name__ == "__main__":
