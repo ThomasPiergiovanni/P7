@@ -11,11 +11,11 @@ def main():
     survey = Survey()
     # survey.split_question()
     # survey.normalize_lists()
-    survey.define_pattern()
-    survey.get_prev_nexts_pattern()
-    survey.get_start_position()
-    survey.get_end_position()
-    survey.get_search_element()
+    survey.define_word_code()
+    survey.get_next_word_code()
+    survey.find_start_word_position()
+    survey.find_end_word_position()
+    survey.generate_parsed_string()
 
 if __name__ == "__main__":
     main()

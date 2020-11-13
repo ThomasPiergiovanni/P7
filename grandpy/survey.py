@@ -10,13 +10,10 @@ class Word:
     def __init__(self):
         self.index = None
         self.name = None
-        self.pattern = None
-        self.selected = False
-        self.word_minus_one_pattern = None
-        self.word_plus_one_pattern = None
-        self.word_plus_two_pattern = None
-        self.start_position = False
-        self.end_position = False
+        self.code = None
+        self.word_minus_one_code = None
+        self.word_plus_one_code = None
+        self.word_plus_two_code = None
 
 class Survey:
     """
@@ -28,9 +25,9 @@ class Survey:
         self.stop_word_list = None
         self.words_list = []
         self.keyword_present = False
-        self.search_element = ""
         self.start_word_index = None
         self.end_word_index = None
+        self.parsed_string = ""
 
 
 
@@ -52,7 +49,7 @@ class Survey:
         self.stop_word_list = [stop_word.lower() for stop_word in STOPWORDS]
 
         
-    def define_pattern(self):
+    def define_word_code(self):
         self.split_question_list = ["quelle","est","l","adresse","du","centre","commercial","de", "vélizy", "2"]
         self.split_question_list = [question_word.lower() for question_word in self.split_question_list]
 
@@ -73,87 +70,81 @@ class Survey:
 
             if word_is_keyword:
                 word.name = word_from_split
-                word.pattern = "2"              
+                word.code = "2"              
             elif word_is_stopword:
                 word.name = word_from_split
-                word.pattern = "0"
+                word.code = "0"
             else:
                 word.name = word_from_split
-                word.pattern = "1"
+                word.code = "1"
 
             self.words_list.append(word)
             counter += 1
 
 
-    def get_prev_nexts_pattern(self):
+    def get_next_word_code(self):
+        """
+        """
         list_len = len(self.words_list)
         for word in self.words_list:
             counter = 1
             if word.index != 0: 
-                pattern_value = [next_word.pattern for
+                code_value = [next_word.code for
                         next_word in self.words_list if word.index - 1 ==  next_word.index]
-                word.word_minus_one_pattern = pattern_value[0]
-
+                word.word_minus_one_code = code_value[0]
             if counter <= list_len - 1:
                 for word_plus_one in self.words_list:
                     if word_plus_one.index == word.index + 1:
-                         word.word_plus_one_pattern = word_plus_one.pattern
-
+                         word.word_plus_one_code = word_plus_one.code
             if counter <= list_len - 2:
                 for word_plus_two in self.words_list:
                     if word_plus_two.index == word.index + 2:
-                         word.word_plus_two_pattern = word_plus_two.pattern
+                         word.word_plus_two_code = word_plus_two.code
 
-    def get_start_position(self):
+    def find_start_word_position(self):
         """
         """
         for word in self.words_list:
-            if word.pattern == "2":
+            if word.code == "2":
                 self.keyword_present = True
 
         starts_analysis = False
         for word in self.words_list:
             if self.keyword_present:
-                if word.pattern == "2":
+                if word.code == "2":
                     starts_analysis = True
-                if starts_analysis and word.pattern == "1":
-                    word.start_position = True
+                if starts_analysis and word.code == "1":
                     self.start_word_index = word.index
                     starts_analysis = False
             else:
-                if word.pattern == "1":
-                    word.start_position = True
+                if word.code == "1":
                     self.start_word_index = word.index
 
-
-    def get_end_position(self):
+    def find_end_word_position(self):
         """
         """
         continue_analysis = True
         for word in self.words_list:
             if word.index >= self.start_word_index and continue_analysis: 
-                if word.pattern == "1" and \
-                        word.word_plus_one_pattern == "0" and \
-                        word.word_plus_two_pattern == "0":
-                    word.end_position = True
+                if word.code == "1" and \
+                        word.word_plus_one_code == "0" and \
+                        word.word_plus_two_code == "0":
                     self.end_word_index = word.index
                     continue_analysis = False
 
-                elif word.pattern == "1" and \
-                        word.word_plus_one_pattern == "0" and \
-                        word.word_plus_two_pattern == None:
-                    word.end_position = True
+                elif word.code == "1" and \
+                        word.word_plus_one_code == "0" and \
+                        word.word_plus_two_code == None:
                     self.end_word_index = word.index
                     continue_analysis = False
  
-                elif word.pattern == "1" and \
-                        word.word_plus_one_pattern == None and word.word_plus_two_pattern == None:
-                    word.end_position = True
+                elif word.code == "1" and \
+                        word.word_plus_one_code == None and word.word_plus_two_code == None:
                     self.end_word_index = word.index
                     continue_analysis = False
 
 
-    def get_search_element(self):
+    def generate_parsed_string(self):
         """
         """
         parsed_list = []
@@ -165,10 +156,10 @@ class Survey:
         counter = 1
         for word in parsed_list:
             if counter < len(parsed_list):
-                self.search_element += str(word)
-                self.search_element += str(" ")
+                self.parsed_string += str(word)
+                self.parsed_string += str(" ")
                 counter += 1
             else:
-                self.search_element += str(word)
+                self.parsed_string += str(word)
 
-        print(self.search_element)
+        print(self.parsed_string)
