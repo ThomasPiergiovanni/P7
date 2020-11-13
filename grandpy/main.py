@@ -15,6 +15,7 @@ def main():
     survey.get_prev_nexts_pattern()
     survey.get_start_position()
     survey.get_end_position()
+    survey.get_search_element()
     # survey.regular_expression_start()
 
 
