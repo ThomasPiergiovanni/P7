@@ -1,7 +1,7 @@
 """
-Survey module
+Parser module
 """
-from re import split, escape, search
+from re import sub, split, escape
 
 
 from grandpy.configuration.config import STOPWORDS, KEYWORDS
@@ -10,12 +10,12 @@ class Word:
     def __init__(self):
         self.index = None
         self.name = None
-        self.code = None
-        self.word_minus_one_code = None
-        self.word_plus_one_code = None
-        self.word_plus_two_code = None
+        self.enumeration = None
+        self.word_minus_one_enumeration = None
+        self.word_plus_one_enumeration = None
+        self.word_plus_two_enumeration = None
 
-class Survey:
+class Parser:
     """
     """
     def __init__(self):
@@ -37,85 +37,90 @@ class Survey:
     def split_question(self):
         """
         """
-        self.my_delimiters = " ", "'"
-        self.regular_expression = '|'.join(map(escape, self.my_delimiters)) 
-        self.split_question_list = split(self.regular_expression, self.question)
+        self.question = self.question.strip(" ,.?!")
+        self.question = sub("[,.?!']"," ", self.question)
+        while "  " in self.question:
+            self.question = self.question.replace("  "," ")
+        self.split_question_list = split(" ",self.question)
 
-    def normalize_lists(self):
+
+    def lower_lists(self):
         """
         """
-        self.split_question_list = [question_word.lower() for question_word in self.split_question_list]
-        self.stop_word_list = [stop_word.lower() for stop_word in STOPWORDS]
+        self.split_question_list = [question_word.lower() for question_word
+                in self.split_question_list]
+        self.stop_word_list = [stop_word.lower() for
+                stop_word in STOPWORDS]
 
-    def define_word_code(self):
-        self.split_question_list = ["quelle","est","l","adresse","du","centre","commercial","de", "vélizy", "2"]
-        self.split_question_list = [question_word.lower() for question_word in self.split_question_list]
+    def enumerate_word(self):
+        # self.split_question_list = ["quelle","est","l","adresse","du",
+        #         "centre","commercial","de", "vélizy", "2"]
+        # self.split_question_list = [question_word.lower() for question_word
+        #         in self.split_question_list]
 
 
 
-        # split_lists = [
-        #     ["où","se","trouve","la","tour","eiffel"],
-        #     ["quelle","est","l","adresse","du","centre","commercial","de", "vélizy", "2"],
-        #     ["où","se","trouve","l","arc","de","triomphe"],
-        #     ["dis-moi","vieux","con","c","est","où","saint-Laurent-des-mortiers"]
-        #     ]
         counter = 0
         for word_from_split in self.split_question_list:
-            word_is_stopword = [word for word in STOPWORDS if word_from_split == word]
-            word_is_keyword = [word for word in KEYWORDS if word_from_split == word]
+            word_is_stopword = [word for word in STOPWORDS if word_from_split == \
+                    word]
+            word_is_keyword = [word for word in KEYWORDS if word_from_split == \
+                    word]
             word = Word()
             word.index = counter
 
             if word_is_keyword:
                 word.name = word_from_split
-                word.code = "2"              
+                word.enumeration = "2"              
             elif word_is_stopword:
                 word.name = word_from_split
-                word.code = "0"
+                word.enumeration = "0"
             else:
                 word.name = word_from_split
-                word.code = "1"
+                word.enumeration = "1"
 
             self.words_list.append(word)
             counter += 1
 
 
-    def get_next_word_code(self):
+    def get_next_word_enumeration(self):
         """
         """
         list_len = len(self.words_list)
         for word in self.words_list:
             counter = 1
             if word.index != 0: 
-                code_value = [next_word.code for
-                        next_word in self.words_list if word.index - 1 ==  next_word.index]
-                word.word_minus_one_code = code_value[0]
+                enumeration_value = [next_word.enumeration for next_word in \
+                        self.words_list if word.index - 1 == next_word.index]
+                word.word_minus_one_enumeration = enumeration_value[0]
             if counter <= list_len - 1:
                 for word_plus_one in self.words_list:
                     if word_plus_one.index == word.index + 1:
-                         word.word_plus_one_code = word_plus_one.code
+                        word.word_plus_one_enumeration = \
+                                word_plus_one.enumeration
             if counter <= list_len - 2:
                 for word_plus_two in self.words_list:
                     if word_plus_two.index == word.index + 2:
-                         word.word_plus_two_code = word_plus_two.code
+                        word.word_plus_two_enumeration = \
+                                word_plus_two.enumeration
 
     def find_start_word_position(self):
         """
         """
         for word in self.words_list:
-            if word.code == "2":
+            if word.enumeration == "2":
                 self.keyword_present = True
 
         starts_analysis = False
         for word in self.words_list:
             if self.keyword_present:
-                if word.code == "2":
+                if word.enumeration == "2":
                     starts_analysis = True
-                if starts_analysis and word.code == "1":
+                if starts_analysis and word.enumeration == "1":
                     self.start_word_index = word.index
                     starts_analysis = False
             else:
-                if word.code == "1":
+                if word.enumeration == "1":
                     self.start_word_index = word.index
 
     def find_end_word_position(self):
@@ -124,23 +129,21 @@ class Survey:
         continue_analysis = True
         for word in self.words_list:
             if word.index >= self.start_word_index and continue_analysis: 
-                if word.code == "1" and \
-                        word.word_plus_one_code == "0" and \
-                        word.word_plus_two_code == "0":
+                if word.enumeration == "1" and \
+                        word.word_plus_one_enumeration== "0" and \
+                        word.word_plus_two_enumeration == "0":
                     self.end_word_index = word.index
                     continue_analysis = False
-
-                elif word.code == "1" and \
-                        word.word_plus_one_code == "0" and \
-                        word.word_plus_two_code == None:
+                elif word.enumeration == "1" and \
+                        word.word_plus_one_enumeration == "0" and \
+                        word.word_plus_two_enumeration == None:
                     self.end_word_index = word.index
                     continue_analysis = False
- 
-                elif word.code == "1" and \
-                        word.word_plus_one_code == None and word.word_plus_two_code == None:
+                elif word.enumeration== "1" and \
+                        word.word_plus_one_enumeration == None and \
+                        word.word_plus_two_enumeration == None:
                     self.end_word_index = word.index
                     continue_analysis = False
-
 
     def generate_parsed_string(self):
         """
@@ -160,4 +163,3 @@ class Survey:
             else:
                 self.parsed_string += str(word)
 
-        print(self.parsed_string)

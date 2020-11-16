@@ -1,46 +1,58 @@
 """
 """
-from grandpy.survey import Survey
+from grandpy.parser.parser import Parser
 
-class TestSurvey:
+class TestParser:
 
-    survey = Survey()
-    questions_list = [
-        "Où se trouve la Tour Eiffel", 
-        "Quelle est l'adresse du Centre Commercial de Vélizy 2",
-        "Où se trouve l'Arc de Triomphe",
-        "Dis-moi vieux con, c'est ou Saint-Laurent-des-Mortiers"
-        "Ey toi , tu sais c'est où c'est chez moi"
+    t_parser = Parser()
+    t_questions_list = [
+        "Où se trouve la Tour Eiffel?", 
+        "Quelle est l'adresse du Centre Commercial de Vélizy 2?",
+        "Où se trouve l'Arc de Triomphe?",
+        "Dis-moi vieux con! C'est ou Saint-Laurent-des-Mortiers?",
+        "Ey toi, tu sais c'est où chez moi?"
         ]
-    split_lists = [
+    t_split_lists = [
         ["Où","se","trouve","la","Tour","Eiffel"],
         ["Quelle","est","l","adresse","du","Centre","Commercial","de", "Vélizy", "2"],
         ["Où","se","trouve","l","Arc","de","Triomphe"],
-        ["Dis-moi","vieux","con,","c","est","ou","Saint-Laurent-des-Mortiers"]
-        ["Ey","toi",",","tu","sais","ou","Saint-Laurent-des-Mortiers"]
+        ["Dis-moi","vieux","con","C","est","ou","Saint-Laurent-des-Mortiers"],
+        ["Ey","toi","tu","sais","c","est","où","chez", "moi"]
         ]
-    filtered_list = [
+
+    t_lowered_lists = [
+        ["Où","se","trouve","la","Tour","Eiffel"],
+        ["Quelle","est","l","adresse","du","Centre","Commercial","de", "Vélizy", "2"],
+        ["Où","se","trouve","l","Arc","de","Triomphe"],
+        ["Dis-moi","vieux","con","C","est","ou","Saint-Laurent-des-Mortiers"],
+        ["Ey","toi","tu","sais","c","est","où","chez", "moi"]
+        ]
+
+    t_filtered_list = [
         ["Tour","Eiffel"],
-        ["Centre","Centre", "de", "Vélizy", "2"],
+        ["Centre", "Centre", "de", "Vélizy", "2"],
         ["Arc","de", "Triomphe"],
         ["Saint-Laurent-des-Mortiers"],
+        [""]
         ]
 
     def test_ask_question(self, monkeypatch):
-        for question in self.questions_list:
+        for question in self.t_questions_list:
             def mock_input(self):
                 return question
 
             monkeypatch.setattr("builtins.input", mock_input)
-            self.survey.ask_question()
-            assert self.survey.question == question
+            self.t_parser.ask_question()
+            assert self.t_parser.question == question
 
     def test_split_question(self):
         counter = 0 
-        for question in self.questions_list:
-            self.survey.question = question 
-            self.survey.split_question()
-            assert self.survey.split_question_list == self.split_lists[counter]
+        for question in self.t_questions_list:
+            self.t_parser.question = question 
+            self.t_parser.split_question()
+            assert self.t_parser.split_question_list == self.t_split_lists[counter]
             counter += 1
 
+    def test_lower_question(self):
+        pass
 
