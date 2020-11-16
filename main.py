@@ -10,7 +10,7 @@ def main():
     """
     parser = Parser()
     parser.split_question()
-    # survey.normalize_lists()
+    parser.lower_lists()
     # parser.enumerate_word()
     # parser.get_next_word_enumeration()
     # parser.find_start_word_position()

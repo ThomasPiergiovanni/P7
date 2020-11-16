@@ -21,11 +21,11 @@ class TestParser:
         ]
 
     t_lowered_lists = [
-        ["Où","se","trouve","la","Tour","Eiffel"],
-        ["Quelle","est","l","adresse","du","Centre","Commercial","de", "Vélizy", "2"],
-        ["Où","se","trouve","l","Arc","de","Triomphe"],
-        ["Dis-moi","vieux","con","C","est","ou","Saint-Laurent-des-Mortiers"],
-        ["Ey","toi","tu","sais","c","est","où","chez", "moi"]
+        ["où","se","trouve","la","tour","eiffel"],
+        ["quelle","est","l","adresse","du","centre","commercial","de", "vélizy", "2"],
+        ["où","se","trouve","l","arc","de","triomphe"],
+        ["dis-moi","vieux","con","c","est","ou","saint-laurent-des-mortiers"],
+        ["ey","toi","tu","sais","c","est","où","chez", "moi"]
         ]
 
     t_filtered_list = [
@@ -53,6 +53,14 @@ class TestParser:
             assert self.t_parser.split_question_list == self.t_split_lists[counter]
             counter += 1
 
-    def test_lower_question(self):
-        pass
+    def test_lower_list_for_split_question_list(self):
+        counter = 0
+        for question in self.t_split_lists:
+            self.t_parser.split_question_list = question
+            self.t_parser.lower_lists()
+            assert self.t_parser.split_question_list == \
+                    self.t_lowered_lists[counter]
+            counter += 1
+
+
 
