@@ -4,7 +4,7 @@ Survey module
 from re import split, escape, search
 
 
-from configuration.config import STOPWORDS, KEYWORDS
+from grandpy.configuration.config import STOPWORDS, KEYWORDS
 
 class Word:
     def __init__(self):
@@ -29,13 +29,10 @@ class Survey:
         self.end_word_index = None
         self.parsed_string = ""
 
-
-
     def ask_question(self):
         """
         """
         self.question = input(self.question_label)
-
 
     def split_question(self):
         """
@@ -45,10 +42,11 @@ class Survey:
         self.split_question_list = split(self.regular_expression, self.question)
 
     def normalize_lists(self):
+        """
+        """
         self.split_question_list = [question_word.lower() for question_word in self.split_question_list]
         self.stop_word_list = [stop_word.lower() for stop_word in STOPWORDS]
 
-        
     def define_word_code(self):
         self.split_question_list = ["quelle","est","l","adresse","du","centre","commercial","de", "vélizy", "2"]
         self.split_question_list = [question_word.lower() for question_word in self.split_question_list]

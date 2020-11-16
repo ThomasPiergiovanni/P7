@@ -1,7 +1,7 @@
 """
 Main module
 """
-from survey import Survey
+from grandpy.survey import Survey
 
 
 def main():
