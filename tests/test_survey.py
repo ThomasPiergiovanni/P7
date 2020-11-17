@@ -4,6 +4,15 @@ from grandpy.parser.parser import Parser
 
 class TestParser:
 
+    class MockWord:
+        def __init__(self):
+            self.index = None
+            self.name = None
+            self.enumeration = None
+            self.word_minus_one_enumeration = None
+            self.word_plus_one_enumeration = None
+            self.word_plus_two_enumeration = None
+
     t_questions_list = [
         "Où se trouve la Tour Eiffel?", 
         "Quelle est l'adresse du Centre Commercial de Vélizy 2?",
@@ -65,16 +74,7 @@ class TestParser:
             counter += 1
 
 
-
     def test_enumerate_word(self):
-        class MockWord:
-            def __init__(self):
-                self.index = None
-                self.name = None
-                self.enumeration = None
-                self.word_minus_one_enumeration = None
-                self.word_plus_one_enumeration = None
-                self.word_plus_two_enumeration = None
         tuple_list = [
                 (0,"où","0",None,"0","2"),
                 (1,"se","0","0","2","0"),
@@ -86,7 +86,7 @@ class TestParser:
 
         t_parser = Parser()
         for word in tuple_list:
-            mock_word = MockWord()
+            mock_word = self.MockWord()
             mock_word.index = word[0]
             mock_word.name = word[1]
             t_parser.split_question_list.append(word[1])
@@ -112,18 +112,10 @@ class TestParser:
                 (3,"la","0","2","1","1"),
                 (4,"tour","1","0","1",None),
                 (5,"eiffel","1","1", None ,None)]
-        class MockWord:
-            def __init__(self):
-                self.index = None
-                self.name = None
-                self.enumeration = None
-                self.word_minus_one_enumeration = None
-                self.word_plus_one_enumeration = None
-                self.word_plus_two_enumeration = None
 
         t_parser = Parser()
         for word in t_enumerate_words_tuple:
-            mock_word = MockWord()
+            mock_word = self.MockWord()
             mock_word.index = word[0]
             mock_word.name = word[1]
             mock_word.enumeration = word[2]
@@ -146,15 +138,6 @@ class TestParser:
 
     def test_find_start_word_position(self):
 
-        class MockWord:
-            def __init__(self):
-                self.index = None
-                self.name = None
-                self.enumeration = None
-                self.word_minus_one_enumeration = None
-                self.word_plus_one_enumeration = None
-                self.word_plus_two_enumeration = None
-
         tuple_list = [
                 (0,"où","0",None,"0","2"),
                 (1,"se","0","0","2","0"),
@@ -164,11 +147,10 @@ class TestParser:
                 (5,"eiffel","1","1", None ,None)
                 ]
         
-
         def mock_words_list(self):
             words_list = []
             for word in tuple_list:
-                word_mock = MockWord()
+                word_mock = self.MockWord()
                 word_mock.index = word[0]
                 word_mock.name = word[1]
                 word_mock.enumeration = word[2]

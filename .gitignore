@@ -14,3 +14,7 @@ controllers/__pycache__/
 models/__pycache__/
 models/mapper/__pycache__/
 views/__pycache__/
+
+GrandPyBot.sublime-project
+GrandPyBot.sublime-workspace
+
