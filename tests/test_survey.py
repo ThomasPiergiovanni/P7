@@ -36,6 +36,15 @@ class TestParser:
         ["ey","toi","tu","sais","c","est","où","chez", "moi"]
         ]
 
+    tuple_list = [
+        (0,"où","0",None,"0","2"),
+        (1,"se","0","0","2","0"),
+        (2,"trouve","2","0","0","1"),
+        (3,"la","0","2","1","1"),
+        (4,"tour","1","0","1",None),
+        (5,"eiffel","1","1", None ,None)
+        ]
+
     t_filtered_list = [
         ["Tour","Eiffel"],
         ["Centre", "Centre", "de", "Vélizy", "2"],
@@ -75,17 +84,8 @@ class TestParser:
 
 
     def test_enumerate_word(self):
-        tuple_list = [
-                (0,"où","0",None,"0","2"),
-                (1,"se","0","0","2","0"),
-                (2,"trouve","2","0","0","1"),
-                (3,"la","0","2","1","1"),
-                (4,"tour","1","0","1",None),
-                (5,"eiffel","1","1", None ,None)
-                ]
-
         t_parser = Parser()
-        for word in tuple_list:
+        for word in self.tuple_list:
             mock_word = self.MockWord()
             mock_word.index = word[0]
             mock_word.name = word[1]
@@ -94,7 +94,7 @@ class TestParser:
 
         # for tuple_item in tuple_list:
         for word in t_parser.words_list:
-            for tuple_item in tuple_list:
+            for tuple_item in self.tuple_list:
                 if word.index == tuple_item[0]:
                      assert word.enumeration == tuple_item[2]
         
@@ -137,19 +137,10 @@ class TestParser:
 
 
     def test_find_start_word_position(self):
-
-        tuple_list = [
-                (0,"où","0",None,"0","2"),
-                (1,"se","0","0","2","0"),
-                (2,"trouve","2","0","0","1"),
-                (3,"la","0","2","1","1"),
-                (4,"tour","1","0","1",None),
-                (5,"eiffel","1","1", None ,None)
-                ]
         
         def mock_words_list(self):
             words_list = []
-            for word in tuple_list:
+            for word in self.tuple_list:
                 word_mock = self.MockWord()
                 word_mock.index = word[0]
                 word_mock.name = word[1]
@@ -162,7 +153,7 @@ class TestParser:
         t_parser.words_list = mock_words_list(self)
         t_parser.find_start_word_position()
 
-        assert t_parser.start_word_index == tuple_list[4][0]
+        assert t_parser.start_word_index == self.tuple_list[4][0]
 
 
 
