@@ -1,27 +1,19 @@
 """
 Parser module
 """
-from re import sub, split, escape
+from re import sub, split
 
 
 from grandpy.configuration.config import STOPWORDS, KEYWORDS
-
-class Word:
-    def __init__(self):
-        self.index = None
-        self.name = None
-        self.enumeration = None
-        self.word_minus_one_enumeration = None
-        self.word_plus_one_enumeration = None
-        self.word_plus_two_enumeration = None
+from grandpy.parser.word import Word
 
 class Parser:
     """
     """
     def __init__(self):
         self.question_label = "Quelle est votre question?"
-        self.question = None
-        self.split_question_list = None
+        self.question = str
+        self.split_question_list = []
         self.stop_word_list = None
         self.words_list = []
         self.keyword_present = False
@@ -53,13 +45,8 @@ class Parser:
                 stop_word in STOPWORDS]
 
     def enumerate_word(self):
-        # self.split_question_list = ["quelle","est","l","adresse","du",
-        #         "centre","commercial","de", "vélizy", "2"]
-        # self.split_question_list = [question_word.lower() for question_word
-        #         in self.split_question_list]
-
-
-
+        """
+        """
         counter = 0
         for word_from_split in self.split_question_list:
             word_is_stopword = [word for word in STOPWORDS if word_from_split == \
@@ -68,7 +55,6 @@ class Parser:
                     word]
             word = Word()
             word.index = counter
-
             if word_is_keyword:
                 word.name = word_from_split
                 word.enumeration = "2"              
@@ -78,7 +64,6 @@ class Parser:
             else:
                 word.name = word_from_split
                 word.enumeration = "1"
-
             self.words_list.append(word)
             counter += 1
 
