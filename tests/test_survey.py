@@ -114,7 +114,7 @@ class TestParser:
                 (5,"eiffel","1","1", None ,None)]
 
         t_parser = Parser()
-        for word in t_enumerate_words_tuple:
+        for word in self.tuple_list:
             mock_word = self.MockWord()
             mock_word.index = word[0]
             mock_word.name = word[1]
@@ -123,17 +123,17 @@ class TestParser:
         t_parser.get_next_word_enumeration()
         for word in t_parser.words_list:
             if word.index == 0:
-                assert word.word_minus_one_enumeration == None
-                assert word.word_plus_one_enumeration == "0"
-                assert word.word_plus_two_enumeration == "2"
+                assert word.word_minus_one_enumeration == self.tuple_list[0][3]
+                assert word.word_plus_one_enumeration == self.tuple_list[0][4]
+                assert word.word_plus_two_enumeration == self.tuple_list[0][5]
             elif word.index == 3:
-                assert word.word_minus_one_enumeration == "2"
-                assert word.word_plus_one_enumeration == "1"
-                assert word.word_plus_two_enumeration == "1"
+                assert word.word_minus_one_enumeration == self.tuple_list[3][3]
+                assert word.word_plus_one_enumeration == self.tuple_list[3][4]
+                assert word.word_plus_two_enumeration == self.tuple_list[3][5]
             elif word.index == 5:
-                assert word.word_minus_one_enumeration == "1"
-                assert word.word_plus_one_enumeration == None
-                assert word.word_plus_two_enumeration == None
+                assert word.word_minus_one_enumeration == self.tuple_list[5][3]
+                assert word.word_plus_one_enumeration == self.tuple_list[5][4]
+                assert word.word_plus_two_enumeration == self.tuple_list[5][5]
 
 
     def test_find_start_word_position(self):
@@ -154,9 +154,3 @@ class TestParser:
         t_parser.find_start_word_position()
 
         assert t_parser.start_word_index == self.tuple_list[4][0]
-
-
-
-
-
-    
