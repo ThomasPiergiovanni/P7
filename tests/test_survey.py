@@ -64,33 +64,41 @@ class TestParser:
                     self.t_lowered_lists[counter]
             counter += 1
 
+
+
     def test_enumerate_word(self):
-
-        t_parser = Parser()
-        t_enumerate_words_tuple = [("où","0"), ("se","0"),
-            ("trouve","2"), ("la","0"), ("tour","1"), ("eiffel","1")]
-        t_word_mock_list = []
-
         class MockWord:
             def __init__(self):
-                self.name = None
                 self.index = None
+                self.name = None
                 self.enumeration = None
+                self.word_minus_one_enumeration = None
+                self.word_plus_one_enumeration = None
+                self.word_plus_two_enumeration = None
+        tuple_list = [
+                (0,"où","0",None,"0","2"),
+                (1,"se","0","0","2","0"),
+                (2,"trouve","2","0","0","1"),
+                (3,"la","0","2","1","1"),
+                (4,"tour","1","0","1",None),
+                (5,"eiffel","1","1", None ,None)
+                ]
 
-        counter = 0
-        for word in t_enumerate_words_tuple:
+        t_parser = Parser()
+        for word in tuple_list:
             mock_word = MockWord()
-            mock_word.index = counter
-            mock_word.name = word[0]
-            mock_word.enumeration = word[1]
-            t_word_mock_list.append(mock_word)
-            t_parser.split_question_list.append(word[0])
-            counter += 1
+            mock_word.index = word[0]
+            mock_word.name = word[1]
+            t_parser.split_question_list.append(word[1])
         t_parser.enumerate_word()
+
+        # for tuple_item in tuple_list:
         for word in t_parser.words_list:
-            word_mock_enumeration = [mock_word.enumeration for mock_word
-                    in t_word_mock_list if mock_word.index == word.index]
-            assert word.enumeration == word_mock_enumeration[0]
+            for tuple_item in tuple_list:
+                if word.index == tuple_item[0]:
+                     assert word.enumeration == tuple_item[2]
+
+
 
     def test_get_next_word_enumeration(self):
 
@@ -137,6 +145,4 @@ class TestParser:
 
 
 
-        
-
-
+    
