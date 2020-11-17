@@ -97,6 +97,7 @@ class TestParser:
             for tuple_item in tuple_list:
                 if word.index == tuple_item[0]:
                      assert word.enumeration == tuple_item[2]
+        
 
 
 
@@ -141,6 +142,46 @@ class TestParser:
                 assert word.word_minus_one_enumeration == "1"
                 assert word.word_plus_one_enumeration == None
                 assert word.word_plus_two_enumeration == None
+
+
+    def test_find_start_word_position(self):
+
+        class MockWord:
+            def __init__(self):
+                self.index = None
+                self.name = None
+                self.enumeration = None
+                self.word_minus_one_enumeration = None
+                self.word_plus_one_enumeration = None
+                self.word_plus_two_enumeration = None
+
+        tuple_list = [
+                (0,"où","0",None,"0","2"),
+                (1,"se","0","0","2","0"),
+                (2,"trouve","2","0","0","1"),
+                (3,"la","0","2","1","1"),
+                (4,"tour","1","0","1",None),
+                (5,"eiffel","1","1", None ,None)
+                ]
+        
+
+        def mock_words_list(self):
+            words_list = []
+            for word in tuple_list:
+                word_mock = MockWord()
+                word_mock.index = word[0]
+                word_mock.name = word[1]
+                word_mock.enumeration = word[2]
+                words_list.append(word_mock)
+
+            return words_list
+
+        t_parser = Parser()
+        t_parser.words_list = mock_words_list(self)
+        t_parser.find_start_word_position()
+
+        assert t_parser.start_word_index == tuple_list[4][0]
+
 
 
 
