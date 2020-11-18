@@ -75,8 +75,9 @@ class Parser:
         for word in self.word_list:
             counter = 1
             if word.index != 0: 
-                enumeration_value = [next_word.enumeration for next_word in \
-                        self.word_list if word.index - 1 == next_word.index]
+                enumeration_value = [next_word.enumeration for\
+                        next_word in self.word_list if\
+                        word.index - 1 == next_word.index]
                 word.word_minus_one_enumeration = enumeration_value[0]
             if counter <= list_len - 1:
                 for word_plus_one in self.word_list:
@@ -113,19 +114,20 @@ class Parser:
         """
         continue_analysis = True
         for word in self.word_list:
-            if word.index >= self.start_word_index and continue_analysis: 
+            if word.index >= self.start_word_index and\
+                    continue_analysis: 
                 if word.enumeration == "1" and \
-                        word.word_plus_one_enumeration== "0" and \
+                        word.word_plus_one_enumeration== "0" and\
                         word.word_plus_two_enumeration == "0":
                     self.end_word_index = word.index
                     continue_analysis = False
                 elif word.enumeration == "1" and \
-                        word.word_plus_one_enumeration == "0" and \
+                        word.word_plus_one_enumeration == "0" and\
                         word.word_plus_two_enumeration == None:
                     self.end_word_index = word.index
                     continue_analysis = False
                 elif word.enumeration== "1" and \
-                        word.word_plus_one_enumeration == None and \
+                        word.word_plus_one_enumeration == None and\
                         word.word_plus_two_enumeration == None:
                     self.end_word_index = word.index
                     continue_analysis = False
