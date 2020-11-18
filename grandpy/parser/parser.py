@@ -13,9 +13,10 @@ class Parser:
     def __init__(self):
         self.question_label = "Quelle est votre question?"
         self.question = str
-        self.split_question_list = []
-        self.stop_word_list = None
-        self.words_list = []
+        self.words_list = None
+        self.stop_words_list = STOPWORDS
+        self.key_words_list = KEYWORDS
+        self.word_list = []
         self.keyword_present = False
         self.start_word_index = None
         self.end_word_index = None
@@ -33,58 +34,57 @@ class Parser:
         self.question = sub("[,.?!']"," ", self.question)
         while "  " in self.question:
             self.question = self.question.replace("  "," ")
-        self.split_question_list = split(" ",self.question)
+        self.words_list = split(" ",self.question)
 
 
     def lower_lists(self):
         """
         """
-        self.split_question_list = [question_word.lower() for question_word
-                in self.split_question_list]
-        self.stop_word_list = [stop_word.lower() for
-                stop_word in STOPWORDS]
+        self.words_list = [question_word.lower() for question_word
+                in self.words_list]
+        self.stop_words_list = [stop_word.lower() for
+                stop_word in self.stop_words_list]
+        self.key_words_list = [stop_word.lower() for
+                stop_word in self.key_words_list]
+
+    def create_word(self):
+        counter = 0
+        for word_in_list in self.words_list:
+            word = Word()
+            word.index = counter
+            word.name = word_in_list
+            self.word_list.append(word)
+            counter += 1
 
     def enumerate_word(self):
         """
         """
-        counter = 0
-        for word_from_split in self.split_question_list:
-            word_is_stopword = [word for word in STOPWORDS if word_from_split == \
-                    word]
-            word_is_keyword = [word for word in KEYWORDS if word_from_split == \
-                    word]
-            word = Word()
-            word.index = counter
-            if word_is_keyword:
-                word.name = word_from_split
-                word.enumeration = "2"              
-            elif word_is_stopword:
-                word.name = word_from_split
-                word.enumeration = "0"
-            else:
-                word.name = word_from_split
-                word.enumeration = "1"
-            self.words_list.append(word)
-            counter += 1
-
+        for word in self.word_list:
+            word.enumeration = "1"
+            for stop_word in self.stop_words_list:
+                if word.name == stop_word:
+                    word.enumeration = "0"
+            for key_word in self.key_words_list:
+                if word.name == key_word:
+                    word.enumeration = "2"
 
     def get_next_word_enumeration(self):
         """
         """
-        list_len = len(self.words_list)
-        for word in self.words_list:
+        list_len = len(self.word_list)
+        for word in self.word_list:
             counter = 1
             if word.index != 0: 
                 enumeration_value = [next_word.enumeration for next_word in \
-                        self.words_list if word.index - 1 == next_word.index]
+                        self.word_list if word.index - 1 == next_word.index]
                 word.word_minus_one_enumeration = enumeration_value[0]
             if counter <= list_len - 1:
-                for word_plus_one in self.words_list:
+                for word_plus_one in self.word_list:
                     if word_plus_one.index == word.index + 1:
                         word.word_plus_one_enumeration = \
                                 word_plus_one.enumeration
             if counter <= list_len - 2:
-                for word_plus_two in self.words_list:
+                for word_plus_two in self.word_list:
                     if word_plus_two.index == word.index + 2:
                         word.word_plus_two_enumeration = \
                                 word_plus_two.enumeration
@@ -92,12 +92,12 @@ class Parser:
     def find_start_word_position(self):
         """
         """
-        for word in self.words_list:
+        for word in self.word_list:
             if word.enumeration == "2":
                 self.keyword_present = True
 
         starts_analysis = False
-        for word in self.words_list:
+        for word in self.word_list:
             if self.keyword_present:
                 if word.enumeration == "2":
                     starts_analysis = True
@@ -112,7 +112,7 @@ class Parser:
         """
         """
         continue_analysis = True
-        for word in self.words_list:
+        for word in self.word_list:
             if word.index >= self.start_word_index and continue_analysis: 
                 if word.enumeration == "1" and \
                         word.word_plus_one_enumeration== "0" and \
@@ -134,7 +134,7 @@ class Parser:
         """
         """
         parsed_list = []
-        for word in self.words_list:
+        for word in self.word_list:
             if word.index >= self.start_word_index and \
                     word.index <= self.end_word_index:
                 parsed_list.append(word.name)

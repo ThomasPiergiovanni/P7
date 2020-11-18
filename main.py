@@ -12,6 +12,7 @@ def main():
     parser.ask_question()
     parser.split_question()
     parser.lower_lists()
+    parser.create_word()
     parser.enumerate_word()
     parser.get_next_word_enumeration()
     # parser.find_start_word_position()

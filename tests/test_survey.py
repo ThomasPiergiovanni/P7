@@ -69,59 +69,78 @@ class TestParser:
         for question in self.t_questions_list:
             t_parser.question = question 
             t_parser.split_question()
-            assert t_parser.split_question_list == self.t_split_lists[counter]
+            assert t_parser.words_list == self.t_split_lists[counter]
             counter += 1
 
-    def test_lower_list_for_split_question_list(self):
+    def test_lower_list(self):
         t_parser = Parser()
         counter = 0
         for question in self.t_split_lists:
-            t_parser.split_question_list = question
+            t_parser.words_list = question
             t_parser.lower_lists()
-            assert t_parser.split_question_list == \
+            assert t_parser.words_list == \
                     self.t_lowered_lists[counter]
             counter += 1
 
+    def mock_words_list(self):
+        words_list = []
+        for word in self.tuple_list:
+            words_list.append(word[1])
+        return words_list
 
-    def test_enumerate_word(self):
+    def mock_word_list(self):
+        word_list = []
         t_parser = Parser()
         for word in self.tuple_list:
             mock_word = self.MockWord()
             mock_word.index = word[0]
             mock_word.name = word[1]
-            t_parser.split_question_list.append(word[1])
+            word_list.append(mock_word)
+        return word_list
+
+    def test_create_word(self):
+        t_parser = Parser()
+        t_parser.words_list = self.mock_words_list()
+        t_parser.create_word()
+        for word in t_parser.words_list:
+            if word.index == 0:
+                assert word.name == self.tuple_list[0][1]
+            elif word.index == 3:
+                assert word.name == self.tuple_list[3][1]
+            elif word.index == 5:
+                assert word.name == self.tuple_list[5][1]
+
+    def test_enumerate_word(self):
+        t_parser = Parser()
+        t_parser.word_list = self.mock_word_list()
         t_parser.enumerate_word()
 
-        # for tuple_item in tuple_list:
-        for word in t_parser.words_list:
-            for tuple_item in self.tuple_list:
-                if word.index == tuple_item[0]:
-                     assert word.enumeration == tuple_item[2]
-        
+        for word in t_parser.word_list:
+            if word.index == 0:
+                assert word.enumeration == self.tuple_list[0][2]
+            elif word.index == 3:
+                assert word.enumeration == self.tuple_list[3][2]
+            elif word.index == 5:
+                assert word.enumeration == self.tuple_list[5][2]
 
-
-
-    def test_get_next_word_enumeration(self):
-
-        # Tuple structure: (index, word, enumeration, enumeration tuple-1
-        # enumeration tuple+1, enumeration tuple+2)
-        t_enumerate_words_tuple = [
-                (0,"où","0",None,"0","2"),
-                (1,"se","0","0","2","0"),
-                (2,"trouve","2","0","0","1"),
-                (3,"la","0","2","1","1"),
-                (4,"tour","1","0","1",None),
-                (5,"eiffel","1","1", None ,None)]
-
+    def mock_enumerate_word(self):
+        word_list = []
         t_parser = Parser()
         for word in self.tuple_list:
             mock_word = self.MockWord()
             mock_word.index = word[0]
             mock_word.name = word[1]
             mock_word.enumeration = word[2]
-            t_parser.words_list.append(mock_word)
+            word_list.append(mock_word)
+        return word_list
+
+
+    def test_get_next_word_enumeration(self):
+
+        t_parser = Parser()
+        t_parser.word_list = self.mock_enumerate_word()
         t_parser.get_next_word_enumeration()
-        for word in t_parser.words_list:
+        for word in t_parser.word_list:
             if word.index == 0:
                 assert word.word_minus_one_enumeration == self.tuple_list[0][3]
                 assert word.word_plus_one_enumeration == self.tuple_list[0][4]
@@ -135,22 +154,16 @@ class TestParser:
                 assert word.word_plus_one_enumeration == self.tuple_list[5][4]
                 assert word.word_plus_two_enumeration == self.tuple_list[5][5]
 
+    # def test_find_start_word_position(self):
+    #     t_parser = Parser()
+    #     t_parser.word_list = self.mock_word_list()
+    #     t_parser.find_start_word_position()
 
-    def test_find_start_word_position(self):
-        
-        def mock_words_list(self):
-            words_list = []
-            for word in self.tuple_list:
-                word_mock = self.MockWord()
-                word_mock.index = word[0]
-                word_mock.name = word[1]
-                word_mock.enumeration = word[2]
-                words_list.append(word_mock)
+    #     assert t_parser.start_word_index == self.tuple_list[4][0]
 
-            return words_list
+    # def test_find_end_word_position(self):
+    #     t_parser = Parser()
+    #     t_parser.word_list = self.mock_word_list()
+    #     t_parser.find_end_word_position()
 
-        t_parser = Parser()
-        t_parser.words_list = mock_words_list(self)
-        t_parser.find_start_word_position()
-
-        assert t_parser.start_word_index == self.tuple_list[4][0]
+    #     assert t_parser.end_word_index == self.tuple_list[5][0]
