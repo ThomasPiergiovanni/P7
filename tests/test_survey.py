@@ -45,14 +45,6 @@ class TestParser:
         (5,"eiffel","1","1", None ,None)
         ]
 
-    t_filtered_list = [
-        ["Tour","Eiffel"],
-        ["Centre", "Centre", "de", "Vélizy", "2"],
-        ["Arc","de", "Triomphe"],
-        ["Saint-Laurent-des-Mortiers"],
-        [""]
-        ]
-
     def test_ask_question(self, monkeypatch):
         t_parser = Parser()
         for question in self.t_questions_list:
@@ -189,3 +181,12 @@ class TestParser:
         t_parser.start_word_index = self.tuple_list[4][0]
         t_parser.find_end_word_position()
         assert t_parser.end_word_index == self.tuple_list[5][0]
+
+    def test_generate_parsed_string(self):
+        t_parser = Parser()
+        t_parser.word_list = self.mock_next_word_enumeration()
+        t_parser.start_word_index = self.tuple_list[4][0]
+        t_parser.end_word_index = self.tuple_list[5][0]
+        t_parser.generate_parsed_string()
+        assert t_parser.parsed_string == self.tuple_list[4][1]\
+                +" "+self.tuple_list[5][1]

@@ -11,7 +11,7 @@ class Parser:
     """
     """
     def __init__(self):
-        self.question_label = "Quelle est votre question?"
+        self.question_label = "Quelle est votre question? \n"
         self.question = str
         self.words_list = None
         self.stop_words_list = STOPWORDS
@@ -96,7 +96,6 @@ class Parser:
         for word in self.word_list:
             if word.enumeration == "2":
                 self.keyword_present = True
-
         starts_analysis = False
         for word in self.word_list:
             if self.keyword_present:
@@ -140,7 +139,6 @@ class Parser:
             if word.index >= self.start_word_index and \
                     word.index <= self.end_word_index:
                 parsed_list.append(word.name)
-
         counter = 1
         for word in parsed_list:
             if counter < len(parsed_list):
@@ -149,4 +147,4 @@ class Parser:
                 counter += 1
             else:
                 self.parsed_string += str(word)
-
+        print(self.parsed_string)

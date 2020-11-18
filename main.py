@@ -15,9 +15,9 @@ def main():
     parser.create_word()
     parser.enumerate_word()
     parser.get_next_word_enumeration()
-    # parser.find_start_word_position()
-    # parser.find_end_word_position()
-    # parser.generate_parsed_string()
+    parser.find_start_word_position()
+    parser.find_end_word_position()
+    parser.generate_parsed_string()
 
 if __name__ == "__main__":
     main()
