@@ -4,8 +4,8 @@ Parser module
 from re import sub, split
 
 
-from grandpy.configuration.config import STOPWORDS, KEYWORDS
-from grandpy.parser.word import Word
+from app.configuration.config import STOPWORDS, KEYWORDS
+from app.parser.word import Word
 
 class Parser:
     """

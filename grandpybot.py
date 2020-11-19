@@ -1,7 +1,7 @@
 """
 Main module
 """
-from grandpy.parser.parser import Parser
+from app.parser.parser import Parser
 
 
 def main():
