@@ -1,6 +1,7 @@
 """
 Main module
 """
+from app import app
 from app.parser.parser import Parser
 
 

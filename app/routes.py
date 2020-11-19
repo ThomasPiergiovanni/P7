@@ -1,3 +1,4 @@
+from flask import render_template
 from app import app #j importe ici app, va variable de classe Flask qui est dans __init__
 
 @app.route('/') 
@@ -7,4 +8,5 @@ from app import app #j importe ici app, va variable de classe Flask qui est dans
 # parce que c est la seule view disponible.
 
 def index():
-    return "Hello, World!"
+    return render_template("index.html")
+    
