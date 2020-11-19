@@ -17,21 +17,33 @@
 							<img src="static/images/robot.png" width="40" height="30" alt= "Robot image">
 						</div>
 						<div class="col-11">
-							<h5> Pose ta question à GrandPy Bot</h5>
+							<h5> Pose ta question à GrandPy Bot!</h5>
 						</div>
 					</div>
 			</div>
 		</div>
 		<div class="bg-light">
     		<div class="container">
-				<div class="jumbotron">
+					<div class="jumbotron">
 				    <div class="row">
 				    	<div class="col">
-				            <form action="" method="post">
+				            <form action="" methods="post">
 				            	{{ form.hidden_tag() }}
-				            	        <p>
+				            	  <p>
 							            {{ form.question (rows='4',cols='40') }}
 							        	</p>
+							        	<p>
+							     				{{ form.submit }}
+							        	</p>
+							        	{% with messages = get_flashed_messages() %}
+        									{% if messages %}
+        										<ul>
+						            			{% for message in messages %}
+						           					<li>{{ message }}</li>
+						            			{% endfor %}
+						        				</ul>
+						        			{% endif %}
+						        		{% endwith %}
 <!-- 					            <div class=”form-group” >
 									<label for=”question”></label>
 									<textarea class=”form-control”  id=”question” rows=”5” required>
