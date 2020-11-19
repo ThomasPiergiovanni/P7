@@ -1,8 +1,9 @@
 #  venv repo
 env/
 
+
 # file containing private settings
-configuration/env.py
+configuration/config.py
 
 #  repo conatining various uneliverable files
 99_other/

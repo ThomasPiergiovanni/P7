@@ -4,7 +4,7 @@ Parser module
 from re import sub, split
 
 
-from app.configuration.config import STOPWORDS, KEYWORDS
+from configuration.config import STOPWORDS, KEYWORDS
 from app.parser.word import Word
 
 class Parser:
