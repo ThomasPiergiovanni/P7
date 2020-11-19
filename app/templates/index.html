@@ -1,80 +1,11 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<link 
-			rel="stylesheet" 
-			href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
-			integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" 
-			crossorigin="anonymous">
-		<title>GrandPyBot</title>
-	</head>
-	<body>
-		<div class="bg-light">
-			<div class="container">
-					<div class="navbar">
-						<div class="col-1">
-							<img src="static/images/robot.png" width="40" height="30" alt= "Robot image">
-						</div>
-						<div class="col-11">
-							<h5> Pose ta question à GrandPy Bot!</h5>
-						</div>
-					</div>
-			</div>
-		</div>
-		<div class="bg-light">
-    		<div class="container">
-					<div class="jumbotron">
-				    <div class="row">
-				    	<div class="col">
-				            <form action="" methods="post">
-				            	{{ form.hidden_tag() }}
-				            	  <p>
-							            {{ form.question (rows='4',cols='40') }}
-							        	</p>
-							        	<p>
-							     				{{ form.submit }}
-							        	</p>
-							        	{% with messages = get_flashed_messages() %}
-        									{% if messages %}
-        										<ul>
-						            			{% for message in messages %}
-						           					<li>{{ message }}</li>
-						            			{% endfor %}
-						        				</ul>
-						        			{% endif %}
-						        		{% endwith %}
-<!-- 					            <div class=”form-group” >
-									<label for=”question”></label>
-									<textarea class=”form-control”  id=”question” rows=”5” required>
-										{{question}}
-									</textarea>
-								</div> -->
-							</form>
-						</div>
-				    </div>
-				</div>
-				<div class="jumbotron">
-				    <div class="row">
-				    	<div class="col">
-				            <h5>Discussion</h5>
-							<div class="card">
-							   <div class="card-body">
-							      <h6 class="card-title">@ auteur</h6>
-							      <p class="card-text">commentaire</p>
-							   </div>
-							</div>
-						</div>
-				    </div>
-				</div>
-			</div>
-    	</div>
-		<div class="bg-dark">
-    		<div class="container">
-    			<div class="col">
-    				<div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-    			</div>
-    		</div>
-    	</div>
-	</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.question(size=32) }}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}
