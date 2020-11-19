@@ -10,13 +10,16 @@
 		<title>GrandPyBot</title>
 	</head>
 	<body>
-		<div class="bg-dark">
+		<div class="bg-light">
 			<div class="container">
-				<div>
-					<nav class="navbar navbar-expand">
-						<a class="navbar-brand" href="index.html">Grand Py Bot</a>
-						<img src="images/robot.png" width="40" height="30" alt= "Robot image">
-				</div>
+					<div class="navbar">
+						<div class="col-1">
+							<img src="static/images/robot.png" width="40" height="30" alt= "Robot image">
+						</div>
+						<div class="col-11">
+							<h5> Pose ta question à GrandPy Bot</h5>
+						</div>
+					</div>
 			</div>
 		</div>
 		<div class="bg-light">
@@ -24,14 +27,17 @@
 				<div class="jumbotron">
 				    <div class="row">
 				    	<div class="col">
-				            <h5>Poser votre question à GrandPy</h5>
-				            <form>
-					            <div class=”form-group”>
+				            <form action="" method="post">
+				            	{{ form.hidden_tag() }}
+				            	        <p>
+							            {{ form.question (rows='4',cols='40') }}
+							        	</p>
+<!-- 					            <div class=”form-group” >
 									<label for=”question”></label>
-									<textarea class=”form-control” id=”question” rows=”5” required>
+									<textarea class=”form-control”  id=”question” rows=”5” required>
 										{{question}}
 									</textarea>
-								</div>
+								</div> -->
 							</form>
 						</div>
 				    </div>

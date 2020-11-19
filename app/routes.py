@@ -1,5 +1,7 @@
 from flask import render_template
+
 from app import app #j importe ici app, va variable de classe Flask qui est dans __init__
+from app.forms import LoginForm
 
 @app.route('/') 
 @app.route('/index')
@@ -8,5 +10,6 @@ from app import app #j importe ici app, va variable de classe Flask qui est dans
 # parce que c est la seule view disponible.
 
 def index():
-    return render_template("index.html")
+    form = LoginForm()
+    return render_template("index.html", form=form)
     
