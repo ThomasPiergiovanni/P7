@@ -10,9 +10,9 @@ from app.parser.word import Word
 class Parser:
     """
     """
-    def __init__(self):
-        self.question_label = "Quelle est votre question? \n"
-        self.question = str
+    def __init__(self, question):
+        # self.question_label = "Quelle est votre question? \n"
+        self.question = question
         self.words_list = None
         self.stop_words_list = STOPWORDS
         self.key_words_list = KEYWORDS
@@ -21,11 +21,22 @@ class Parser:
         self.start_word_index = None
         self.end_word_index = None
         self.parsed_string = ""
+        self.split_question()
+        self.lower_lists()
+        self.create_word()
+        self.enumerate_word()
+        self.get_next_word_enumeration()
+        self.find_start_word_position()
+        self.find_end_word_position()
+        self.generate_parsed_string()
 
-    def ask_question(self):
-        """
-        """
-        self.question = input(self.question_label)
+
+
+
+    # def ask_question(self):
+    #     """
+    #     """
+    #     self.question = input(self.question_label)
 
     def split_question(self):
         """
