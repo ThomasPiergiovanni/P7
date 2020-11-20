@@ -11,27 +11,18 @@ class ConnectionManager:
     def __init__(self):
         self.config = Config()
         self.endpoint = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?"
-        self.input = "amarone"
+        self.input = "les caves nysa"
         self.inputtype = "textquery"
         self.fields = "formatted_address,name"
         self.locationbias = "rectangle:48.7783,2.3129|48.7801,2.3168"
 
         self.parameters = {
-                "input" : "amarone",
+                "input" : "cave nysa",
                 "inputtype" : "textquery",
                 "fields": "name,formatted_address,geometry,types",
                 "locationbias": "rectangle:48.7783,2.3129|48.7801,2.3168",
                 "key" : self.config.GG_API_KEY
                 }
-
-        # self.url_1 = self.endpoint\
-        #         + "input="+ self.input\
-        #         + "&inputtype=" + self.inputtype\
-        #         + "&fields="+ self.fields\
-        #         + "&locationbias="+ self.locationbias\
-        #         + "&key=" + self.config.GG_API_KEY
-        # print(self.url)
-        # print(self.url_1)
 
         self.places_api_answer = None
 
