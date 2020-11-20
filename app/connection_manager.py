@@ -15,22 +15,21 @@ class ConnectionManager:
         self.inputtype = "textquery"
         self.fields = "formatted_address,name"
         self.locationbias = "rectangle:48.7783,2.3129|48.7801,2.3168"
-        self.key = self.config.GG_API_KEY
 
-        # self.parameters = {
-        #         "input" = "amarone",
-        #         "inputtype" = "textquerry",
-        #         # "fields": "formatted_address",
-        #         # "locationbias": "rectangle:48.7783,2.3129|48.7801,2.3168",
-        #         "key" = self.config.GG_API_KEY
-        # }
+        self.parameters = {
+                "input" : "amarone",
+                "inputtype" : "textquery",
+                "fields": "name,formatted_address,geometry,types",
+                "locationbias": "rectangle:48.7783,2.3129|48.7801,2.3168",
+                "key" : self.config.GG_API_KEY
+                }
 
-        self.url_1 = self.endpoint\
-                + "input="+ self.input\
-                + "&inputtype=" + self.inputtype\
-                + "&fields="+ self.fields\
-                + "&locationbias="+ self.locationbias\
-                + "&key=" + self.key
+        # self.url_1 = self.endpoint\
+        #         + "input="+ self.input\
+        #         + "&inputtype=" + self.inputtype\
+        #         + "&fields="+ self.fields\
+        #         + "&locationbias="+ self.locationbias\
+        #         + "&key=" + self.config.GG_API_KEY
         # print(self.url)
         # print(self.url_1)
 
@@ -39,8 +38,9 @@ class ConnectionManager:
     def get_places(self):
 
         try:
-            response_api = requests.get(
-                self.url_1)
+            # response_api = requests.get(
+            #     self.url_1)
+            response_api = requests.get(self.endpoint, params = self.parameters)
             self.places_api_answer = response_api.json()
             print(self.places_api_answer)
 
