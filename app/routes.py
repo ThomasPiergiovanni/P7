@@ -11,7 +11,9 @@ from app.forms import LoginForm
 def index():
     form = LoginForm()
     if form.validate_on_submit():
-         flash("Question has been asked!")
-         return render_template('index.html', form=form)
+
+        flash(form.question.data)
+        # return render_template('index.html', form=form)
+        return redirect(url_for("index")) # cela ramene a index, donc le formulaire sera vié puisque nvelle instance
     return render_template('index.html', form=form)
   
