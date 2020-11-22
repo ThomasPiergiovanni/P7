@@ -1,7 +1,7 @@
 """
 Main module
 """
-from app import app
+from website import app
 from app.parser.parser import Parser
 from app.connection_manager import ConnectionManager
 

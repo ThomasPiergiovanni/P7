@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for
-from app import app #j importe ici app, va variable de classe Flask qui est dans __init__
-from app.forms import LoginForm
+from website import app #j importe ici app, va variable de classe Flask qui est dans __init__
+from website.forms import LoginForm
 
 from app.parser.parser import Parser
 
