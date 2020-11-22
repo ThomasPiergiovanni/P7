@@ -6,7 +6,7 @@ from app.parser.parser import Parser
 from app.connection_manager import ConnectionManager
 
 
-def main():
+# def main():
 #     """
 #     Main method launching the programm
 #     """
@@ -21,10 +21,11 @@ def main():
 #     parser.find_end_word_position()
 #     parser.generate_parsed_string()
 
-    try_conn = ConnectionManager()
+    # try_conn = ConnectionManager()
     # try_conn.get_places()
 
 if __name__ == "__main__":
-    main()
+    # main()
     try_conn = ConnectionManager()
-    try_conn.get_places()
+    # try_conn.get_places()
+    try_conn.get_attribute()
