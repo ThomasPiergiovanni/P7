@@ -3,7 +3,7 @@ Main module
 """
 from website import app
 from grandpy.parser.parser import Parser
-from grandpy.apiclients.connection_manager import ConnectionManager
+from grandpy.apiclients.google_places import GooglePlaces
 
 
 # def main():
@@ -26,6 +26,6 @@ from grandpy.apiclients.connection_manager import ConnectionManager
 
 if __name__ == "__main__":
     # main()
-    try_conn = ConnectionManager()
+    try_conn = GooglePlaces()
     # try_conn.get_places()
     try_conn.get_attribute()

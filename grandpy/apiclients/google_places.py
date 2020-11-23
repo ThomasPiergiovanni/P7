@@ -5,7 +5,7 @@ import requests
 from configuration.config import Config
 
 
-class ConnectionManager:
+class GooglePlaces:
     """
     """
     def __init__(self):
