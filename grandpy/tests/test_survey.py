@@ -45,7 +45,7 @@ class TestParser:
         (5,"eiffel","1","1", None ,None)
         ]
 
-    def test_ask_question(self, monkeypatch):
+    def test_ask_question(self, question, monkeypatch):
         t_parser = Parser()
         for question in self.t_questions_list:
             def mock_input(self):
