@@ -3,7 +3,7 @@ Main module
 """
 from website import app
 from grandpy.parser.parser import Parser
-from grandpy.connection_manager import ConnectionManager
+from grandpy.apiclients.connection_manager import ConnectionManager
 
 
 # def main():
