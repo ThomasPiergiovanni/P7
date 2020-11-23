@@ -1,6 +1,9 @@
 #  venv repo
 env/
 
+#other unwanted file
+main.py
+
 
 # file containing private settings
 configuration/config.py
