@@ -27,5 +27,4 @@ def index():
                 + google_places_api.address)
         mape.set_place_location(google_places_api.place_id)
         return render_template('index.html', form=form, mape=mape)
-        return redirect(url_for("index"))
     return render_template('index.html', form=form, mape=mape)
