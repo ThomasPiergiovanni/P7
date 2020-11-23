@@ -5,7 +5,7 @@ from re import sub, split
 
 
 from configuration.config import STOPWORDS, KEYWORDS
-from app.parser.word import Word
+from grandpy.parser.word import Word
 
 class Parser:
     """

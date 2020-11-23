@@ -1,6 +1,6 @@
 """
 """
-from app.parser.parser import Parser
+from grandpy.parser.parser import Parser
 
 class TestParser:
 

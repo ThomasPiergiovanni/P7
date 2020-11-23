@@ -2,8 +2,8 @@
 Main module
 """
 from website import app
-from app.parser.parser import Parser
-from app.connection_manager import ConnectionManager
+from grandpy.parser.parser import Parser
+from grandpy.connection_manager import ConnectionManager
 
 
 # def main():
