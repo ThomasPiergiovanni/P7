@@ -1,2 +1,2 @@
-FLASK_APP=grandpy/grandpybot.py
+FLASK_APP=grandpy/app.py
 FLASK_ENV=development
