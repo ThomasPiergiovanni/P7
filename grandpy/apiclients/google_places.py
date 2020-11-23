@@ -20,11 +20,12 @@ class GooglePlaces:
                 "input" : parsed_string,
                 "inputtype" : "textquery",
                 "fields": "name,formatted_address,geometry,types",
-                "locationbias": "rectangle:48.7783,2.3129|48.7801,2.3168",
+                "locationbias": "rectangle:48.8311,2.2654|48.9003,2.3991",
                 "key" : self.config.GG_API_KEY
                 }
 
         self.places_api_answer = None
+        self.name = ""
         self.address = ""
 
     def get_places(self):
@@ -61,11 +62,11 @@ class GooglePlaces:
 
         candidates = self.places_api_answer["candidates"]
         for candidate in candidates:
-            name = candidate["name"]
+            self.name = candidate["name"]
             self.address = candidate["formatted_address"]
             latitude = candidate["geometry"]["location"]["lat"]
             longitude = candidate["geometry"]["location"]["lng"]
-            print(name)
+            print(self.name)
             print(self.address)
             print(latitude)
             print(longitude)

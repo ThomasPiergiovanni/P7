@@ -23,7 +23,7 @@ def index():
         google_places_api = GooglePlaces(parser.parsed_string)
         google_places_api.get_places()
         google_places_api.get_attribute()
-        flash("GranPy answer : " + google_places_api.address)
+        flash("GranPy answer : L'adresse de " + google_places_api.name + " est " + google_places_api.address)
 
 
 
