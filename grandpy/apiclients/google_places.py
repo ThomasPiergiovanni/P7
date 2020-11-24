@@ -44,15 +44,9 @@ class GooglePlaces:
 
     def set_attribute(self):
         """
-        """
-        
+        """  
         candidates = self.places_api_answer["candidates"]
         for candidate in candidates:
             self.place_id = candidate["place_id"]
             self.name = candidate["name"]
             self.address = candidate["formatted_address"]
-            latitude = candidate["geometry"]["location"]["lat"]
-            longitude = candidate["geometry"]["location"]["lng"]
-            print(self.place_id)
-            print(self.name)
-

@@ -40,21 +40,11 @@ class MediaWiki:
     def set_attribute(self):
         """
         """
-        # for key, value in self.mediawiki_answer.iteritems():
-        #     print(key, value)
+        try:
+            for key in self.mediawiki_answer["query"]["pages"].keys():
+                self.information = self.mediawiki_answer["query"]["pages"][key]["extract"]
+        except KeyError as error:
+            self.information = "Mmmh je ne sais rien sur cet endroit"
 
-        pages = self.mediawiki_answer["query"]["pages"]
-        for key in pages.keys():
-            page_id = key
-            print(page_id)
-        self.information = self.mediawiki_answer["query"]["pages"][page_id]["extract"]
-        
         print(self.information)
-        # for candidate in candidates:
-        #     self.place_id = candidate["place_id"]
-        #     self.name = candidate["name"]
-        #     self.address = candidate["formatted_address"]
-        #     latitude = candidate["geometry"]["location"]["lat"]
-        #     longitude = candidate["geometry"]["location"]["lng"]
-        #     print(self.place_id)
-        #     print(self.name)
+
