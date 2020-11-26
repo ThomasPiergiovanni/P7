@@ -12,13 +12,14 @@ class Parser:
     """
     def __init__(self, question):
         self.question = question
+        self.question_strip = ""
         self.words_list = None
         self.stop_words_list = STOPWORDS
         self.key_words_list = KEYWORDS
         self.word_list = []
         self.keyword_present = False
-        self.start_word_index = None
-        self.end_word_index = None
+        self.start_word_index = 0
+        self.end_word_index = 0
         self.parsed_string = ""
         self.split_question()
         self.lower_lists()
@@ -32,11 +33,11 @@ class Parser:
     def split_question(self):
         """
         """
-        self.question = self.question.strip(" ,.?!")
-        self.question = sub("[,.?!']"," ", self.question)
-        while "  " in self.question:
-            self.question = self.question.replace("  "," ")
-        self.words_list = split(" ",self.question)
+        self.question_strip = self.question.strip(" ,.?!")
+        self.question_strip = sub("[,.?!']"," ", self.question_strip)
+        while "  " in self.question_strip:
+            self.question_strip = self.question_strip.replace("  "," ")
+        self.words_list = split(" ",self.question_strip)
 
 
     def lower_lists(self):

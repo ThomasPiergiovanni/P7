@@ -18,9 +18,9 @@ class TestGooglePlaces:
                         ],
                     'status': 'OK'}
 
-        def test_set_attribute_catches_the_correct_attribute(self):
-                t_place = GooglePlaces()
-                t_place.plaxes_api_answer = t_response
-                t_place.set_attribute()
-                assert t_place.address == t_response["candidates"][0]["formatted_address"]
+        # def test_set_attribute_catches_the_correct_attribute(self):
+        #         t_place = GooglePlaces()
+        #         t_place.plaxes_api_answer = t_response
+        #         t_place.set_attribute()
+        #         assert t_place.address == t_response["candidates"][0]["formatted_address"]
 
