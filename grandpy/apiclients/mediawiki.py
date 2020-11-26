@@ -5,7 +5,7 @@ from configuration.config import Config
 class MediaWiki:
     """
     """
-    def __init__(self):
+    def __init__(self, parsed_string):
         self.config = Config()
         self.endpoint = "https://fr.wikipedia.org/w/api.php"
         self.parameters = {
@@ -16,7 +16,7 @@ class MediaWiki:
                 "exintro" :0,
                 "explaintext" :0 ,
                 "redirects" : 1,
-                "titles": "Bourg-la-Reine"
+                "titles": parsed_string
                 }
         self.mediawiki_answer = None
         self.information = None
@@ -46,5 +46,4 @@ class MediaWiki:
         except KeyError as error:
             self.information = "Mmmh je ne sais rien sur cet endroit"
 
-        print(self.information)
 
