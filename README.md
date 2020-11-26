@@ -1,5 +1,7 @@
 # P7 - Create GrandPy Bot, the old robot!
 
+## !!!! WORK IN PROGRESS!!!!
+
 ## 1. Introduction.
 NA
 
