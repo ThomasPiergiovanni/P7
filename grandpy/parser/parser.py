@@ -10,17 +10,19 @@ from grandpy.parser.word import Word
 class Parser:
     """
     """
-    def __init__(self, question):
-        self.question = question
-        self.question_strip = ""
-        self.words_list = None
+    def __init__(self):
         self.stop_words_list = STOPWORDS
         self.key_words_list = KEYWORDS
-        self.word_list = []
+        self.question = ""
+        self.question_strip = ""
+        self.words_list = None
+        self.word_instances_list = []
         self.keyword_present = False
         self.start_word_index = 0
         self.end_word_index = 0
         self.parsed_string = ""
+
+    def parse(self):
         self.split_question()
         self.lower_lists()
         self.create_word()
@@ -56,81 +58,96 @@ class Parser:
             word = Word()
             word.index = counter
             word.name = word_in_list
-            self.word_list.append(word)
+            self.word_instances_list.append(word)
             counter += 1
 
     def enumerate_word(self):
         """
         """
-        for word in self.word_list:
-            word.enumeration = "1"
+        for word in self.word_instances_list:
+            word.enum = "1"
             for stop_word in self.stop_words_list:
                 if word.name == stop_word:
-                    word.enumeration = "0"
+                    word.enum = "0"
             for key_word in self.key_words_list:
                 if word.name == key_word:
-                    word.enumeration = "2"
+                    word.enum = "2"
 
     def get_next_word_enumeration(self):
         """
         """
-        list_len = len(self.word_list)
-        for word in self.word_list:
+        list_len = len(self.word_instances_list)
+        for word in self.word_instances_list:
             counter = 1
             if word.index != 0: 
-                enumeration_value = [next_word.enumeration for\
-                        next_word in self.word_list if\
+                enum_value = [next_word.enum for\
+                        next_word in self.word_instances_list if\
                         word.index - 1 == next_word.index]
-                word.word_minus_one_enumeration = enumeration_value[0]
+                word.min_one_enum = enum_value[0]
+            if word.index != 0 and word.index != 1: 
+                enum_value = [next_word.enum for\
+                        next_word in self.word_instances_list if\
+                        word.index - 2 == next_word.index]
+                word.min_two_enum = enum_value[0]
             if counter <= list_len - 1:
-                for word_plus_one in self.word_list:
+                for word_plus_one in self.word_instances_list:
                     if word_plus_one.index == word.index + 1:
-                        word.word_plus_one_enumeration = \
-                                word_plus_one.enumeration
+                        word.plus_one_enum = \
+                                word_plus_one.enum
             if counter <= list_len - 2:
-                for word_plus_two in self.word_list:
+                for word_plus_two in self.word_instances_list:
                     if word_plus_two.index == word.index + 2:
-                        word.word_plus_two_enumeration = \
-                                word_plus_two.enumeration
+                        word.plus_two_enum = \
+                                word_plus_two.enum
 
     def find_start_word_position(self):
         """
         """
-        for word in self.word_list:
-            if word.enumeration == "2":
+        for word in self.word_instances_list:
+            if word.enum == "2":
                 self.keyword_present = True
         starts_analysis = False
-        for word in self.word_list:
+        for word in self.word_instances_list:
             if self.keyword_present:
-                if word.enumeration == "2":
+                if word.enum == "2":
                     starts_analysis = True
-                if starts_analysis and word.enumeration == "1":
+                if starts_analysis and word.enum == "1":
                     self.start_word_index = word.index
                     starts_analysis = False
             else:
-                if word.enumeration == "1":
+                if word.enum == "1" and\
+                        word.min_two_enum != 1 and\
+                        word.plus_one_enum == None:
                     self.start_word_index = word.index
+                elif word.enum == "1" and\
+                        word.min_two_enum != 1 and\
+                        word.plus_two_enum == None:
+                    self.start_word_index = word.index
+                else:
+                    if word.enum == "1":
+                        self.start_word_index = word.index
+
 
     def find_end_word_position(self):
         """
         """
         continue_analysis = True
-        for word in self.word_list:
+        for word in self.word_instances_list:
             if word.index >= self.start_word_index and\
                     continue_analysis: 
-                if word.enumeration == "1" and \
-                        word.word_plus_one_enumeration== "0" and\
-                        word.word_plus_two_enumeration == "0":
+                if word.enum == "1" and \
+                        word.plus_one_enum== "0" and\
+                        word.plus_two_enum == "0":
                     self.end_word_index = word.index
                     continue_analysis = False
-                elif word.enumeration == "1" and \
-                        word.word_plus_one_enumeration == "0" and\
-                        word.word_plus_two_enumeration == None:
+                elif word.enum == "1" and \
+                        word.plus_one_enum == "0" and\
+                        word.plus_two_enum == None:
                     self.end_word_index = word.index
                     continue_analysis = False
-                elif word.enumeration== "1" and \
-                        word.word_plus_one_enumeration == None and\
-                        word.word_plus_two_enumeration == None:
+                elif word.enum== "1" and \
+                        word.plus_one_enum == None and\
+                        word.plus_two_enum == None:
                     self.end_word_index = word.index
                     continue_analysis = False
 
@@ -138,7 +155,7 @@ class Parser:
         """
         """
         parsed_list = []
-        for word in self.word_list:
+        for word in self.word_instances_list:
             if word.index >= self.start_word_index and \
                     word.index <= self.end_word_index:
                 parsed_list.append(word.name)
