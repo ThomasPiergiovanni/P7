@@ -27,7 +27,7 @@ class Parser:
         self.lower_lists()
         self.create_word()
         self.enumerate_word()
-        self.get_next_word_enumeration()
+        self.enumerate_nexts_words()
         self.find_start_word_position()
         self.find_end_word_position()
         self.generate_parsed_string()
@@ -73,7 +73,7 @@ class Parser:
                 if word.name == key_word:
                     word.enum = "2"
 
-    def get_next_word_enumeration(self):
+    def enumerate_nexts_words(self):
         """
         """
         list_len = len(self.word_instances_list)
