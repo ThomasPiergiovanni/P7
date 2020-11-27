@@ -18,8 +18,8 @@ class Parser:
         self.words_list = None
         self.word_instances_list = []
         self.keyword_present = False
-        self.start_word_index = 0
-        self.end_word_index = 0
+        self.start_index = 0
+        self.end_index = 0
         self.parsed_string = ""
 
     def parse(self):
@@ -27,9 +27,9 @@ class Parser:
         self.lower_lists()
         self.create_word()
         self.enumerate_word()
-        self.enumerate_nexts_words()
-        self.find_start_word_position()
-        self.find_end_word_position()
+        self.enumerate_nexts()
+        self.start_position()
+        self.end_position()
         self.generate_parsed_string()
 
     def split_question(self):
@@ -100,7 +100,7 @@ class Parser:
                         word.plus_two_enum = \
                                 word_plus_two.enum
 
-    def find_start_word_position(self):
+    def start_position(self):
         """
         """
         for word in self.word_instances_list:
@@ -112,52 +112,52 @@ class Parser:
                 if word.enum == "2":
                     starts_analysis = True
                 if starts_analysis and word.enum == "1":
-                    self.start_word_index = word.index
+                    self.start_index = word.index
                     starts_analysis = False
             else:
                 if word.enum == "1" and\
                         word.min_two_enum != 1 and\
                         word.plus_one_enum == None:
-                    self.start_word_index = word.index
+                    self.start_index = word.index
                 elif word.enum == "1" and\
                         word.min_two_enum != 1 and\
                         word.plus_two_enum == None:
-                    self.start_word_index = word.index
+                    self.start_index = word.index
                 else:
                     if word.enum == "1":
-                        self.start_word_index = word.index
+                        self.start_index = word.index
 
-
-    def find_end_word_position(self):
+    def end_position(self):
         """
         """
         continue_analysis = True
         for word in self.word_instances_list:
-            if word.index >= self.start_word_index and\
+            if word.index >= self.start_index and\
                     continue_analysis: 
                 if word.enum == "1" and \
                         word.plus_one_enum== "0" and\
                         word.plus_two_enum == "0":
-                    self.end_word_index = word.index
+                    self.end_index = word.index
                     continue_analysis = False
                 elif word.enum == "1" and \
                         word.plus_one_enum == "0" and\
                         word.plus_two_enum == None:
-                    self.end_word_index = word.index
+                    self.end_index = word.index
                     continue_analysis = False
                 elif word.enum== "1" and \
                         word.plus_one_enum == None and\
                         word.plus_two_enum == None:
-                    self.end_word_index = word.index
+                    self.end_index = word.index
                     continue_analysis = False
+
 
     def generate_parsed_string(self):
         """
         """
         parsed_list = []
         for word in self.word_instances_list:
-            if word.index >= self.start_word_index and \
-                    word.index <= self.end_word_index:
+            if word.index >= self.start_index and \
+                    word.index <= self.end_index:
                 parsed_list.append(word.name)
         counter = 1
         for word in parsed_list:
