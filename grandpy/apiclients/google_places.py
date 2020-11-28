@@ -11,11 +11,10 @@ class GooglePlaces:
     def __init__(self, parsed_string):
         self.config = Config()
         self.endpoint = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?"
-        self.input = None
         self.parameters = {
                 "input" : parsed_string,
                 "inputtype" : "textquery",
-                "fields": "place_id,name,formatted_address,geometry,types",
+                "fields": "place_id,name,formatted_address",
                 "locationbias": "rectangle:48.7731,2.3056|48.7918,2.3307", #LOCATION_BIAS,
                 "key" : self.config.GG_API_KEY
                 }

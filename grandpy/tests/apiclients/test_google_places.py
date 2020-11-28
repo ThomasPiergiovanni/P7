@@ -2,25 +2,44 @@
 """
 from grandpy.apiclients.google_places import GooglePlaces
 
+
 class TestGooglePlaces:
 
-        t_response = {'candidates': 
-                        [
-                            {'formatted_address': '1 bis Rue René Roeckel, 92340 Bourg-la-Reine, France',
-                            'geometry': {'location': {'lat': 48.779397, 'lng': 2.3149264}, 
-                                        'viewport': {'northeast': {'lat': 48.78074967989272, 'lng': 2.316450729892722},
-                                                    'southwest': {'lat': 48.77805002010727, 'lng': 2.313751070107277}
-                                                    }
-                                        },
-                            'name': 'Les Caves Nysa',
-                            'types': ['liquor_store', 'food', 'point_of_interest', 'store', 'establishment']
-                            }
-                        ],
-                    'status': 'OK'}
+    def test_get_places_is_successfull(self, monkeypatch):
+        t_parsed_string_ok = "Bourg-la-Reine"
+        t_response_ok = {
+            'candidates': [{
+                'formatted_address': '92340 Bourg-la-Reine, France',
+                'name': 'Bourg-la-Reine',
+                'place_id': 'ChIJBY5REypx5kcRgD6LaMOCCwQ'}],
+            'status': 'OK'}
+        class MockResponse:
+            def __init__(self, endpoint, params = None):
+                pass
 
-        # def test_set_attribute_catches_the_correct_attribute(self):
-        #         t_place = GooglePlaces()
-        #         t_place.plaxes_api_answer = t_response
-        #         t_place.set_attribute()
-        #         assert t_place.address == t_response["candidates"][0]["formatted_address"]
+            def json(self):
+                return t_response_ok
+               
+        monkeypatch.setattr("requests.get", MockResponse)
+        place = GooglePlaces(t_parsed_string_ok)
+        place.get_places()
+        assert place.places_api_answer["status"] == 'OK'
 
+    def test_get_places_is_not_successfull(self, monkeypatch):
+        t_parsed_string_nok = "Brg-la-Rine"
+        t_response_nok = {
+                'candidates': [],
+                'status': 'ZERO_RESULTS'}
+
+
+        class MockResponse:
+            def __init__(self, endpoint, params = None):
+                pass
+
+            def json(self):
+                return t_response_nok
+               
+        monkeypatch.setattr("requests.get", MockResponse)
+        place = GooglePlaces(t_parsed_string_nok)
+        place.get_places()
+        assert place.places_api_answer["status"] == 'ZERO_RESULTS'
