@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for
 
-from grandpy.apiclients.google_map import Map
+from grandpy.apiclients.gmap import Gmap
 from grandpy.apiclients.place import Place
 from grandpy.apiclients.mediawiki import MediaWiki
 from grandpy.parser.parser import Parser
@@ -12,7 +12,7 @@ from website.form import Form
 @app.route('/index', methods=['GET', 'POST'])
 
 def index():
-    mape = Map()
+    gmap = Gmap()
     form = Form()
     if form.validate_on_submit():
         parser = Parser()
@@ -25,18 +25,21 @@ def index():
             place.get_place()
             place.set_attribute()
             if place.status:
-                infos = MediaWiki(place.name)
-                infos.get_mediawiki()
-                infos.set_attribute()
-                flash("L'adresse de: "
-                        + place.name
-                        + " est "
-                        + place.address)
-                flash("Info wiki: " + infos.information)
-                mape.set_place_location(place.place_id)
-                return render_template('index.html', form=form, mape=mape)
+                mediawiki = MediaWiki(place.name)
+                mediawiki.get_mediawiki()
+                mediawiki.set_attribute()
+                if mediawiki.status:
+                    flash("L'adresse de: "
+                            + place.name
+                            + " est "
+                            + place.address)
+                    flash("Info wiki: " + mediawiki.information)
+                    gmap.set_place_location(place.place_id)
+                    return render_template('index.html', form=form, gmap=gmap)
+                else:
+                    flash("Mmh, pas d'info sur ce lieu")
             else:
-                flash("Mmh je ne comprend pas ce que tu me demandes")
+                flash("Mmh, je ne connais pas cet endroit")
         else:
             flash("Mmh, je n'ai pas compris ce que tu me demandes")
-    return render_template('index.html', form=form, mape=mape)
+    return render_template('index.html', form=form, gmap=gmap)

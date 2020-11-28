@@ -5,7 +5,7 @@ import requests
 from configuration.config import Config, LOCATION_BIAS
 
 
-class Map:
+class Gmap:
     """
     """
     def __init__(self):
