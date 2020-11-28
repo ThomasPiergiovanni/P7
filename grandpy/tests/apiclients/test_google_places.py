@@ -5,7 +5,7 @@ from grandpy.apiclients.google_places import GooglePlaces
 
 class TestGooglePlaces:
 
-    def test_get_places_is_successfull(self, monkeypatch):
+    def test_get_places_place_exists(self, monkeypatch):
         t_parsed_string_ok = "Bourg-la-Reine"
         t_response_ok = {
             'candidates': [{
@@ -25,12 +25,11 @@ class TestGooglePlaces:
         place.get_places()
         assert place.places_api_answer["status"] == 'OK'
 
-    def test_get_places_is_not_successfull(self, monkeypatch):
+    def test_get_places_place_does_not_exists(self, monkeypatch):
         t_parsed_string_nok = "Brg-la-Rine"
         t_response_nok = {
                 'candidates': [],
                 'status': 'ZERO_RESULTS'}
-
 
         class MockResponse:
             def __init__(self, endpoint, params = None):
@@ -43,3 +42,22 @@ class TestGooglePlaces:
         place = GooglePlaces(t_parsed_string_nok)
         place.get_places()
         assert place.places_api_answer["status"] == 'ZERO_RESULTS'
+
+    def test_set_attribute_verify_attribute_are_attributed_ok(self):
+
+        t_parsed_string_ok = "Bourg-la-Reine"
+        t_response_ok = {
+            'candidates': [{
+                'formatted_address': '92340 Bourg-la-Reine, France',
+                'name': 'Bourg-la-Reine',
+                'place_id': 'ChIJBY5REypx5kcRgD6LaMOCCwQ'}],
+            'status': 'OK'}
+
+        t_place = GooglePlaces(t_parsed_string_ok)
+        t_place.places_api_answer = t_response_ok
+        t_place.set_attribute()
+        assert t_place.place_id == "ChIJBY5REypx5kcRgD6LaMOCCwQ"
+        assert t_place.name == "Bourg-la-Reine"
+        assert t_place.address == "92340 Bourg-la-Reine, France"
+
+

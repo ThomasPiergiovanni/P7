@@ -29,10 +29,11 @@ class GooglePlaces:
         try:
             response_api = requests.get(self.endpoint, params = self.parameters)
             self.places_api_answer = response_api.json()
-        except requests.ConnectionError:
-            print(
-                "Un problème de connection est apparu. Ré-essaayez plus"
-                " tard ou contacter le propriétaire de l'application")
+        except requests.ConnectionError as error:
+            print(error.value)
+            # print(
+            #     "Un problème de connection est apparu. Ré-essaayez plus"
+            #     " tard ou contacter le propriétaire de l'application")
         except requests.Timeout:
             print(
                 "Un problème de connection est apparu. Ré-essaayez plus"
@@ -41,7 +42,6 @@ class GooglePlaces:
     def set_attribute(self):
         """
         """ 
-
         candidates = self.places_api_answer["candidates"]
         for candidate in candidates:
             self.place_id = candidate["place_id"]
@@ -49,4 +49,4 @@ class GooglePlaces:
             self.address = candidate["formatted_address"]
 
         if len(candidates) == 0:
-            self.address = "Desolé je ne connais pas cet endroit"
+            self.address = "Desolé je ne reconnais pas cet endroit"
