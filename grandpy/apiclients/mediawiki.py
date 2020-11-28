@@ -18,15 +18,17 @@ class MediaWiki:
                 "redirects" : 1,
                 "titles": parsed_string
                 }
-        self.mediawiki_answer = None
+        self.response = None
         self.information = None
+        self.status = False
 
     def get_mediawiki(self):
         """
         """
         try:
-            response_api = requests.get(self.endpoint, params = self.parameters)
-            self.mediawiki_answer = response_api.json()
+            response_api = requests.get(self.endpoint, params = \
+                    self.parameters)
+            self.response = response_api.json()
 
         except requests.ConnectionError:
             print(
@@ -41,9 +43,11 @@ class MediaWiki:
         """
         """
         try:
-            for key in self.mediawiki_answer["query"]["pages"].keys():
-                self.information = self.mediawiki_answer["query"]["pages"][key]["extract"]
+            for key in self.response["query"]["pages"].keys():
+                self.status = True
+                self.information = self.response["query"]["pages"]\
+                        [key]["extract"]
         except KeyError as error:
-            self.information = "Mmmh je ne sais rien sur cet endroit"
+            self.status = False
 
 

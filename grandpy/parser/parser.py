@@ -21,13 +21,14 @@ class Parser:
         self.start_index = 0
         self.end_index = 0
         self.parsed_string = ""
+        self.status = True
 
     def parse(self):
         self.split_question()
         self.lower_lists()
         self.create_word()
         self.enumerate_word()
-        self.enumerate_nexts()
+        self.enumerate_nexts_words()
         self.start_position()
         self.end_position()
         self.generate_parsed_string()
@@ -159,12 +160,13 @@ class Parser:
             if word.index >= self.start_index and \
                     word.index <= self.end_index:
                 parsed_list.append(word.name)
-        counter = 1
-        for word in parsed_list:
-            if counter < len(parsed_list):
-                self.parsed_string += str(word)
-                self.parsed_string += str(" ")
-                counter += 1
-            else:
-                self.parsed_string += str(word)
-        print(self.parsed_string)
+        if len(parsed_list) != 0:
+            self.status = True
+            counter = 1
+            for word in parsed_list:
+                if counter < len(parsed_list):
+                    self.parsed_string += str(word)
+                    self.parsed_string += str(" ")
+                    counter += 1
+                else:
+                    self.parsed_string += str(word)

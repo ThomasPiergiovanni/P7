@@ -2,6 +2,7 @@
 Word module
 """
 
+
 class Word:
     """
     """

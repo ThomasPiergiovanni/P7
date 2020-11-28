@@ -1,11 +1,11 @@
 """ test google places module
 """
-from grandpy.apiclients.google_places import GooglePlaces
+from grandpy.apiclients.place import Place
 
 
-class TestGooglePlaces:
+class TestPlace:
 
-    def test_get_places_place_exists(self, monkeypatch):
+    def test_get_place_when_exists(self, monkeypatch):
         t_parsed_string_ok = "Bourg-la-Reine"
         t_response_ok = {
             'candidates': [{
@@ -21,11 +21,11 @@ class TestGooglePlaces:
                 return t_response_ok
                
         monkeypatch.setattr("requests.get", MockResponse)
-        place = GooglePlaces(t_parsed_string_ok)
-        place.get_places()
-        assert place.places_api_answer["status"] == 'OK'
+        place = Place(t_parsed_string_ok)
+        place.get_place()
+        assert place.place_api_answer["status"] == 'OK'
 
-    def test_get_places_place_does_not_exists(self, monkeypatch):
+    def test_get_place_when_does_not_exists(self, monkeypatch):
         t_parsed_string_nok = "Brg-la-Rine"
         t_response_nok = {
                 'candidates': [],
@@ -39,11 +39,11 @@ class TestGooglePlaces:
                 return t_response_nok
                
         monkeypatch.setattr("requests.get", MockResponse)
-        place = GooglePlaces(t_parsed_string_nok)
-        place.get_places()
-        assert place.places_api_answer["status"] == 'ZERO_RESULTS'
+        place = Place(t_parsed_string_nok)
+        place.get_place()
+        assert place.place_api_answer["status"] == 'ZERO_RESULTS'
 
-    def test_set_attribute_verify_attribute_are_attributed_ok(self):
+    def test_set_attribute_when_place_exist(self):
 
         t_parsed_string_ok = "Bourg-la-Reine"
         t_response_ok = {
@@ -52,12 +52,24 @@ class TestGooglePlaces:
                 'name': 'Bourg-la-Reine',
                 'place_id': 'ChIJBY5REypx5kcRgD6LaMOCCwQ'}],
             'status': 'OK'}
-
-        t_place = GooglePlaces(t_parsed_string_ok)
-        t_place.places_api_answer = t_response_ok
+        t_place = Place(t_parsed_string_ok)
+        t_place.place_api_answer = t_response_ok
         t_place.set_attribute()
+        assert t_place.status == True
         assert t_place.place_id == "ChIJBY5REypx5kcRgD6LaMOCCwQ"
         assert t_place.name == "Bourg-la-Reine"
         assert t_place.address == "92340 Bourg-la-Reine, France"
 
+    def test_set_attribute_when_place_doesnt_exist(self):
 
+        t_parsed_string_nok = "Brg-la-Rine"
+        t_response_nok = {
+                'candidates': [],
+                'status': 'ZERO_RESULTS'}
+        t_place = Place(t_parsed_string_nok)
+        t_place.place_api_answer = t_response_nok
+        t_place.set_attribute()
+        assert t_place.status == False
+        assert t_place.place_id == ""
+        assert t_place.name == ""
+        assert t_place.address == ""
