@@ -4,6 +4,34 @@
     <head>
         <title>GrandPyBot</title>
 
+           
+    </head>
+    <body>
+        <div>
+            Ask your question:
+        </div>
+        <form action="" method="post" novalidate>
+            <div>
+                <input type="text" id="question" value="" />
+                <button type="button" id="submit" onclick="submitMessage();">Ask</button>
+            </div>
+        </form>
+        <hr>
+            <ul>
+                <li id ="user_question"></li>
+                <li id ="grandpy_address"></li>
+                <li id ="grandpy_information"></li>
+            </ul>
+
+        <hr>
+        <iframe
+            id="grandpy_map"
+            width="600"
+            height="450"
+            frameborder="0" style="border:0"
+            src={{ gmap.url }} allowfullscreen>
+        </iframe>
+
     <script type="text/javascript">
 
         function submitMessage() {
@@ -35,6 +63,7 @@
                 userQuestion.textContent = "@User question:"+ inputQuestion.value
                 grandpyAnswerAddress.textContent = "@GPy address:"+ data.address;
                 grandpyAnswerWiki.textContent = "@GPy wiki:"+ data.information;
+                grandpyMap.src = data.map;
                 });
             })
             .catch(function(error) {
@@ -43,33 +72,7 @@
 
         }
 
-    </script>           
-    </head>
-    <body>
-        <div>
-            Ask your question:
-        </div>
-        <form action="" method="post" novalidate>
-            <div>
-                <input type="text" id="question" value="" />
-                <button type="button" id="submit" onclick="submitMessage();">Ask</button>
-            </div>
-        </form>
-        <hr>
-            <ul>
-                <li id ="user_question"></li>
-                <li id ="grandpy_address"></li>
-                <li id ="grandpy_information"></li>
-            </ul>
-
-        <hr>
-        <iframe
-            id="grandpy_map"
-            width="600"
-            height="450"
-            frameborder="0" style="border:0"
-            src={{ gmap.url }} allowfullscreen>
-        </iframe>
+    </script>
   
     </body>
 </html>
