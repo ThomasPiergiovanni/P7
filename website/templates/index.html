@@ -17,10 +17,7 @@
             </div>
         </form>
         <hr>
-            <ul>
-                <li id ="user_question"></li>
-                <li id ="grandpy_address"></li>
-                <li id ="grandpy_information"></li>
+            <ul id="chat">
             </ul>
 
         <hr>
@@ -37,13 +34,14 @@
         function submitMessage() {
             let inputQuestion = document.getElementById("question");
             let userQuestion = document.getElementById("user_question");
+            let chat = document.querySelector("#chat");
             let grandpyAnswerAddress = document.getElementById("grandpy_address");
             let grandpyAnswerWiki = document.getElementById("grandpy_information");
             let grandpyMap = document.getElementById("grandpy_map");
             let entry = { 
                 question: inputQuestion.value
             };
-        
+
             fetch(`${window.origin}/index/create-entry`, {
                 method: "POST",
                 credentials: "include",
@@ -60,9 +58,17 @@
                 }
                 response.json().then(function(data) {
                 console.log(data);
-                userQuestion.textContent = "@User question:"+ inputQuestion.value
-                grandpyAnswerAddress.textContent = "@GPy address:"+ data.address;
-                grandpyAnswerWiki.textContent = "@GPy wiki:"+ data.information;
+
+                let node = document.createElement("li");
+                let nodeQuestion = document.createTextNode(inputQuestion.value);
+                let brakeLine = document.createElement("br")
+                let nodeAddress = document.createTextNode(data.address);
+                node.append(nodeQuestion);
+                node.append(brakeLine);
+                node.append(nodeAddress);
+                // answerAdress = data.address;
+                chat.append(node);
+
                 grandpyMap.src = data.map;
                 });
             })

@@ -21,17 +21,14 @@ def create_entry():
     parser = Parser()
     parser.question = demand["question"]
     parser.parse()
-    if parser.status:
-        place = Place(parser.parsed_string)
-        place.get_place()
-        place.set_attribute()
-        if place.status:
-            mediawiki = MediaWiki(place.name)
-            mediawiki.get_mediawiki()
-            mediawiki.set_attribute()
-            if mediawiki.status:
-                gmap = Gmap()
-                gmap.set_place_location(place.place_id)
+    place = Place(parser.parsed_string)
+    place.get_place()
+    place.set_attribute()
+    mediawiki = MediaWiki(place.name)
+    mediawiki.get_mediawiki()
+    mediawiki.set_attribute()
+    gmap = Gmap()
+    gmap.set_place_location(place.place_id)
 
     answer = {
         "parsed_string" : parser.parsed_string,
@@ -39,6 +36,6 @@ def create_entry():
         "information" : mediawiki.information,
         "map": gmap.url
     }
-    res = make_response(jsonify(answer), 200)
-    return res
+    response = make_response(jsonify(answer), 200)
+    return response
 
