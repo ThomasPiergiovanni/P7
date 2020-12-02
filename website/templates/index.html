@@ -1,7 +1,13 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
         <title>GrandPyBot</title>
 
            
@@ -59,15 +65,35 @@
                 response.json().then(function(data) {
                 console.log(data);
 
+                let userPrefix = "@utilisateur: "
+                let grandpyPrefix = "@grandpy: "
+
                 let node = document.createElement("li");
+                let node2 = document.createElement("li");
+                let node3 = document.createElement("li");
+                let nodeUserPrefix = document.createElement("span");
+                nodeUserPrefix.textContent = userPrefix
                 let nodeQuestion = document.createTextNode(inputQuestion.value);
-                let brakeLine = document.createElement("br")
-                let nodeAddress = document.createTextNode(data.address);
+                let nodeGrandpyPrefix = document.createElement("span");
+                nodeGrandpyPrefix.textContent = grandpyPrefix
+                let nodeGrandpyPrefix2 = document.createElement("span");
+                nodeGrandpyPrefix2.textContent = grandpyPrefix
+                let nodeAnswerAddress = document.createTextNode(data.address);
+                let nodeAnswerWikiMedia = document.createTextNode(data.information);
+
+
+
+                node.append(nodeUserPrefix);
                 node.append(nodeQuestion);
-                node.append(brakeLine);
-                node.append(nodeAddress);
-                // answerAdress = data.address;
                 chat.append(node);
+
+                node2.append(nodeGrandpyPrefix);
+                node2.append(nodeAnswerAddress);
+                chat.append(node2);
+
+                node3.append(nodeGrandpyPrefix2);
+                node3.append(nodeAnswerWikiMedia);
+                chat.append(node3);
 
                 grandpyMap.src = data.map;
                 });
