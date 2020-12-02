@@ -13,15 +13,27 @@
            
     </head>
     <body>
-        <div>
-            Ask your question:
-        </div>
-        <form action="" method="post" novalidate>
-            <div>
-                <input type="text" id="question" value="" />
-                <button type="button" id="submit" onclick="submitMessage();">Ask</button>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <p class="navbar-brand">
+                    Ask your question to Grandpy
+                </p>
             </div>
-        </form>
+        </nav>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <form action="" method="post" novalidate>
+                        <div class="form-group">
+                            <div>
+                                <input type="text" id="question" value="" />
+                                <button type="button" id="submit" onclick="submitMessage();">Ask</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <hr>
             <ul id="chat">
             </ul>
