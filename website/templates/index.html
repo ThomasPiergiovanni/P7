@@ -26,19 +26,24 @@
                     <form action="" method="post" novalidate>
                         <div class="form-group">
                             <div>
-                                <input type="text" id="question" value="" />
-                                <button type="button" id="submit" onclick="submitMessage();">Ask</button>
+                                <input type="text" id="question" size="3" class="form-control" required>
+                                <button type="button" id="ask_button" class="btn btn-primary">Ask</button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-        <hr>
-            <ul id="chat">
-            </ul>
-
-        <hr>
+        <div class="bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <ul class="list-inline text-left" id="chat">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
         <iframe
             id="grandpy_map"
             width="600"
@@ -49,7 +54,11 @@
 
     <script type="text/javascript">
 
-        function submitMessage() {
+        let askButton = document.getElementById("ask_button");
+        askButton.addEventListener('click', function(event) { 
+            event.stopPropagation();
+            event.preventDefault();
+
             let inputQuestion = document.getElementById("question");
             let userQuestion = document.getElementById("user_question");
             let chat = document.querySelector("#chat");
@@ -80,12 +89,42 @@
                 let userPrefix = "@utilisateur: "
                 let grandpyPrefix = "@grandpy: "
 
-                let node = document.createElement("li");
+                let divUser = document.createElement("div");
+                divUser.setAttribute("class", "mt-5");
+
+                let divUserRow= document.createElement("div");
+                divUserRow.setAttribute("class", "row");
+
+                let divUserCol= document.createElement("div");
+                divUserCol.setAttribute("class", "col-10");
+
+                let divUserColRow1= document.createElement("div");
+                divUserColRow1.setAttribute("class", "row");
+
+                let divUserColRow2= document.createElement("div");
+                divUserColRow2.setAttribute("class", "row");
+
+                let divGrandPy = document.createElement("div");
+                let divGrandPyRow= document.createElement("div");
+                divGrandPy.setAttribute("class", "mt-3");
+                let divGrandPyCol1= document.createElement("div");
+                let divGrandPyCol2= document.createElement("div");
+                divGrandPyRow.setAttribute("class", "row");
+                divGrandPyCol1.setAttribute("class", "col-2");
+                divGrandPyCol2.setAttribute("class", "col-10");
+
+
+                // let node = document.createElement("li");
+                // node.setAttribute("class", "list-inline-item")
                 let node2 = document.createElement("li");
                 let node3 = document.createElement("li");
                 let nodeUserPrefix = document.createElement("span");
                 nodeUserPrefix.textContent = userPrefix
-                let nodeQuestion = document.createTextNode(inputQuestion.value);
+
+                // let nodeQuestion = document.createTextNode(inputQuestion.value);
+                let nodeQuestion = document.createElement("span");
+                nodeQuestion.textContent = inputQuestion.value
+                
                 let nodeGrandpyPrefix = document.createElement("span");
                 nodeGrandpyPrefix.textContent = grandpyPrefix
                 let nodeGrandpyPrefix2 = document.createElement("span");
@@ -94,18 +133,27 @@
                 let nodeAnswerWikiMedia = document.createTextNode(data.information);
 
 
+                divUser.append(divUserRow);
+                divUserRow.append(divUserCol);
+                divUserCol.append(divUserColRow1);
+                divUserCol.append(divUserColRow2);
+                divUserColRow1.append(nodeUserPrefix);
+                divUserColRow2.append(nodeQuestion);
+                
+                                // node.append(divUserColRow1);
+                                // node.append(divUserColRow2);
+                chat.append(divUser);
 
-                node.append(nodeUserPrefix);
-                node.append(nodeQuestion);
-                chat.append(node);
 
+                divGrandPy.append(divGrandPyRow);
+                divGrandPyRow.append(divGrandPyCol1);
+                divGrandPyRow.append(divGrandPyCol2);
+                divGrandPyCol2.append(node2);
                 node2.append(nodeGrandpyPrefix);
                 node2.append(nodeAnswerAddress);
-                chat.append(node2);
-
-                node3.append(nodeGrandpyPrefix2);
+                divGrandPyCol2.append(node3);
                 node3.append(nodeAnswerWikiMedia);
-                chat.append(node3);
+                chat.append(divGrandPy);
 
                 grandpyMap.src = data.map;
                 });
@@ -114,9 +162,13 @@
                 console.log("Fetch error: " + error);
             });
 
-        }
+        });
 
     </script>
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   
     </body>
 </html>
