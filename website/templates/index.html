@@ -13,44 +13,58 @@
            
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container">
+
+        <nav class="navbar navbar-expand-xs navbar-dark bg-dark">
+        <div class="container">            
                 <p class="navbar-brand">
                     Ask your question to Grandpy
                 </p>
-            </div>
+         </div>           
         </nav>
+
         <div class="container">
             <div class="row">
                 <div class="col">
                     <form action="" method="post" novalidate>
                         <div class="form-group">
-                            <div>
-                                <input type="text" id="question" size="3" class="form-control" required>
+
+                                <input type="text" id="question" class="form-control" required>
                                 <button type="button" id="ask_button" class="btn btn-primary">Ask</button>
-                            </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-        <div class="bg-light">
+<!--         <div class="bg-light"> -->
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <ul class="list-inline text-left" id="chat">
-                        </ul>
+
+
+ 
+                                <ul class="col border border-dark" id="chat">
+                                </ul>
+
                     </div>
                 </div>
             </div>
-        </div>
-        <iframe
-            id="grandpy_map"
-            width="600"
-            height="450"
-            frameborder="0" style="border:0"
-            src={{ gmap.url }} allowfullscreen>
-        </iframe>
+<!--         </div> -->
+<!--         <div class="bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <iframe
+                            class="embed-responsive embed-responsive-16by9"
+                            id="grandpy_map"
+                            width="200"
+                            height="100"
+                            frameborder="0" style="border:0"
+                            src={{ gmap.url }} allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div> -->
 
     <script type="text/javascript">
 
@@ -162,36 +176,6 @@
                 chat.append(divGrandPy);
 
 
-
-                // let node2 = document.createElement("li");
-                // let node3 = document.createElement("li");
-
-
-
-                // let nodeGrandpyPrefix = document.createElement("span");
-                // nodeGrandpyPrefix.textContent = grandpyPrefix
-                // let nodeGrandpyPrefix2 = document.createElement("span");
-                // nodeGrandpyPrefix2.textContent = grandpyPrefix
-                // let nodeAnswerAddress = document.createTextNode(data.address);
-                // let nodeAnswerWikiMedia = document.createTextNode(data.information);
-
-
-
-                
-                //                 // node.append(divUserColRow1);
-                //                 // node.append(divUserColRow2);
-                
-
-
-                // divGrandPy.append(divGrandPyRow);
-                // divGrandPyRow.append(divGrandPyCol1);
-                // divGrandPyRow.append(divGrandPyCol2);
-                // divGrandPyCol2.append(node2);
-                // node2.append(nodeGrandpyPrefix);
-                // node2.append(nodeAnswerAddress);
-                // divGrandPyCol2.append(node3);
-                // node3.append(nodeAnswerWikiMedia);
-                // chat.append(divGrandPy);
 
                 grandpyMap.src = data.map;
                 });
