@@ -13,58 +13,79 @@
            
     </head>
     <body>
-
-        <nav class="navbar navbar-expand-xs navbar-dark bg-dark">
+<div class="bg-dark">
         <div class="container">            
-                <p class="navbar-brand">
-                    Ask your question to Grandpy
-                </p>
-         </div>           
-        </nav>
+                <div class="row pt-4 pb-3">
+
+                <div class="col-1 col-md-2"></div>
+                <div class="col-10 col-md-8 text-center text-light h2">    
+                    Pose ta question à GrandPy
+                </div>
+                <div class="col-1 col-md-2"></div>
+         </div>  
+         </div>
+         </div>            
+            
 
         <div class="container">
             <div class="row">
-                <div class="col">
+                <div class="col-1 col-md-2"></div>
+                <div class="col-10 col-md-8">
                     <form action="" method="post" novalidate>
                         <div class="form-group">
+                            <div class="border border-secondary mt-4">
 
-                                <input type="text" id="question" class="form-control" required>
-                                <button type="button" id="ask_button" class="btn btn-primary">Ask</button>
+                                <input type="text" id="question" class="form-control" value="Ta question ici..." required>
+                            </div>
+                                <button type="button" id="ask_button" class="btn btn-primary mt-2">Demande</button>
+
                         </div>
                     </form>
                 </div>
+                <div class="col-1 col-md-2"></div>
             </div>
         </div>
-<!--         <div class="bg-light"> -->
+<!--    <div class="bg-light"> -->
             <div class="container">
-                <div class="row">
-                    <div class="col">
-
-
- 
-                                <ul class="col border border-dark" id="chat">
-                                </ul>
-
-                    </div>
+                <div class="row align-items-center mt-4">
+                    <div class="col-1 col-md-2"></div>
+                        <div class="col-10 col-md-8">
+                            
+                            <ul class="col scroll border border-secondary" style="min-height: 100px; max-height: 200px; overflow-y: scroll;" id="chat">
+                            </ul>
+                        </div>
+                        <div class="col-1 col-md-2"></div>
                 </div>
             </div>
 <!--         </div> -->
-<!--         <div class="bg-light">
             <div class="container">
-                <div class="row">
-                    <div class="col">
+                <div class="row align-items-center mt-1 mb-4">
+                    <div class="col-1 col-md-2"></div>
+                        <div class="col-10 col-md-8">
+                            <div class="embed-responsive embed-responsive-4by3">
                         <iframe
-                            class="embed-responsive embed-responsive-16by9"
+                            class="embed-responsive-item border border-secondary" 
                             id="grandpy_map"
-                            width="200"
-                            height="100"
-                            frameborder="0" style="border:0"
                             src={{ gmap.url }} allowfullscreen>
                         </iframe>
                     </div>
+                    </div>
+                    <div class="col-1 col-md-2"></div>
                 </div>
-            </div>
-        </div> -->
+        </div>
+    <div class="bg-dark">
+    <div class="container">
+      <div class="row pt-4 pb-3 text-secondary">
+        <div class="col">
+          <ul class="list-inline text-center">
+            <li class="list-inline-item">Thomas Piergiovanni</a></li>
+            <li class="list-inline-item">&middot;</li>
+            <li class="list-inline-item"><a href="https://github.com/ThomasPiergiovanni/">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 
     <script type="text/javascript">
 
@@ -104,7 +125,7 @@
                 let grandpyPrefix = "@grandpy: "
 
                 let divUser = document.createElement("div");
-                divUser.setAttribute("class", "mt-5");
+                divUser.setAttribute("class", "mb-2");
 
                 let divUserRow= document.createElement("div");
                 divUserRow.setAttribute("class", "row");
@@ -120,9 +141,11 @@
 
                 let spanUserPrefix = document.createElement("span");
                 spanUserPrefix.textContent = userPrefix
+                spanUserPrefix.setAttribute("class", "font-weight-bold");
 
                 let spanQuestion = document.createElement("span");
                 spanQuestion.textContent = inputQuestion.value
+                spanQuestion.setAttribute("class", "font-italic");
 
                 divUser.append(divUserRow);
                 divUserRow.append(divUserCol);
@@ -135,7 +158,7 @@
 
 
                 let divGrandPy = document.createElement("div");
-                divGrandPy.setAttribute("class", "mt-3");
+                divGrandPy.setAttribute("class", "mb-4");
 
                 let divGrandPyRow= document.createElement("div");
                 divGrandPyRow.setAttribute("class", "row");
@@ -157,6 +180,7 @@
 
                 let spanGrandpyPrefix = document.createElement("span");
                 spanGrandpyPrefix.textContent = grandpyPrefix
+                spanGrandpyPrefix.setAttribute("class", "font-weight-bold");
 
                 let spanGrandpyAddress = document.createElement("span");
                 spanGrandpyAddress.textContent = data.address
