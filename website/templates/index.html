@@ -8,253 +8,84 @@
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-        <title>GrandPyBot</title>
-
-           
+        <title>GrandPyBot</title>   
     </head>
     <body>
-    <div class="bg-dark">
-        <div class="container">            
+        <div class="bg-dark">
+            <div class="container">            
                 <div class="row pt-5 pb-2">
-
-                <div class="col-1 col-md-2"></div>
-                    
-                <div class="col-10 col-md-8 text-left text-light h2">
-                    <img src="../static/images/robot.png" width="50" height="50" alt="robot image" >
-                            Pose ta question à GrandPy
-                    
-                </div>
-                <div class="col-1 col-md-2"></div>
-         </div>  
-         </div>
-         </div>                      
-            
-
+                    <div class="col-1 col-md-2"></div>
+                    <div class="col-10 col-md-8 text-left text-light h2">
+                        <img src="../static/images/robot.png" width="50" height="50" alt="robot image" >
+                        Pose ta question à GrandPy
+                    </div>
+                    <div class="col-1 col-md-2"></div>
+                </div>  
+            </div>
+        </div>                                  
         <div class="container">
             <div class="row">
                 <div class="col-1 col-md-2"></div>
+                    <div class="col-10 col-md-8">
+                        <form action="" method="post" novalidate>
+                            <div class="form-group">
+                                <div class="border border-secondary mt-4 rounded">
+                                    <input type="text" id="question" class="form-control font-italic" value="Ta question ici..." required>
+                                </div>
+                                <div class="text-right">
+                                    <button type="button" id="ask_button" class="btn btn-primary mt-2">Demande</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                <div class="col-1 col-md-2"></div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row align-items-center mt-3">
+                <div class="col-1 col-md-2"></div>
                 <div class="col-10 col-md-8">
-                    <form action="" method="post" novalidate>
-                        <div class="form-group">
-                            <div class="border border-secondary mt-4 rounded">
-
-                                <input type="text" id="question" class="form-control font-italic" value="Ta question ici..." required>
-                            </div>
-                            <div class="text-right">
-                                <button type="button" id="ask_button" class="btn btn-primary mt-2">Demande</button>
-                            </div>
-                        </div>
-                    </form>
+                    <ul class="col scroll border border-secondary rounded" style="min-height: 100px; max-height: 200px; overflow-y: scroll;" id="chat">
+                    </ul>
                 </div>
                 <div class="col-1 col-md-2"></div>
             </div>
         </div>
-<!--    <div class="bg-light"> -->
-            <div class="container">
-                <div class="row align-items-center mt-3">
-                    <div class="col-1 col-md-2"></div>
-                        <div class="col-10 col-md-8">
-                            
-                            <ul class="col scroll border border-secondary rounded" style="min-height: 100px; max-height: 200px; overflow-y: scroll;" id="chat">
-                            </ul>
-                        </div>
-                        <div class="col-1 col-md-2"></div>
-                </div>
-            </div>
-<!--         </div> -->
-            <div class="container">
-                <div class="row align-items-center mt-1 mb-4">
-                    <div class="col-1 col-md-2"></div>
-                        <div class="col-10 col-md-8">
-                            <div class="embed-responsive embed-responsive-4by3">
+        <div class="container">
+            <div class="row align-items-center mt-1 mb-4">
+                <div class="col-1 col-md-2"></div>
+                <div class="col-10 col-md-8">
+                    <div class="embed-responsive embed-responsive-4by3">
                         <iframe
                             class="embed-responsive-item border border-secondary" 
                             id="grandpy_map"
                             src={{ gmap.url }} allowfullscreen>
                         </iframe>
                     </div>
-                    </div>
-                    <div class="col-1 col-md-2"></div>
                 </div>
+                <div class="col-1 col-md-2"></div>
+            </div>
         </div>
-    <div class="bg-dark">
-    <div class="container">
-      <div class="row pt-3 pb-5 text-secondary">
-        <div class="col">
-          <ul class="list-inline text-center">
-            <li class="list-inline-item">Thomas Piergiovanni</a></li>
-            <li class="list-inline-item">&middot;</li>
-            <li class="list-inline-item"><a href="https://github.com/ThomasPiergiovanni/">GitHub</a></li>
-          </ul>
+        <div class="bg-dark">
+            <div class="container">
+                <div class="row pt-3 pb-5 text-secondary">
+                    <div class="col">
+                        <ul class="list-inline text-center">
+                            <li class="list-inline-item">Thomas Piergiovanni</a></li>
+                            <li class="list-inline-item">&middot;</li>
+                            <li class="list-inline-item"><a href="https://github.com/ThomasPiergiovanni/">GitHub</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-
-    <script type="text/javascript">
-
-        class FormElement{
-            constructor(){
-                this.askButton = document.getElementById("ask_button");
-                this.inputQuestion = document.getElementById("question");
-                this.chat = document.querySelector("#chat");
-                this.grandpyMap = document.getElementById("grandpy_map");
-            }
-        };
-
-        class UserHtmlElement{
-            constructor(){
-                this.divUser = document.createElement("div");
-                this.divUserRow = document.createElement("div");
-                this.divUserCol = document.createElement("div");
-                this.divUserColRow1 = document.createElement("div");
-                this.divUserColRow2 = document.createElement("div");
-                this.spanUserPrefix = document.createElement("span");
-                this.spanTime = document.createElement("span");
-                this.spanQuestion = document.createElement("span");
-            };
-
-            defineAttribute(number) {
-                this.divUser.setAttribute("class", "mb-2");
-                this.divUserRow.setAttribute("class", "row");
-                this.divUserCol.setAttribute("class", "col-10");
-                this.divUserColRow1.setAttribute("class", "row");
-                this.divUserColRow2.setAttribute("class", "row");
-                this.spanUserPrefix.textContent = "# Utilisateur ";
-                this.spanUserPrefix.setAttribute("class", "font-weight-bold");
-                this.time = new Date();
-                this.spanTime.textContent = "[" + this.time.getHours() + ":" + this.time.getMinutes() + ":" + this.time.getSeconds() + "]";
-                this.spanQuestion.textContent = formElement.inputQuestion.value
-                this.spanQuestion.setAttribute("class", "text-align-justify")
-            }
-
-            buildHtml(){
-                this.divUser.append(this.divUserRow);
-                this.divUserRow.append(this.divUserCol);
-                this.divUserCol.append(this.divUserColRow1);
-                this.divUserCol.append(this.divUserColRow2);
-                this.divUserColRow1.append(this.spanUserPrefix);
-                this.divUserColRow1.append(this.spanTime);
-                this.divUserColRow2.append(this.spanQuestion);
-            }
-
-        };
-
-        class GrandPyHtmlElement{
-            constructor(){
-                this.divGrandPy = document.createElement("div");
-                this.divGrandPyRow = document.createElement("div");
-                this.divGrandPyCol1= document.createElement("div");
-                this.divGrandPyCol2= document.createElement("div");
-                this.divGrandPyCol2Row1= document.createElement("div");
-                this.divGrandPyCol2Row2= document.createElement("div");
-                this.divGrandPyCol2Row3= document.createElement("div");
-                this.spanGrandpyPrefix = document.createElement("span");
-                this.spanTime = document.createElement("span");
-                this.spanGrandpyPrefixAddress = document.createElement("span");
-                this.spanGrandpyAddress = document.createElement("span");
-                this.spanGrandpyPrefixWiki = document.createElement("span");
-                this.spanGrandpyWiki = document.createElement("span");
-            };
-
-            defineAttribute(data) {
-                this.divGrandPy.setAttribute("class", "mb-4");
-                this.divGrandPyRow.setAttribute("class", "row");
-                this.divGrandPyCol1.setAttribute("class", "col-2");
-                this.divGrandPyCol2.setAttribute("class", "col-10");
-                this.divGrandPyCol2Row1.setAttribute("class", "row");
-                this.divGrandPyCol2Row2.setAttribute("class", "row");
-                this.divGrandPyCol2Row3.setAttribute("class", "row");
-                this.spanGrandpyPrefix.textContent = "# Grandpy"
-                this.spanGrandpyPrefix.setAttribute("class", "font-weight-bold");
-                this.time = new Date();
-                this.spanTime.textContent = "[" + this.time.getHours() + ":" + this.time.getMinutes() + ":" + this.time.getSeconds() + "]";
-                this.spanGrandpyPrefixAddress.textContent = "L'adresse de l'endroit recherché est ..."
-                this.spanGrandpyAddress.textContent = data.address
-                this.spanGrandpyAddress.setAttribute("class", "font-italic text-align-justify");
-                this.spanGrandpyPrefixWiki.textContent = "... Et savais tu que... "
-                this.spanGrandpyWiki.textContent = data.information;
-                this.spanGrandpyWiki.setAttribute("class", "font-italic text-align-justify");
-            }
-
-            buildHtml(){
-                this.divGrandPy.append(this.divGrandPyRow);
-                this.divGrandPyRow.append(this.divGrandPyCol1);
-                this.divGrandPyRow.append(this.divGrandPyCol2);
-                this.divGrandPyCol2.append(this.divGrandPyCol2Row1);
-                this.divGrandPyCol2.append(this.divGrandPyCol2Row2);
-                this.divGrandPyCol2.append(this.divGrandPyCol2Row3);
-                this.divGrandPyCol2Row1.append(this.spanGrandpyPrefix);
-                this.divGrandPyCol2Row1.append(this.spanTime);
-                this.divGrandPyCol2Row2.append(this.spanGrandpyPrefixAddress);
-                this.divGrandPyCol2Row2.append(this.spanGrandpyAddress);
-                this.divGrandPyCol2Row3.append(this.spanGrandpyPrefixWiki);
-                this.divGrandPyCol2Row3.append(this.spanGrandpyWiki);
-            }
-        };
-
-        let formElement = new FormElement();
-
-        formElement.inputQuestion.addEventListener("click", function(event) {
-            event.preventDefault();
-            formElement.inputQuestion.value = null;
-        });
-
-        formElement.inputQuestion.addEventListener("keydown", function(event) {
-            if (event.keyCode == 13) {
-                event.preventDefault();
-                formElement.askButton.click();
-            }
-        });    
-
-
-        formElement.askButton.addEventListener('click', function(event) { 
-            event.preventDefault();
-
-
-            let entry = { 
-                question: formElement.inputQuestion.value
-            };      
-
-            fetch(`${window.origin}/index/create-entry`, {
-                method: "POST",
-                credentials: "include",
-                body: JSON.stringify(entry),
-                cache: "no-cache",
-                headers: new Headers({
-                    "content-type": "application/json"
-                })
-            })
-            .then(function(response) {
-                if (response.status !== 200) {
-                    console.log(`Looks like there was a problem. Status code: ${response.status}`);
-                    return;
-                }
-                response.json().then(function(data) {
-
-                let userHtml = new UserHtmlElement();
-                let grandPyHtml = new GrandPyHtmlElement();
-                userHtml.defineAttribute();
-                userHtml.buildHtml();           
-                grandPyHtml.defineAttribute(data);
-                grandPyHtml.buildHtml();
-                formElement.chat.prepend(grandPyHtml.divGrandPy);
-                formElement.chat.prepend(userHtml.divUser);
-                formElement.grandpyMap.src = data.map;
-
-                });
-            })
-            .catch(function(error) {
-                console.log("Fetch error: " + error);
-            });
-
-        });
-
-    </script>
+        <script 
+            type="text/javascript"
+            src="{{ url_for('static', filename='interface.js') }}">    
+        </script>
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     </body>
 </html>
