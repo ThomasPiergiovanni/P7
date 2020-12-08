@@ -17,11 +17,11 @@
         <div class="container">            
                 <div class="row pt-4 pb-3">
 
-                <div class="col-1 col-md-2"></div>
-                <div class="col-10 col-md-8 text-center text-light h2">    
+                <div class="col-1 col-md-2 col-xl-3"></div>
+                <div class="col-10 col-md-8 col-xl-6 text-center text-light h2">    
                     Pose ta question à GrandPy
                 </div>
-                <div class="col-1 col-md-2"></div>
+                <div class="col-1 col-md-2 col-xl-3"></div>
          </div>  
          </div>
          </div>            
@@ -29,8 +29,8 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-1 col-md-2"></div>
-                <div class="col-10 col-md-8">
+                <div class="col-1 col-md-2 col-xl-3"></div>
+                <div class="col-10 col-md-8 col-xl-6">
                     <form action="" method="post" novalidate>
                         <div class="form-group">
                             <div class="border border-secondary mt-4">
@@ -42,26 +42,26 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-1 col-md-2"></div>
+                <div class="col-1 col-md-2 col-xl-3"></div>
             </div>
         </div>
 <!--    <div class="bg-light"> -->
             <div class="container">
                 <div class="row align-items-center mt-4">
-                    <div class="col-1 col-md-2"></div>
-                        <div class="col-10 col-md-8">
+                    <div class="col-1 col-md-2 col-xl-3"></div>
+                        <div class="col-10 col-md-8 col-xl-6">
                             
                             <ul class="col scroll border border-secondary" style="min-height: 100px; max-height: 200px; overflow-y: scroll;" id="chat">
                             </ul>
                         </div>
-                        <div class="col-1 col-md-2"></div>
+                        <div class="col-1 col-md-2 col-xl-3"></div>
                 </div>
             </div>
 <!--         </div> -->
             <div class="container">
                 <div class="row align-items-center mt-1 mb-4">
-                    <div class="col-1 col-md-2"></div>
-                        <div class="col-10 col-md-8">
+                    <div class="col-1 col-md-2 col-xl-3"></div>
+                        <div class="col-10 col-md-8 col-xl-6">
                             <div class="embed-responsive embed-responsive-4by3">
                         <iframe
                             class="embed-responsive-item border border-secondary" 
@@ -70,7 +70,7 @@
                         </iframe>
                     </div>
                     </div>
-                    <div class="col-1 col-md-2"></div>
+                    <div class="col-1 col-md-2 col-xl-3"></div>
                 </div>
         </div>
     <div class="bg-dark">
@@ -89,20 +89,39 @@
 
     <script type="text/javascript">
 
-        let askButton = document.getElementById("ask_button");
-        askButton.addEventListener('click', function(event) { 
+        class FormElement{
+            constructor(){
+                this.askButton = document.getElementById("ask_button");
+                this.inputQuestion = document.getElementById("question");
+                this.chat = document.querySelector("#chat");
+                this.grandpyMap = document.getElementById("grandpy_map");
+            }
+        };
+
+        class UserHtmlElement{
+            constructor(){
+                this.divUser = document.createElement("div");
+                this.divUserRow = document.createElement("div");
+                this.divUserCol= document.createElement("div");
+                this.divUserColRow1= document.createElement("div");
+                this.divUserColRow2= document.createElement("div");
+                this.spanUserPrefix = document.createElement("span");
+                this.spanQuestion = document.createElement("span");
+
+            }
+        };
+
+        let formElement = new FormElement();
+        let userHtml = new UserHtmlElement();
+
+        formElement.askButton.addEventListener('click', function(event) { 
             event.stopPropagation();
             event.preventDefault();
 
-            let inputQuestion = document.getElementById("question");
-            let userQuestion = document.getElementById("user_question");
-            let chat = document.querySelector("#chat");
-            let grandpyAnswerAddress = document.getElementById("grandpy_address");
-            let grandpyAnswerWiki = document.getElementById("grandpy_information");
-            let grandpyMap = document.getElementById("grandpy_map");
+
             let entry = { 
-                question: inputQuestion.value
-            };
+                question: formElement.inputQuestion.value
+            };      
 
             fetch(`${window.origin}/index/create-entry`, {
                 method: "POST",
@@ -121,41 +140,34 @@
                 response.json().then(function(data) {
                 console.log(data);
 
-                let userPrefix = "@utilisateur: "
-                let grandpyPrefix = "@grandpy: "
+                let userPrefix = "# Utilisateur: "
+                let grandpyPrefix = "# Grandpy: "
 
-                let divUser = document.createElement("div");
-                divUser.setAttribute("class", "mb-2");
-
-                let divUserRow= document.createElement("div");
-                divUserRow.setAttribute("class", "row");
-
-                let divUserCol= document.createElement("div");
-                divUserCol.setAttribute("class", "col-10");
-
-                let divUserColRow1= document.createElement("div");
-                divUserColRow1.setAttribute("class", "row");
-
-                let divUserColRow2= document.createElement("div");
-                divUserColRow2.setAttribute("class", "row");
-
-                let spanUserPrefix = document.createElement("span");
-                spanUserPrefix.textContent = userPrefix
-                spanUserPrefix.setAttribute("class", "font-weight-bold");
-
-                let spanQuestion = document.createElement("span");
-                spanQuestion.textContent = inputQuestion.value
-                spanQuestion.setAttribute("class", "font-italic");
-
-                divUser.append(divUserRow);
-                divUserRow.append(divUserCol);
-                divUserCol.append(divUserColRow1);
-                divUserCol.append(divUserColRow2);
-                divUserColRow1.append(spanUserPrefix);
-                divUserColRow2.append(spanQuestion);
-                chat.append(divUser);
+                userHtml.divUser.setAttribute("class", "mb-2");
 
 
+                userHtml.divUserRow.setAttribute("class", "row");
+
+                userHtml.divUserCol.setAttribute("class", "col-10");
+
+                userHtml.divUserColRow1.setAttribute("class", "row");
+
+                userHtml.divUserColRow2.setAttribute("class", "row");
+
+                userHtml.spanUserPrefix.textContent = userPrefix
+                userHtml.spanUserPrefix.setAttribute("class", "font-weight-bold");
+
+                userHtml.spanQuestion.textContent = formElement.inputQuestion.value
+                userHtml.spanQuestion.setAttribute("class", "font-italic");
+
+
+                userHtml.divUser.append(userHtml.divUserRow);
+                userHtml.divUserRow.append(userHtml.divUserCol);
+                userHtml.divUserCol.append(userHtml.divUserColRow1);
+                userHtml.divUserCol.append(userHtml.divUserColRow2);
+                userHtml.divUserColRow1.append(userHtml.spanUserPrefix);
+                userHtml.divUserColRow2.append(userHtml.spanQuestion);
+                formElement.chat.append(userHtml.divUser);
 
                 let divGrandPy = document.createElement("div");
                 divGrandPy.setAttribute("class", "mb-4");
@@ -197,11 +209,14 @@
                 divGrandPyCol2Row1.append(spanGrandpyPrefix);
                 divGrandPyCol2Row2.append(spanGrandpyAddress);
                 divGrandPyCol2Row3.append(spanGrandpyWiki);
-                chat.append(divGrandPy);
+                formElement.chat.append(divGrandPy);
 
 
 
-                grandpyMap.src = data.map;
+                formElement.grandpyMap.src = data.map;
+
+
+
                 });
             })
             .catch(function(error) {
