@@ -13,18 +13,21 @@
            
     </head>
     <body>
-<div class="bg-dark">
+    <div class="bg-dark">
         <div class="container">            
-                <div class="row pt-4 pb-3">
+                <div class="row pt-5 pb-2">
 
                 <div class="col-1 col-md-2"></div>
-                <div class="col-10 col-md-8 text-center text-light h2">    
-                    Pose ta question à GrandPy
+                    
+                <div class="col-10 col-md-8 text-left text-light h2">
+                    <img src="../static/images/robot.png" width="50" height="50" alt="robot image" >
+                            Pose ta question à GrandPy
+                    
                 </div>
                 <div class="col-1 col-md-2"></div>
          </div>  
          </div>
-         </div>            
+         </div>                      
             
 
         <div class="container">
@@ -33,7 +36,7 @@
                 <div class="col-10 col-md-8">
                     <form action="" method="post" novalidate>
                         <div class="form-group">
-                            <div class="border border-secondary mt-4">
+                            <div class="border border-secondary mt-4 rounded">
 
                                 <input type="text" id="question" class="form-control font-italic" value="Ta question ici..." required>
                             </div>
@@ -48,11 +51,11 @@
         </div>
 <!--    <div class="bg-light"> -->
             <div class="container">
-                <div class="row align-items-center mt-4">
+                <div class="row align-items-center mt-3">
                     <div class="col-1 col-md-2"></div>
                         <div class="col-10 col-md-8">
                             
-                            <ul class="col scroll border border-secondary" style="min-height: 100px; max-height: 200px; overflow-y: scroll;" id="chat">
+                            <ul class="col scroll border border-secondary rounded" style="min-height: 100px; max-height: 200px; overflow-y: scroll;" id="chat">
                             </ul>
                         </div>
                         <div class="col-1 col-md-2"></div>
@@ -76,7 +79,7 @@
         </div>
     <div class="bg-dark">
     <div class="container">
-      <div class="row pt-4 pb-3 text-secondary">
+      <div class="row pt-3 pb-5 text-secondary">
         <div class="col">
           <ul class="list-inline text-center">
             <li class="list-inline-item">Thomas Piergiovanni</a></li>
@@ -122,6 +125,7 @@
                 this.time = new Date();
                 this.spanTime.textContent = "[" + this.time.getHours() + ":" + this.time.getMinutes() + ":" + this.time.getSeconds() + "]";
                 this.spanQuestion.textContent = formElement.inputQuestion.value
+                this.spanQuestion.setAttribute("class", "text-align-justify")
             }
 
             buildHtml(){
@@ -167,10 +171,10 @@
                 this.spanTime.textContent = "[" + this.time.getHours() + ":" + this.time.getMinutes() + ":" + this.time.getSeconds() + "]";
                 this.spanGrandpyPrefixAddress.textContent = "L'adresse de l'endroit recherché est ..."
                 this.spanGrandpyAddress.textContent = data.address
-                this.spanGrandpyAddress.setAttribute("class", "font-italic");
+                this.spanGrandpyAddress.setAttribute("class", "font-italic text-align-justify");
                 this.spanGrandpyPrefixWiki.textContent = "... Et savais tu que... "
                 this.spanGrandpyWiki.textContent = data.information;
-                this.spanGrandpyWiki.setAttribute("class", "font-italic");
+                this.spanGrandpyWiki.setAttribute("class", "font-italic text-align-justify");
             }
 
             buildHtml(){
