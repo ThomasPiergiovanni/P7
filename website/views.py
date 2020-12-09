@@ -31,8 +31,11 @@ def create_entry():
     gmap.set_place_location(place.place_id)
 
     answer = {
+        "parser_status" : parser.status,
         "parsed_string" : parser.parsed_string,
+        "address_status" : place.status,
         "address" : place.address,
+        "information_status" : mediawiki.status,
         "information" : mediawiki.information,
         "map": gmap.url
     }

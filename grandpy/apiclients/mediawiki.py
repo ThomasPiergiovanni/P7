@@ -49,5 +49,3 @@ class MediaWiki:
                         [key]["extract"]
         except KeyError as error:
             self.status = False
-
-

@@ -19,7 +19,7 @@ class UserHtmlElement{
         this.spanQuestion = document.createElement("span");
     };
 
-    defineAttribute(number) {
+    defineAttribute() {
         this.divUser.setAttribute("class", "mb-2");
         this.divUserRow.setAttribute("class", "row");
         this.divUserCol.setAttribute("class", "col-10");
@@ -29,8 +29,8 @@ class UserHtmlElement{
         this.spanUserPrefix.setAttribute("class", "font-weight-bold");
         this.time = new Date();
         this.spanTime.textContent = "[" + this.time.getHours() + ":" + this.time.getMinutes() + ":" + this.time.getSeconds() + "]";
-        this.spanQuestion.textContent = formElement.inputQuestion.value
-        this.spanQuestion.setAttribute("class", "text-align-justify")
+        this.spanQuestion.textContent = formElement.inputQuestion.value;
+        this.spanQuestion.setAttribute("class", "text-align-justify");
     }
 
     buildHtml(){
@@ -62,7 +62,7 @@ class GrandPyHtmlElement{
         this.spanGrandpyWiki = document.createElement("span");
     };
 
-    defineAttribute(data) {
+    defineAttribute(addressPrefix, addressData, wikiPrefix, wikiData) {
         this.divGrandPy.setAttribute("class", "mb-4");
         this.divGrandPyRow.setAttribute("class", "row");
         this.divGrandPyCol1.setAttribute("class", "col-2");
@@ -70,15 +70,15 @@ class GrandPyHtmlElement{
         this.divGrandPyCol2Row1.setAttribute("class", "row");
         this.divGrandPyCol2Row2.setAttribute("class", "row");
         this.divGrandPyCol2Row3.setAttribute("class", "row");
-        this.spanGrandpyPrefix.textContent = "# Grandpy"
+        this.spanGrandpyPrefix.textContent = "# Grandpy";
         this.spanGrandpyPrefix.setAttribute("class", "font-weight-bold");
         this.time = new Date();
         this.spanTime.textContent = "[" + this.time.getHours() + ":" + this.time.getMinutes() + ":" + this.time.getSeconds() + "]";
-        this.spanGrandpyPrefixAddress.textContent = "L'adresse de l'endroit recherché est ..."
-        this.spanGrandpyAddress.textContent = data.address
+        this.spanGrandpyPrefixAddress.textContent = addressPrefix;
+        this.spanGrandpyAddress.textContent = addressData;
         this.spanGrandpyAddress.setAttribute("class", "font-italic text-align-justify");
-        this.spanGrandpyPrefixWiki.textContent = "... Et savais tu que... "
-        this.spanGrandpyWiki.textContent = data.information;
+        this.spanGrandpyPrefixWiki.textContent = wikiPrefix;
+        this.spanGrandpyWiki.textContent = wikiData;
         this.spanGrandpyWiki.setAttribute("class", "font-italic text-align-justify");
     }
 
@@ -114,11 +114,9 @@ formElement.inputQuestion.addEventListener("keydown", function(event) {
 
 formElement.askButton.addEventListener('click', function(event) { 
     event.preventDefault();
-
-
     let entry = { 
         question: formElement.inputQuestion.value
-    };      
+    };
 
     fetch(`${window.origin}/index/create-entry`, {
         method: "POST",
@@ -129,6 +127,7 @@ formElement.askButton.addEventListener('click', function(event) {
             "content-type": "application/json"
         })
     })
+
     .then(function(response) {
         if (response.status !== 200) {
             console.log(`Looks like there was a problem. Status code: ${response.status}`);
@@ -136,18 +135,44 @@ formElement.askButton.addEventListener('click', function(event) {
         }
         response.json().then(function(data) {
 
-        let userHtml = new UserHtmlElement();
-        let grandPyHtml = new GrandPyHtmlElement();
-        userHtml.defineAttribute();
-        userHtml.buildHtml();           
-        grandPyHtml.defineAttribute(data);
-        grandPyHtml.buildHtml();
-        formElement.chat.prepend(grandPyHtml.divGrandPy);
-        formElement.chat.prepend(userHtml.divUser);
-        formElement.grandpyMap.src = data.map;
+            let userHtml = new UserHtmlElement();
+            let grandPyHtml = new GrandPyHtmlElement();
+            userHtml.defineAttribute();
+            userHtml.buildHtml();
+
+            if (!data.parser_status) {
+                let addressPrefix = "Désolé, je n'ai pas compris la question"
+                let addressData = null
+                let wikiPrefix = null
+                let wikiData = null
+                grandPyHtml.defineAttribute(addressPrefix, addressData, wikiPrefix, wikiData);
+            } else if (data.parser_status && !data.address_status) {
+                let addressPrefix = "Désolé, je ne connais pas cet endroit"
+                let addressData = null
+                let wikiPrefix = null
+                let wikiData = null
+                grandPyHtml.defineAttribute(addressPrefix, addressData, wikiPrefix, wikiData);
+            } else if (data.parser_status && data.address_status && !data.information_status) {
+                let addressPrefix = "L'adresse de l'endroit recherché est ..."
+                let addressData = data.address;
+                let wikiPrefix = "... Par contre, je ne sais rien de cet endroit ..."
+                let wikiData = null
+                grandPyHtml.defineAttribute(addressPrefix, addressData, wikiPrefix, wikiData);
+            } else {
+                let addressPrefix = "L'adresse de l'endroit recherché est ..."
+                let addressData = data.address;
+                let wikiPrefix = "... Et savais tu que... "
+                let wikiData = data.information;
+                grandPyHtml.defineAttribute(addressPrefix, addressData, wikiPrefix, wikiData);
+            };
+            grandPyHtml.buildHtml();
+            formElement.chat.prepend(grandPyHtml.divGrandPy);
+            formElement.chat.prepend(userHtml.divUser);
+            formElement.grandpyMap.src = data.map;
 
         });
     })
+
     .catch(function(error) {
         console.log("Fetch error: " + error);
     });
