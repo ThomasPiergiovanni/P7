@@ -9,7 +9,6 @@ class MediaWiki:
         self.config = Config()
         self.endpoint = "https://fr.wikipedia.org/w/api.php"
         self.parameters = {
-
                 "action": "query",
                 "format": "json",
                 "prop": "extracts",

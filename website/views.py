@@ -16,7 +16,6 @@ def index():
 @app.route('/index/create-entry', methods=['POST'])
 def create_entry():
     demand = request.get_json()
-
     parser = Parser()
     parser.question = demand["question"]
     parser.parse()

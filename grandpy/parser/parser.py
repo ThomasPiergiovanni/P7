@@ -3,9 +3,9 @@ Parser module
 """
 from re import sub, split
 
-
 from configuration.config import STOPWORDS, KEYWORDS
 from grandpy.parser.word import Word
+
 
 class Parser:
     """
@@ -170,3 +170,5 @@ class Parser:
                     counter += 1
                 else:
                     self.parsed_string += str(word)
+
+        print(self.parsed_string)

@@ -14,7 +14,6 @@ class TestParser:
             self.plus_one_enum = None
             self.plus_two_enum = None
 
-    # t_question = "Où se trouve la Tour Eiffel?"
     t_questions_list = [
         "Où se trouve la Tour Eiffel?", 
         "Quelle est l'adresse du Centre Commercial de Vélizy 2?",
@@ -316,6 +315,7 @@ class TestParser:
         t_parser.end_index = self.tuple_three[7][0]
         t_parser.generate_parsed_string()
         assert t_parser.parsed_string == self.t_parsed_string[4][0]
+        print(t_parser.parsed_string)
 
         # The same test but with another question 
         t_parser = Parser()
@@ -324,3 +324,4 @@ class TestParser:
         t_parser.end_index = self.tuple_four[3][0]
         t_parser.generate_parsed_string()
         assert t_parser.parsed_string == self.t_parsed_string[5][0]
+
