@@ -13,6 +13,7 @@ class TestParser:
             self.enum= None
             self.plus_one_enum = None
             self.plus_two_enum = None
+            self.plus_three_enum = None
 
     t_questions_list = [
         "Où se trouve la Tour Eiffel?", 
@@ -50,43 +51,43 @@ class TestParser:
 
 
     tuple_one = [
-            (0,"où", None, None,"0","0","2"),
-            (1,"se",None,"0","0","2","0"),
-            (2,"trouve","0","0","2","0","1"),
-            (3,"la","0","2","0","1","1"),
-            (4,"tour","2","0","1","1", None),
-            (5,"eiffel","0","1","1", None, None)
+            (0,"où", None, None,"0","0","2","0"),
+            (1,"se",None,"0","0","2","0","1"),
+            (2,"trouve","0","0","2","0","1","1"),
+            (3,"la","0","2","0","1","1", None),
+            (4,"tour","2","0","1","1", None, None),
+            (5,"eiffel","0","1","1", None, None, None)
             ]
     tuple_two = [
-            (0,"quelle", None, None,"0","0","0"),
-            (1,"est",None,"0","0","0","2"),
-            (2,"l","0","0","0","2","0"),
-            (3,"adresse","0","0","2","0","1"),
-            (4,"du","0","2","0","1","1"),
-            (5,"centre","2","0","1", "1", "0"),
-            (6,"commercial","0","1","1","0","1"),
-            (7,"de","1","1","0","1","1"),
-            (8,"vélizy","1","0","1","1", None),
-            (9,"2","0","1","1", None, None)
+            (0,"quelle", None, None,"0","0","0","2"),
+            (1,"est",None,"0","0","0","2","0"),
+            (2,"l","0","0","0","2","0","1"),
+            (3,"adresse","0","0","2","0","1","1"),
+            (4,"du","0","2","0","1","1","0"),
+            (5,"centre","2","0","1", "1","0","1"),
+            (6,"commercial","0","1","1","0","1","1"),
+            (7,"de","1","1","0","1","1", None),
+            (8,"vélizy","1","0","1","1", None, None),
+            (9,"2","0","1","1", None, None, None)
             ]
 
     tuple_three = [
-            (0,"ey", None, None,"1","0","0"),
-            (1,"toi",None,"1","0","0","0"),
-            (2,"tu","1","0","0","0","0"),
-            (3,"sais","0","0","0","0","0"),
-            (4,"c","0","0","0","0","0"),
-            (5,"est","0","0","0", "0", "1"),
-            (6,"où","0","0","0","1","0"),
-            (7,"paris","0","0","1","0","0"),
-            (8,"ou","0","1","0","0", None),
-            (9,"pas","1","0","0", None, None)
+            (0,"ey", None, None,"1","0","0","0"),
+            (1,"toi",None,"1","0","0","0","0"),
+            (2,"tu","1","0","0","0","0","0"),
+            (3,"sais","0","0","0","0","0","0"),
+            (4,"c","0","0","0","0","0","1"),
+            (5,"est","0","0","0", "0", "1","0"),
+            (6,"où","0","0","0","1","0","0"),
+            (7,"paris","0","0","1","0","0", None),
+            (8,"ou","0","1","0","0", None, None),
+            (9,"pas","1","0","0", None, None, None)
             ]
     tuple_four = [
-            (0,"euuuh", None, None,"0","0","0"),
-            (1,"et",None,"0","0","0","1"),
-            (2,"sur","0","0","0","1",None),
-            (3,"saint-laurent-des-mortiers","0","0","1", None, None)
+            (0,"euuuh", None, None,"0","0","0","1"),
+            (1,"et",None,"0","0","0","1",None),
+            (2,"sur","0","0","0","1",None,None),
+            (3,"saint-laurent-des-mortiers","0","0","1",None, None, None)
             ]
 
     def mock_words_list(self, question_tuple):
@@ -128,6 +129,7 @@ class TestParser:
             mock_word.enum = element[4]
             mock_word.plus_one_enum = element[5]
             mock_word.plus_two_enum = element[6]
+            mock_word.plus_three_enum = element[7]
             word_list.append(mock_word)
         return word_list
 
@@ -209,16 +211,19 @@ class TestParser:
                     assert word.min_one_enum == tuple_list[0][3]
                     assert word.plus_one_enum == tuple_list[0][5]
                     assert word.plus_two_enum == tuple_list[0][6]
+                    assert word.plus_three_enum == tuple_list[0][7]
                 elif word.index == 3:
                     assert word.min_two_enum == tuple_list[3][2]
                     assert word.min_one_enum == tuple_list[3][3]
                     assert word.plus_one_enum == tuple_list[3][5]
                     assert word.plus_two_enum == tuple_list[3][6]
+                    assert word.plus_three_enum == tuple_list[3][7]
                 elif word.index == 5:
                     assert word.min_two_enum == tuple_list[5][2]
                     assert word.min_one_enum == tuple_list[5][3]
                     assert word.plus_one_enum == tuple_list[5][5]
                     assert word.plus_two_enum == tuple_list[5][6]
+                    assert word.plus_three_enum == tuple_list[5][7]
 
         # Test with one question            
         t_parser = Parser()

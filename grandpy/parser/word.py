@@ -14,3 +14,4 @@ class Word:
         self.enum = None
         self.plus_one_enum = None
         self.plus_two_enum = None
+        self.plus_three_enum = None

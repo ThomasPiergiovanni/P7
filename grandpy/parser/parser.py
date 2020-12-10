@@ -24,6 +24,8 @@ class Parser:
         self.status = True
 
     def parse(self):
+        """
+        """
         self.split_question()
         self.lower_lists()
         self.create_word()
@@ -41,7 +43,6 @@ class Parser:
         while "  " in self.question_strip:
             self.question_strip = self.question_strip.replace("  "," ")
         self.words_list = split(" ",self.question_strip)
-
 
     def lower_lists(self):
         """
@@ -100,6 +101,11 @@ class Parser:
                     if word_plus_two.index == word.index + 2:
                         word.plus_two_enum = \
                                 word_plus_two.enum
+            if counter <= list_len - 3:
+                for word_plus_three in self.word_instances_list:
+                    if word_plus_three.index == word.index + 3:
+                        word.plus_three_enum = \
+                                word_plus_three.enum
 
     def start_position(self):
         """
@@ -117,16 +123,24 @@ class Parser:
                     starts_analysis = False
             else:
                 if word.enum == "1" and\
-                        word.min_two_enum != 1 and\
-                        word.plus_one_enum == None:
+                        word.min_two_enum != "1" and\
+                        word.plus_one_enum != None and\
+                        word.plus_two_enum != None and\
+                        word.plus_three_enum == None:
                     self.start_index = word.index
                 elif word.enum == "1" and\
-                        word.min_two_enum != 1 and\
-                        word.plus_two_enum == None:
+                        word.min_one_enum != "1" and\
+                        word.plus_one_enum != None and\
+                        word.plus_two_enum == None and\
+                        word.plus_three_enum == None:
                     self.start_index = word.index
-                else:
-                    if word.enum == "1":
-                        self.start_index = word.index
+                elif word.enum == "1" and\
+                        word.min_two_enum != "1" and\
+                        word.min_one_enum != "1" and\
+                        word.plus_one_enum == None and\
+                        word.plus_two_enum == None and\
+                        word.plus_three_enum == None:
+                    self.start_index = word.index
 
     def end_position(self):
         """
@@ -151,7 +165,6 @@ class Parser:
                     self.end_index = word.index
                     continue_analysis = False
 
-
     def generate_parsed_string(self):
         """
         """
@@ -170,5 +183,3 @@ class Parser:
                     counter += 1
                 else:
                     self.parsed_string += str(word)
-
-        print(self.parsed_string)
