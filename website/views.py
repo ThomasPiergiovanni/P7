@@ -5,7 +5,6 @@ from grandpy.apiclients.place import Place
 from grandpy.apiclients.mediawiki import MediaWiki
 from grandpy.parser.parser import Parser
 from website import app 
-# from website.form import Form
 
 
 @app.route('/', methods=['GET', 'POST']) 
@@ -27,9 +26,11 @@ def create_entry():
     mediawiki = MediaWiki(place.name)
     mediawiki.get_mediawiki()
     mediawiki.set_attribute()
-    gmap = Gmap()
-    gmap.set_place_location(place.place_id)
-
+    if place.status:
+        gmap = Gmap()
+        gmap.set_place_location(place.place_id)
+    else:
+        gmap = Gmap()
     answer = {
         "parser_status" : parser.status,
         "parsed_string" : parser.parsed_string,

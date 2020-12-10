@@ -169,7 +169,6 @@ formElement.askButton.addEventListener('click', function(event) {
             formElement.chat.prepend(grandPyHtml.divGrandPy);
             formElement.chat.prepend(userHtml.divUser);
             formElement.grandpyMap.src = data.map;
-
         });
     })
 
