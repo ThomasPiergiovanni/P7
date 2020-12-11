@@ -2,6 +2,34 @@
 """Program configuration file
 """
 
+# DESCRIPTION: Google Map parameters used to define the default
+# map view.
+# MANDATORY: Yes.
+# DEFAULT SETTINGS: "France"
+# CUSTOM SETTINGS: Can be modified at will. Make sure to update
+# accordingly the LOCATION_BIAS variable as well. For more information,
+# please check "https://developers.google.com/maps/documentation/
+# embed/get-started".
+COUNTRY = "France"
+
+# DESCRIPTION: List of words of important usage. Used
+# to analyze which words are imortant for question parsing.
+# MANDATORY: Yes.
+# DEFAULT SETTINGS: ["adresse", "trouve"]
+# CUSTOM SETTINGS: Modifying this list is not required unless you see that
+# other words should be added to improve parsing analysis.
+KEYWORDS = ["adresse", "trouve"]
+
+# DESCRIPTION: Google Map parameters used to define the bounding box
+# for places finding. Represent the bouding box south west and north east
+# corners. In the deafault case, the bouding box covers all France
+# (metropole).
+# MANDATORY: Yes.
+# DEFAULT SETTINGS: "rectangle:42.224,-4.727|51.4796,8.3926"
+# CUSTOM SETTINGS: Can be modified at will. Make sure it to update
+# accordingly the COUNTRY variable as well.
+LOCATION_BIAS = "rectangle:42.224,-4.727|51.4796,8.3926"
+
 # DESCRIPTION: List of words of common usage. Used
 # to analyze which words are imortant or not
 # for question parsing.
@@ -101,7 +129,3 @@ STOPWORDS = [
         "vous", "vous-mêmes", "vu", "vé", "vôtre", "vôtres", "w", "x", "y",
         "z", "zut", "à", "â", "ça", "ès", "étaient", "étais", "était",
         "étant", "été", "être", "ô"]
-
-KEYWORDS = [
-        "adresse", "trouve"]
-LOCATION_BIAS = "rectangle:42.224,-4.727|51.4796,8.3926"
