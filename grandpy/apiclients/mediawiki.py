@@ -12,9 +12,9 @@ class MediaWiki:
                 "action": "query",
                 "format": "json",
                 "prop": "extracts",
-                "exintro" :0,
-                "explaintext" :0 ,
-                "redirects" : 1,
+                "exintro": 0,
+                "explaintext": 0,
+                "redirects": 1,
                 "titles": parsed_string
                 }
         self.response = None
@@ -26,18 +26,16 @@ class MediaWiki:
         a response object back.
         """
         try:
-            response_api = requests.get(self.endpoint, params = \
-                    self.parameters)
+            response_api = requests.get(self.endpoint, params=self.parameters)
             self.response = response_api.json()
-
         except requests.ConnectionError:
             print(
-                "Un problème de connection est apparu. Ré-essaayez plus"
-                " tard ou contacter le propriétaire de l'application")
+                    "Un problème de connection est apparu. Ré-essaayez plus"
+                    " tard ou contacter le propriétaire de l'application")
         except requests.Timeout:
             print(
-                "Un problème de connection est apparu. Ré-essaayez plus"
-                " tard ou contacter le propriétaire de l'application")
+                    "Un problème de connection est apparu. Ré-essaayez plus"
+                    " tard ou contacter le propriétaire de l'application")
 
     def set_attribute(self):
         """Method that sets attributes values with informations
@@ -46,7 +44,7 @@ class MediaWiki:
         try:
             for key in self.response["query"]["pages"].keys():
                 self.status = True
-                self.information = self.response["query"]["pages"]\
-                        [key]["extract"]
+                self.information = (
+                        self.response["query"]["pages"][key]["extract"])
         except KeyError:
             self.status = False
