@@ -11,6 +11,7 @@ from website import app
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     gmap = Gmap()
+    gmap.set_default_location()
     return render_template('index.html', gmap=gmap)
 
 @app.route('/index/create-entry', methods=['POST'])
@@ -30,6 +31,7 @@ def create_entry():
         gmap.set_place_location(place.place_id)
     else:
         gmap = Gmap()
+        gmap.set_default_location()
     answer = {
         "parser_status" : parser.status,
         "parsed_string" : parser.parsed_string,

@@ -1,24 +1,15 @@
 #  venv repo
 env/
 
-#other unwanted file
-main.py
-
-
 # file containing private settings
 configuration/env.py
 
-#  repo conatining various uneliverable files
-99_other/
-
 #  pychache repos
 __pycache__/
-configuration/__pycache__/
-controllers/__pycache__/
-models/__pycache__/
-models/mapper/__pycache__/
-views/__pycache__/
 
-GrandPyBot.sublime-project
-GrandPyBot.sublime-workspace
+# Repo containing various undeliverable files
+99_other/
+
+# Other unwanted file. to remove at the end
+main.py
 

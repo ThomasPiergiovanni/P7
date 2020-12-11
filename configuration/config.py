@@ -1,5 +1,5 @@
 # -*-coding:utf-8 -*
-"""Program configuration file
+"""Program configuration module
 """
 
 # DESCRIPTION: Google Map parameters used to define the default
@@ -38,7 +38,6 @@ LOCATION_BIAS = "rectangle:42.224,-4.727|51.4796,8.3926"
 # "https://github.com/6/stopwords-json/blob/master/dist/fr.json".
 # CUSTOM SETTINGS: Modifying this list is not required unless you forseas that
 # some other words should be added to improve parsing analysis.
-
 STOPWORDS = [
         "a", "abord", "absolument", "afin", "ah", "ai", "aie",
         "ailleurs", "ainsi", "ait", "allaient", "allo", "allons", "allô",
