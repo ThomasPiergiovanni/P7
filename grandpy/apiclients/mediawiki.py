@@ -39,7 +39,7 @@ class MediaWiki:
 
     def set_attribute(self):
         """Method that sets attributes values with informations
-        from the api   commresponse.
+        from the api response.
         """
         try:
             for key in self.response["query"]["pages"].keys():
