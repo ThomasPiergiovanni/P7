@@ -41,12 +41,12 @@ class MediaWiki:
 
     def set_attribute(self):
         """Method that sets attributes values with informations
-        from the api response.
+        from the api   commresponse.
         """
         try:
             for key in self.response["query"]["pages"].keys():
                 self.status = True
                 self.information = self.response["query"]["pages"]\
                         [key]["extract"]
-        except KeyError as error:
+        except KeyError:
             self.status = False
