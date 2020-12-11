@@ -9,14 +9,13 @@ class Place:
     """
     """
     def __init__(self, parsed_string):
-        self.env = Env()
         self.endpoint = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?"
         self.parameters = {
                 "input" : parsed_string,
                 "inputtype" : "textquery",
                 "fields": "place_id,name,formatted_address",
                 "locationbias": "rectangle:48.7731,2.3056|48.7918,2.3307", #Config.LOCATION_BIAS,
-                "key" : self.env.GG_API_KEY
+                "key" : Env.GG_API_KEY
                 }
         self.place_api_answer = None
         self.status = False
