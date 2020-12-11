@@ -1,12 +1,12 @@
 import requests
 
-from configuration.config import Config
+from configuration.env import Env
 
 class MediaWiki:
     """
     """
     def __init__(self, parsed_string):
-        self.config = Config()
+        self.env = Env()
         self.endpoint = "https://fr.wikipedia.org/w/api.php"
         self.parameters = {
                 "action": "query",

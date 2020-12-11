@@ -6,7 +6,7 @@ main.py
 
 
 # file containing private settings
-configuration/config.py
+configuration/env.py
 
 #  repo conatining various uneliverable files
 99_other/

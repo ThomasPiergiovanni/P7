@@ -1,10 +1,10 @@
 from flask import Flask
-from configuration.config import Config
+from configuration.env import Env
 
 app = Flask(__name__)
 # Crée une instance de la classe Flask.
 
-app.config.from_object(Config)
+app.config.from_object(Env)
 # Je defini mon attribut config grace a lacd ap methode from object.
 # qui va recupérer la classe de configuration Config
 

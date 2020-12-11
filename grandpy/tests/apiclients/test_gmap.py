@@ -1,6 +1,6 @@
 """Test mediawiki module
 """
-from configuration.config import Config
+from configuration.env import Env
 from grandpy.apiclients.gmap import Gmap
 
 
@@ -14,4 +14,4 @@ class TestGmap:
         gmap = Gmap()
         gmap.set_place_location(place_id)
         assert gmap.url == "https://www.google.com/maps/embed/v1/place?key=" +\
-                Config.GG_API_KEY + "&q=place_id:" + place_id
+                Env.GG_API_KEY + "&q=place_id:" + place_id
