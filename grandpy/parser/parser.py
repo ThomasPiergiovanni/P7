@@ -150,19 +150,23 @@ class Parser:
             if word.index >= self.start_index and\
                     continue_analysis: 
                 if word.enum == "1" and \
-                        word.plus_one_enum== "0" and\
-                        word.plus_two_enum == "0":
+                        word.plus_one_enum == None and\
+                        word.plus_two_enum == None:
                     self.end_index = word.index
+                    print("here")
                     continue_analysis = False
                 elif word.enum == "1" and \
                         word.plus_one_enum == "0" and\
                         word.plus_two_enum == None:
                     self.end_index = word.index
+                    print("hare")
                     continue_analysis = False
                 elif word.enum== "1" and \
-                        word.plus_one_enum == None and\
-                        word.plus_two_enum == None:
+                        word.plus_one_enum== "0" and\
+                        word.plus_two_enum == "0":
+
                     self.end_index = word.index
+                    print("hore")
                     continue_analysis = False
 
     def generate_parsed_string(self):
@@ -183,3 +187,5 @@ class Parser:
                     counter += 1
                 else:
                     self.parsed_string += str(word)
+
+        print(self.parsed_string, self.start_index, self.end_index)
