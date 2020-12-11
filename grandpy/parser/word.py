@@ -1,10 +1,9 @@
-"""
-Word module
+"""Word module
 """
 
 
 class Word:
-    """
+    """Word class
     """
     def __init__(self):
         self.index = None
