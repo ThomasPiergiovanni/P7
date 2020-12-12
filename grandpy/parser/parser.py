@@ -19,7 +19,7 @@ class Parser:
         self.keyword_present = False
         self.start_index = 0
         self.end_index = 0
-        self.parsed_string = ""
+        self.parsed_chain = ""
         self.status = True
 
     def parse(self):
@@ -33,7 +33,7 @@ class Parser:
         self.enumerate_nexts_words()
         self.start_position()
         self.end_position()
-        self.generate_parsed_string()
+        self.generate_parsed_chain()
 
     def split_question(self):
         """Method that split the user question into individuals word
@@ -115,7 +115,7 @@ class Parser:
 
     def start_position(self):
         """Method that define which word is the starting word in the list for
-        creating the parsed string i.e. the word(s) chain to send to the
+        creating the parsed chain i.e. the word(s) chain to send to the
         different APIs.
         """
         for word in self.word_instances_list:
@@ -152,7 +152,7 @@ class Parser:
 
     def end_position(self):
         """Method that define which word is the ending word in the list for
-        creating the parsed string i.e. the word(s) chain to send to the
+        creating the parsed chain i.e. the word(s) chain to send to the
         Google Place API
         """
         continue_analysis = True
@@ -175,7 +175,7 @@ class Parser:
                     self.end_index = word.index
                     continue_analysis = False
 
-    def generate_parsed_string(self):
+    def generate_parsed_chain(self):
         """ Method that create the word chain to send to the Google
         Place API.
         """
@@ -189,8 +189,8 @@ class Parser:
             counter = 1
             for word in parsed_list:
                 if counter < len(parsed_list):
-                    self.parsed_string += str(word)
-                    self.parsed_string += str(" ")
+                    self.parsed_chain += str(word)
+                    self.parsed_chain += str(" ")
                     counter += 1
                 else:
-                    self.parsed_string += str(word)
+                    self.parsed_chain += str(word)

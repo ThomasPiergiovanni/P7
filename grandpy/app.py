@@ -1,4 +1,3 @@
-"""
-Main module
+"""Main module
 """
 from website import app

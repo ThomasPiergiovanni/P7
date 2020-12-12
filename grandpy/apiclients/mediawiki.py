@@ -6,7 +6,7 @@ import requests
 class MediaWiki:
     """ MediaWiki class
     """
-    def __init__(self, parsed_string):
+    def __init__(self, parsed_chain):
         self.endpoint = "https://fr.wikipedia.org/w/api.php"
         self.parameters = {
                 "action": "query",
@@ -15,7 +15,7 @@ class MediaWiki:
                 "exintro": 0,
                 "explaintext": 0,
                 "redirects": 1,
-                "titles": parsed_string
+                "titles": parsed_chain
                 }
         self.response = None
         self.information = None

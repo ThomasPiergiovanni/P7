@@ -9,12 +9,12 @@ from configuration.env import Env
 class Place:
     """ Place class
     """
-    def __init__(self, parsed_string):
+    def __init__(self, parsed_chain):
         self.endpoint = (
                 "https://maps.googleapis.com/maps/api/place/"
                 "findplacefromtext/json?")
         self.parameters = {
-                "input": parsed_string,
+                "input": parsed_chain,
                 "inputtype": "textquery",
                 "fields": "place_id,name,formatted_address",
                 "locationbias": LOCATION_BIAS,
