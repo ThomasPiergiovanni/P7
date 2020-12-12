@@ -37,13 +37,14 @@ def test_get_mediawiki_with_an_existing_place(monkeypatch):
             """
             self.response = response_ok
             return self.response
+
     monkeypatch.setattr("requests.get", MockResponse)
     mediawiki = MediaWiki(place_ok)
     mediawiki.get_mediawiki()
     assert mediawiki.response == response_ok
 
 
-def test_get_mediawiki_with_a_not_valid_place(monkeypatch):
+def test_get_mediawiki_with_an_unexisting_place(monkeypatch):
     """Function that test get_mediawiki method by providing a not
     valid place.
     """
@@ -71,15 +72,16 @@ def test_get_mediawiki_with_a_not_valid_place(monkeypatch):
             """
             self.response = response_nok
             return self.response
+
     monkeypatch.setattr("requests.get", MockResponse)
     mediawiki = MediaWiki(place_nok)
     mediawiki.get_mediawiki()
     assert mediawiki.response == response_nok
 
 
-def test_set_attribute_with_exist():
+def test_set_attribute_with_response_returning_place():
     """Function that test set_attribute method by providing a
-    valid place
+    response returning an existing object
     """
     place_ok = "Bourg-la-Reine"
     response_ok = {
@@ -109,9 +111,9 @@ def test_set_attribute_with_exist():
             " partie de la métropole du Grand Paris créée en 2016.\n\n")
 
 
-def test_set_attribute_when_does_not_exist():
-    """Method that test set_attribute method by providing a not
-    valid place
+def test_set_attribute_with_response_returning_no_place():
+    """Function that test set_attribute method by providing a
+    response returning an non existing object
     """
     place_nok = "Brg-la-Rine"
     response_nok = {
@@ -120,7 +122,7 @@ def test_set_attribute_when_does_not_exist():
                 'pages': {
                     '-1': {
                         'ns': 0,
-                        'title': 'OpenClasdsdsrooms',
+                        'title': 'Brg-la-Rine',
                         'missing': ''
                         }}}}
     mediawiki = MediaWiki(place_nok)

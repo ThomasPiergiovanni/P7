@@ -1,6 +1,7 @@
-"""
+"""Test parser module
 """
 from grandpy.parser.parser import Parser
+
 
 class TestParser:
 

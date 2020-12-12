@@ -1,75 +1,99 @@
-""" test google places module
+"""Test Place module
 """
 from grandpy.apiclients.place import Place
 
 
-class TestPlace:
+def test_get_place_with_an_existing_place(monkeypatch):
+    """Method that test get_place method by providing an existing place
+    """
+    parsed_string_ok = "Bourg-la-Reine"
+    response_ok = {
+        'candidates': [{
+            'formatted_address': '92340 Bourg-la-Reine, France',
+            'name': 'Bourg-la-Reine',
+            'place_id': 'ChIJBY5REypx5kcRgD6LaMOCCwQ'}],
+        'status': 'OK'}
 
-    def test_get_place_when_exists(self, monkeypatch):
-        t_parsed_string_ok = "Bourg-la-Reine"
-        t_response_ok = {
-            'candidates': [{
-                'formatted_address': '92340 Bourg-la-Reine, France',
-                'name': 'Bourg-la-Reine',
-                'place_id': 'ChIJBY5REypx5kcRgD6LaMOCCwQ'}],
-            'status': 'OK'}
-        class MockResponse:
-            def __init__(self, endpoint, params = None):
-                pass
+    class MockResponse:
+        """MockResponse class
+        """
+        def __init__(self, endpoint, params=None):
+            self.endpoint = endpoint
+            self.params = params
+            self.response = None
 
-            def json(self):
-                return t_response_ok
-               
-        monkeypatch.setattr("requests.get", MockResponse)
-        place = Place(t_parsed_string_ok)
-        place.get_place()
-        assert place.place_api_answer["status"] == 'OK'
+        def json(self):
+            """Method returning a json object
+            """
+            self.response = response_ok
+            return self.response
 
-    def test_get_place_when_does_not_exists(self, monkeypatch):
-        t_parsed_string_nok = "Brg-la-Rine"
-        t_response_nok = {
-                'candidates': [],
-                'status': 'ZERO_RESULTS'}
+    monkeypatch.setattr("requests.get", MockResponse)
+    place = Place(parsed_string_ok)
+    place.get_place()
+    assert place.place_api_answer["status"] == 'OK'
 
-        class MockResponse:
-            def __init__(self, endpoint, params = None):
-                pass
 
-            def json(self):
-                return t_response_nok
-               
-        monkeypatch.setattr("requests.get", MockResponse)
-        place = Place(t_parsed_string_nok)
-        place.get_place()
-        assert place.place_api_answer["status"] == 'ZERO_RESULTS'
+def test_get_place_an_unexisting_place(monkeypatch):
+    """Method that test get_place method by providing an unexisting place
+    """
+    parsed_string_nok = "Brg-la-Rine"
+    response_nok = {
+            'candidates': [],
+            'status': 'ZERO_RESULTS'}
 
-    def test_set_attribute_when_place_exist(self):
+    class MockResponse:
+        """MockResponse class
+        """
+        def __init__(self, endpoint, params=None):
+            self.endpoint = endpoint
+            self.params = params
+            self.response = None
 
-        t_parsed_string_ok = "Bourg-la-Reine"
-        t_response_ok = {
-            'candidates': [{
-                'formatted_address': '92340 Bourg-la-Reine, France',
-                'name': 'Bourg-la-Reine',
-                'place_id': 'ChIJBY5REypx5kcRgD6LaMOCCwQ'}],
-            'status': 'OK'}
-        t_place = Place(t_parsed_string_ok)
-        t_place.place_api_answer = t_response_ok
-        t_place.set_attribute()
-        assert t_place.status == True
-        assert t_place.place_id == "ChIJBY5REypx5kcRgD6LaMOCCwQ"
-        assert t_place.name == "Bourg-la-Reine"
-        assert t_place.address == "92340 Bourg-la-Reine, France"
+        def json(self):
+            """Method returning a json object
+            """
+            self.response = response_nok
+            return self.response
 
-    def test_set_attribute_when_place_doesnt_exist(self):
+    monkeypatch.setattr("requests.get", MockResponse)
+    place = Place(parsed_string_nok)
+    place.get_place()
+    assert place.place_api_answer["status"] == 'ZERO_RESULTS'
 
-        t_parsed_string_nok = "Brg-la-Rine"
-        t_response_nok = {
-                'candidates': [],
-                'status': 'ZERO_RESULTS'}
-        t_place = Place(t_parsed_string_nok)
-        t_place.place_api_answer = t_response_nok
-        t_place.set_attribute()
-        assert t_place.status == False
-        assert t_place.place_id == ""
-        assert t_place.name == ""
-        assert t_place.address == ""
+
+def test_set_attribute_with_response_returning_place():
+    """Function that test set_attribute method by providing a
+    response returning an existing object
+    """
+    parsed_string_ok = "Bourg-la-Reine"
+    response_ok = {
+        'candidates': [{
+            'formatted_address': '92340 Bourg-la-Reine, France',
+            'name': 'Bourg-la-Reine',
+            'place_id': 'ChIJBY5REypx5kcRgD6LaMOCCwQ'}],
+        'status': 'OK'}
+    place = Place(parsed_string_ok)
+    place.place_api_answer = response_ok
+    place.set_attribute()
+    assert place.status is True
+    assert place.place_id == "ChIJBY5REypx5kcRgD6LaMOCCwQ"
+    assert place.name == "Bourg-la-Reine"
+    assert place.address == "92340 Bourg-la-Reine, France"
+
+
+def test_set_attribute_with_response_returning_no_place():
+    """Function that test set_attribute method by providing a
+    response returning an unexisting object
+    """
+    parsed_string_nok = "Brg-la-Rine"
+    response_nok = {
+            'candidates': [],
+            'status': 'ZERO_RESULTS'}
+    place = Place(parsed_string_nok)
+    place.place_api_answer = response_nok
+    place.set_attribute()
+    assert place.status is False
+    assert place.place_id == ""
+    assert place.name == ""
+    assert place.address == ""
