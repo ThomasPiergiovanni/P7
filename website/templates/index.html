@@ -4,10 +4,15 @@
         <meta charset="utf-8" />
         <meta
             name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
-        />
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+        <!-- Bootstrap -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-        <link rel="icon" type="image/png" href="../static/images/robot.png" />
+
+        <!-- Perso css -->
+        <link rel="stylesheet" href="../static/css/main.css"/>
+
+        <link rel="icon" type="image/png" href="../static/images/robot.png"/>
         <title>GrandPyBot</title>   
     </head>
     <body>
@@ -15,10 +20,11 @@
             <div class="container">            
                 <div class="row pt-5 pb-2">
                     <div class="col-1 col-md-2"></div>
-                    <div class="col-10 col-md-8 text-center text-light" style="font-size:3vw;">
-                        <img src="../static/images/robot.png" height="auto" width=10% alt="robot image">
+                    <div class="col-10 col-md-8 text-center text-light my-title-text">
+                    <img src="../static/images/robot.png" class="my-title-image" alt="robot image"/>
                         Pose ta question à GrandPy!
                     </div>
+                    
                     <div class="col-1 col-md-2"></div>
                 </div>  
             </div>
@@ -27,7 +33,7 @@
             <div class="row">
                 <div class="col-1 col-md-2"></div>
                     <div class="col-10 col-md-8">
-                        <form action="" method="post" novalidate>
+                        <form action="index.html" method="post" novalidate>
                             <div class="form-group">
                                 <div class="border border-secondary mt-4 rounded">
                                     <input type="text" id="question" class="form-control font-italic" value="Ta question ici..." required>
@@ -45,7 +51,7 @@
             <div class="row align-items-center mt-3">
                 <div class="col-1 col-md-2"></div>
                 <div class="col-10 col-md-8">
-                    <ul class="col scroll border border-secondary rounded" style="min-height: 100px; max-height: 200px; overflow-y: scroll;" id="chat">
+                    <ul class="col scroll border border-secondary rounded chat-box" id="chat">
                     </ul>
                 </div>
                 <div class="col-1 col-md-2"></div>
@@ -71,7 +77,7 @@
                 <div class="row pt-3 pb-5 text-secondary">
                     <div class="col">
                         <ul class="list-inline text-center">
-                            <li class="list-inline-item">Thomas Piergiovanni</a></li>
+                            <li class="list-inline-item">Thomas Piergiovanni</li>
                             <li class="list-inline-item">&middot;</li>
                             <li class="list-inline-item"><a href="https://github.com/ThomasPiergiovanni/">GitHub</a></li>
                         </ul>
@@ -80,7 +86,6 @@
             </div>
         </div>
         <script 
-            type="text/javascript"
             src="{{ url_for('static', filename='interface.js') }}">    
         </script>
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->

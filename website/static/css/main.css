@@ -1,0 +1,16 @@
+.my-title-text
+{
+	font-size:3vw;
+}
+
+.my-title-image
+{
+	width: 10%;
+}
+
+.chat-box
+{
+	min-height: 100px;
+	max-height: 200px;
+	overflow-y: scroll
+}
