@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
         <!-- Perso css -->
-        <link rel="stylesheet" href="../static/css/main.css"/>
+        <link rel="stylesheet" href="../static/style.css"/>
 
         <link rel="icon" type="image/png" href="../static/images/robot.png"/>
         <title>GrandPyBot</title>   
@@ -64,8 +64,7 @@
                     <div class="embed-responsive embed-responsive-4by3">
                         <iframe
                             class="embed-responsive-item border border-secondary" 
-                            id="grandpy_map"
-                            src={{ gmap.url }} allowfullscreen>
+                            id="grandpy_map" allowfullscreen>
                         </iframe>
                     </div>
                 </div>
@@ -86,7 +85,7 @@
             </div>
         </div>
         <script 
-            src="{{ url_for('static', filename='interface.js') }}">    
+            src="../static/interface.js">
         </script>
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

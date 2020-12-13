@@ -100,6 +100,22 @@ class GrandPyHtmlElement{
 
 let formElement = new FormElement();
 
+fetch(`${window.origin}/index/get-url`, {
+    method: "GET"
+})
+.then(function(response) {
+    if (response.status !== 200) {
+        console.log(`Looks like there was a problem. Status code: ${response.status}`);
+        return;
+    }
+    response.json().then(function(data) {
+        formElement.grandpyMap.setAttribute("src", data.url);
+    });
+})
+.catch(function(error) {
+    console.log("Fetch error: " + error);
+});
+
 formElement.inputQuestion.addEventListener("click", function(event) {
     event.preventDefault();
     formElement.inputQuestion.value = null;
@@ -168,7 +184,7 @@ formElement.askButton.addEventListener('click', function(event) {
             grandPyHtml.buildHtml();
             formElement.chat.prepend(grandPyHtml.divGrandPy);
             formElement.chat.prepend(userHtml.divUser);
-            formElement.grandpyMap.src = data.map;
+            formElement.grandpyMap.setAttribute("src", data.url);
         });
     })
 

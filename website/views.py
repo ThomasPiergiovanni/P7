@@ -14,9 +14,17 @@ from website import app
 def index():
     """Index view
     """
+    return render_template('index.html')
+
+@app.route('/index/get-url', methods=['GET'])
+def get_url():
     gmap = Gmap()
     gmap.set_default_location()
-    return render_template('index.html', gmap=gmap)
+    answer = {
+        "url": gmap.url
+    }
+    response = make_response(jsonify(answer), 200)
+    return response
 
 
 @app.route('/index/create-entry', methods=['POST'])
@@ -46,7 +54,7 @@ def create_entry():
         "address": place.address,
         "information_status": mediawiki.status,
         "information": mediawiki.information,
-        "map": gmap.url
+        "url": gmap.url
     }
     response = make_response(jsonify(answer), 200)
     return response
