@@ -1,3 +1,4 @@
+// FormElement class.
 class FormElement{
     constructor(){
         this.askButton = document.getElementById("ask_button");
@@ -7,6 +8,9 @@ class FormElement{
     }
 };
 
+
+// UserHtmlElement class. Class used for creating DOM objects for user
+// questions.
 class UserHtmlElement{
     constructor(){
         this.divUser = document.createElement("div");
@@ -19,6 +23,7 @@ class UserHtmlElement{
         this.spanQuestion = document.createElement("span");
     };
 
+    // Method that set attribute and attribute values.
     defineAttribute() {
         this.divUser.setAttribute("class", "mb-2");
         this.divUserRow.setAttribute("class", "row");
@@ -33,6 +38,7 @@ class UserHtmlElement{
         this.spanQuestion.setAttribute("class", "text-align-justify");
     }
 
+    // Method that set build the DOM.
     buildHtml(){
         this.divUser.append(this.divUserRow);
         this.divUserRow.append(this.divUserCol);
@@ -45,6 +51,9 @@ class UserHtmlElement{
 
 };
 
+
+// GrandpyHtmlElement class. Class used for creating DOM objects for grandpy
+// answers.
 class GrandPyHtmlElement{
     constructor(){
         this.divGrandPy = document.createElement("div");
@@ -62,6 +71,7 @@ class GrandPyHtmlElement{
         this.spanGrandpyWiki = document.createElement("span");
     };
 
+    // Method that set attribute and attribute values.
     defineAttribute(addressPrefix, addressData, wikiPrefix, wikiData) {
         this.divGrandPy.setAttribute("class", "mb-4");
         this.divGrandPyRow.setAttribute("class", "row");
@@ -82,6 +92,7 @@ class GrandPyHtmlElement{
         this.spanGrandpyWiki.setAttribute("class", "font-italic text-align-justify");
     }
 
+    // Method that set build the DOM.
     buildHtml(){
         this.divGrandPy.append(this.divGrandPyRow);
         this.divGrandPyRow.append(this.divGrandPyCol1);
@@ -98,8 +109,12 @@ class GrandPyHtmlElement{
     }
 };
 
+
 let formElement = new FormElement();
 
+
+// Function sending a request to application for getting map default url
+// on page load.
 fetch(`${window.origin}/index/get-url`, {
     method: "GET"
 })
@@ -116,11 +131,16 @@ fetch(`${window.origin}/index/get-url`, {
     console.log("Fetch error: " + error);
 });
 
+
+// Function that set form input text box value to null when user click on it.
 formElement.inputQuestion.addEventListener("click", function(event) {
     event.preventDefault();
     formElement.inputQuestion.value = null;
 });
 
+
+// Function that set that when user type the "Enter" key, the form button will
+// behave as user click on it.
 formElement.inputQuestion.addEventListener("keydown", function(event) {
     if (event.keyCode == 13) {
         event.preventDefault();
@@ -128,6 +148,9 @@ formElement.inputQuestion.addEventListener("keydown", function(event) {
     }
 });    
 
+
+// Function sending a request to application for posting user input question
+// to the app and getting the app response
 formElement.askButton.addEventListener('click', function(event) { 
     event.preventDefault();
     let entry = { 

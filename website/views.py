@@ -12,12 +12,15 @@ from website import app
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
-    """Index view
+    """Route of index page i.e. the main page.
     """
     return render_template('index.html')
 
+
 @app.route('/index/get-url', methods=['GET'])
 def get_url():
+    """Route when arriving on index page. It get map url back.
+    """
     gmap = Gmap()
     gmap.set_default_location()
     answer = {
@@ -29,7 +32,8 @@ def get_url():
 
 @app.route('/index/create-entry', methods=['POST'])
 def create_entry():
-    """View when question is submitted
+    """Route when question is submitted. It gets Google Place and Map API and
+    WikiMedia informations back.
     """
     demand = request.get_json()
     parser = Parser()
