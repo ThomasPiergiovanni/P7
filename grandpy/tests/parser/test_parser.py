@@ -145,12 +145,13 @@ class EmulateWord:
     def __init__(self):
         self.index = None
         self.name = None
-        self.min_two_enum = None
-        self.min_one_enum = None
-        self.enum = None
-        self.plus_one_enum = None
-        self.plus_two_enum = None
-        self.plus_three_enum = None
+        self.enum = {
+                "min_two": None,
+                "min_one": None,
+                "self": None,
+                "plus_one": None,
+                "plus_two": None,
+                "plus_three": None}
 
 
 def emulate_words_list(question_tuple):
@@ -182,7 +183,7 @@ def emulate_enumerate_word(question_tuple):
         emulate_word = EmulateWord()
         emulate_word.index = element[0]
         emulate_word.name = element[1]
-        emulate_word.enum = element[4]
+        emulate_word.enum["self"] = element[4]
         word_instances_list.append(emulate_word)
     return word_instances_list
 
@@ -195,12 +196,12 @@ def emulate_enumerate_nexts_words(question_tuple):
         emulate_word = EmulateWord()
         emulate_word.index = element[0]
         emulate_word.name = element[1]
-        emulate_word.min_two_enum = element[2]
-        emulate_word.min_one_enum = element[3]
-        emulate_word.enum = element[4]
-        emulate_word.plus_one_enum = element[5]
-        emulate_word.plus_two_enum = element[6]
-        emulate_word.plus_three_enum = element[7]
+        emulate_word.enum["min_two"] = element[2]
+        emulate_word.enum["min_one"] = element[3]
+        emulate_word.enum["self"] = element[4]
+        emulate_word.enum["plus_one"] = element[5]
+        emulate_word.enum["plus_two"] = element[6]
+        emulate_word.enum["plus_three"] = element[7]
         word_list.append(emulate_word)
     return word_list
 
@@ -272,11 +273,11 @@ def test_enumerate_word_with_providing_word_instances(
         counter = 0
         for word in parser.word_instances_list:
             if word.index == counter:
-                assert word.enum == tuple_list[counter][4]
+                assert word.enum["self"] == tuple_list[counter][4]
             elif word.index == 3:
-                assert word.enum == tuple_list[counter][4]
+                assert word.enum["self"] == tuple_list[counter][4]
             elif word.index == 5:
-                assert word.enum == tuple_list[counter][4]
+                assert word.enum["self"] == tuple_list[counter][4]
             counter += 1
 
     # Test with one question
@@ -304,23 +305,23 @@ def test_enumerate_nexts_words_with_providing_word_instances(
         """
         for word in parser.word_instances_list:
             if word.index == 0:
-                assert word.min_two_enum == tuple_list[0][2]
-                assert word.min_one_enum == tuple_list[0][3]
-                assert word.plus_one_enum == tuple_list[0][5]
-                assert word.plus_two_enum == tuple_list[0][6]
-                assert word.plus_three_enum == tuple_list[0][7]
+                assert word.enum["min_two"] == tuple_list[0][2]
+                assert word.enum["min_one"] == tuple_list[0][3]
+                assert word.enum["plus_one"] == tuple_list[0][5]
+                assert word.enum["plus_two"] == tuple_list[0][6]
+                assert word.enum["plus_three"] == tuple_list[0][7]
             elif word.index == 3:
-                assert word.min_two_enum == tuple_list[3][2]
-                assert word.min_one_enum == tuple_list[3][3]
-                assert word.plus_one_enum == tuple_list[3][5]
-                assert word.plus_two_enum == tuple_list[3][6]
-                assert word.plus_three_enum == tuple_list[3][7]
+                assert word.enum["min_two"] == tuple_list[3][2]
+                assert word.enum["min_one"] == tuple_list[3][3]
+                assert word.enum["plus_one"] == tuple_list[3][5]
+                assert word.enum["plus_two"] == tuple_list[3][6]
+                assert word.enum["plus_three"] == tuple_list[3][7]
             elif word.index == 5:
-                assert word.min_two_enum == tuple_list[5][2]
-                assert word.min_one_enum == tuple_list[5][3]
-                assert word.plus_one_enum == tuple_list[5][5]
-                assert word.plus_two_enum == tuple_list[5][6]
-                assert word.plus_three_enum == tuple_list[5][7]
+                assert word.enum["min_two"] == tuple_list[5][2]
+                assert word.enum["min_one"] == tuple_list[5][3]
+                assert word.enum["plus_one"] == tuple_list[5][5]
+                assert word.enum["plus_two"] == tuple_list[5][6]
+                assert word.enum["plus_three"] == tuple_list[5][7]
 
     # Test with one question
     parser = Parser()

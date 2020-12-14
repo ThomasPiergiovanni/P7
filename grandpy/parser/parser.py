@@ -69,13 +69,13 @@ class Parser:
         word list i.e. it codes a word into a numeric value.
         """
         for word in self.word_instances_list:
-            word.enum = "1"
+            word.enum["self"] = "1"
             for stop_word in self.stop_words_list:
                 if word.name == stop_word:
-                    word.enum = "0"
+                    word.enum["self"] = "0"
             for key_word in self.key_words_list:
                 if word.name == key_word:
-                    word.enum = "2"
+                    word.enum["self"] = "2"
 
     def enumerate_nexts_words(self):
         """Method that, for a given word, gets the words enumerations values
@@ -87,28 +87,28 @@ class Parser:
             counter = 1
             if word.index != 0:
                 enum_value = [
-                        next_word.enum for next_word in
+                        next_word.enum["self"] for next_word in
                         self.word_instances_list if word.index - 1 ==
                         next_word.index]
-                word.min_one_enum = enum_value[0]
+                word.enum["min_one"] = enum_value[0]
             if word.index != 0 and word.index != 1:
                 enum_value = [
-                        next_word.enum for next_word in
+                        next_word.enum["self"] for next_word in
                         self.word_instances_list if word.index - 2 ==
                         next_word.index]
-                word.min_two_enum = enum_value[0]
+                word.enum["min_two"] = enum_value[0]
             if counter <= list_len - 1:
                 for word_plus_one in self.word_instances_list:
                     if word_plus_one.index == word.index + 1:
-                        word.plus_one_enum = word_plus_one.enum
+                        word.enum["plus_one"] = word_plus_one.enum["self"]
             if counter <= list_len - 2:
                 for word_plus_two in self.word_instances_list:
                     if word_plus_two.index == word.index + 2:
-                        word.plus_two_enum = word_plus_two.enum
+                        word.enum["plus_two"] = word_plus_two.enum["self"]
             if counter <= list_len - 3:
                 for word_plus_three in self.word_instances_list:
                     if word_plus_three.index == word.index + 3:
-                        word.plus_three_enum = word_plus_three.enum
+                        word.enum["plus_three"] = word_plus_three.enum["self"]
 
     def start_position(self):
         """Method that define which word is the starting word in the list for
@@ -117,34 +117,34 @@ class Parser:
         """
         keyword_present = False
         for word in self.word_instances_list:
-            if word.enum == "2":
+            if word.enum["self"] == "2":
                 keyword_present = True
         starts_analysis = False
         for word in self.word_instances_list:
             if keyword_present:
-                if word.enum == "2":
+                if word.enum["self"] == "2":
                     starts_analysis = True
-                if starts_analysis and word.enum == "1":
+                if starts_analysis and word.enum["self"] == "1":
                     self.boundaries_index["start"] = word.index
                     starts_analysis = False
             else:
                 if (
-                            word.enum == "1" and
-                            word.plus_one_enum is not None and
-                            word.plus_two_enum is not None and
-                            word.plus_three_enum is None):
+                            word.enum["self"] == "1" and
+                            word.enum["plus_one"] is not None and
+                            word.enum["plus_two"] is not None and
+                            word.enum["plus_three"] is None):
                     self.boundaries_index["start"] = word.index
                 elif (
-                            word.enum == "1" and
-                            word.min_one_enum != "1" and
-                            word.plus_one_enum is not None and
-                            word.plus_two_enum is None):
+                            word.enum["self"] == "1" and
+                            word.enum["min_one"] != "1" and
+                            word.enum["plus_one"] is not None and
+                            word.enum["plus_two"] is None):
                     self.boundaries_index["start"] = word.index
                 elif (
-                            word.enum == "1" and
-                            word.min_two_enum != "1" and
-                            word.min_one_enum != "1" and
-                            word.plus_one_enum is None):
+                            word.enum["self"] == "1" and
+                            word.enum["min_two"] != "1" and
+                            word.enum["min_one"] != "1" and
+                            word.enum["plus_one"] is None):
                     self.boundaries_index["start"] = word.index
 
     def end_position(self):
@@ -157,21 +157,21 @@ class Parser:
             if word.index >= self.boundaries_index["start"] and\
                     continue_analysis:
                 if (
-                        word.enum == "1" and
-                        word.plus_one_enum is None and
-                        word.plus_two_enum is None):
+                        word.enum["self"] == "1" and
+                        word.enum["plus_one"] is None and
+                        word.enum["plus_two"] is None):
                     self.boundaries_index["end"] = word.index
                     continue_analysis = False
                 elif (
-                        word.enum == "1" and
-                        word.plus_one_enum == "0" and
-                        word.plus_two_enum is None):
+                        word.enum["self"] == "1" and
+                        word.enum["plus_one"] == "0" and
+                        word.enum["plus_two"] is None):
                     self.boundaries_index["end"] = word.index
                     continue_analysis = False
                 elif (
-                        word.enum == "1" and
-                        word.plus_one_enum == "0" and
-                        word.plus_two_enum == "0"):
+                        word.enum["self"] == "1" and
+                        word.enum["plus_one"] == "0" and
+                        word.enum["plus_two"] == "0"):
                     self.boundaries_index["end"] = word.index
                     continue_analysis = False
 
