@@ -139,8 +139,8 @@ def fixture_question_four():
     return tuple_four
 
 
-class MockWord:
-    """MockQuestion class
+class EmulateWord:
+    """EmulateWord class
     """
     def __init__(self):
         self.index = None
@@ -153,8 +153,8 @@ class MockWord:
         self.plus_three_enum = None
 
 
-def mock_words_list(question_tuple):
-    """Function that mocks words list
+def emulate_words_list(question_tuple):
+    """Function that emulate words list
     """
     words_list = []
     for element in question_tuple:
@@ -162,50 +162,50 @@ def mock_words_list(question_tuple):
     return words_list
 
 
-def mock_word_instances_list(question_tuple):
-    """Function that mocks word instances list
+def emulate_word_instances_list(question_tuple):
+    """Function that emulate word instances list
     """
     word_instances_list = []
     for element in question_tuple:
-        mock_word = MockWord()
-        mock_word.index = element[0]
-        mock_word.name = element[1]
-        word_instances_list.append(mock_word)
+        emulate_word = EmulateWord()
+        emulate_word.index = element[0]
+        emulate_word.name = element[1]
+        word_instances_list.append(emulate_word)
     return word_instances_list
 
 
-def mock_enumerate_word(question_tuple):
-    """Function that mocks word enumeration
+def emulate_enumerate_word(question_tuple):
+    """Function that emulate word enumeration
     """
     word_instances_list = []
     for element in question_tuple:
-        mock_word = MockWord()
-        mock_word.index = element[0]
-        mock_word.name = element[1]
-        mock_word.enum = element[4]
-        word_instances_list.append(mock_word)
+        emulate_word = EmulateWord()
+        emulate_word.index = element[0]
+        emulate_word.name = element[1]
+        emulate_word.enum = element[4]
+        word_instances_list.append(emulate_word)
     return word_instances_list
 
 
-def mock_enumerate_nexts_words(question_tuple):
-    """Function that mocks next word enumeration
+def emulate_enumerate_nexts_words(question_tuple):
+    """Function that emulate next word enumeration
     """
     word_list = []
     for element in question_tuple:
-        mock_word = MockWord()
-        mock_word.index = element[0]
-        mock_word.name = element[1]
-        mock_word.min_two_enum = element[2]
-        mock_word.min_one_enum = element[3]
-        mock_word.enum = element[4]
-        mock_word.plus_one_enum = element[5]
-        mock_word.plus_two_enum = element[6]
-        mock_word.plus_three_enum = element[7]
-        word_list.append(mock_word)
+        emulate_word = EmulateWord()
+        emulate_word.index = element[0]
+        emulate_word.name = element[1]
+        emulate_word.min_two_enum = element[2]
+        emulate_word.min_one_enum = element[3]
+        emulate_word.enum = element[4]
+        emulate_word.plus_one_enum = element[5]
+        emulate_word.plus_two_enum = element[6]
+        emulate_word.plus_three_enum = element[7]
+        word_list.append(emulate_word)
     return word_list
 
 
-def test_split_question_with_providing_questions(
+def test_normalize_question_with_providing_questions(
         questions_list, split_list):
     """Function that test split question method with providing a list of
     questions for seeing if the split is done as expected
@@ -214,8 +214,8 @@ def test_split_question_with_providing_questions(
     for question in questions_list:
         parser = Parser()
         parser.question = question
-        parser.split_question()
-        assert parser.words_list == split_list[counter]
+        parser.normalize_question()
+        assert parser.question == split_list[counter]
         counter += 1
 
 
@@ -226,14 +226,14 @@ def test_lower_lists_with_providing_list(split_list, lowered_list):
     counter = 0
     for word_list in split_list:
         parser = Parser()
-        parser.words_list = word_list
+        parser.question = word_list
         parser.lower_lists()
-        assert parser.words_list == lowered_list[counter]
+        assert parser.question == lowered_list[counter]
         counter += 1
 
 
 def test_create_word_with_providing_list_of_words_for_word_instanciation(
-            question_one, question_two):
+        question_one, question_two):
     """Function that test create word method with providing words list for
     seeing if the words are created as Word instances as expected.
     """
@@ -249,19 +249,19 @@ def test_create_word_with_providing_list_of_words_for_word_instanciation(
 
     # Test with one question
     parser = Parser()
-    parser.words_list = mock_words_list(question_one)
+    parser.words_list = emulate_words_list(question_one)
     parser.create_word()
     verifications(question_one)
 
     # The same test but with another question
     parser = Parser()
-    parser.words_list = mock_words_list(question_two)
+    parser.words_list = emulate_words_list(question_two)
     parser.create_word()
     verifications(question_two)
 
 
 def test_enumerate_word_with_providing_word_instances(
-            question_one, question_two):
+        question_one, question_two):
     """Function that test enumerate word method with providing Word instances
     for seeing if the words are enumerated as expected.
     """
@@ -281,19 +281,19 @@ def test_enumerate_word_with_providing_word_instances(
 
     # Test with one question
     parser = Parser()
-    parser.word_instances_list = mock_word_instances_list(question_one)
+    parser.word_instances_list = emulate_word_instances_list(question_one)
     parser.enumerate_word()
     verifications(question_one)
 
     # The same test but with another question
     parser = Parser()
-    parser.word_instances_list = mock_word_instances_list(question_two)
+    parser.word_instances_list = emulate_word_instances_list(question_two)
     parser.enumerate_word()
     verifications(question_two)
 
 
 def test_enumerate_nexts_words_with_providing_word_instances(
-            question_one, question_two):
+        question_one, question_two):
     """Function that test enumerate nexts words method with providing
     Word instances for seeing if the words nexts words are enumerated as
     expected.
@@ -324,19 +324,19 @@ def test_enumerate_nexts_words_with_providing_word_instances(
 
     # Test with one question
     parser = Parser()
-    parser.word_instances_list = mock_enumerate_word(question_one)
+    parser.word_instances_list = emulate_enumerate_word(question_one)
     parser.enumerate_nexts_words()
     verifications(question_one)
 
     # The same test but with another question
     parser = Parser()
-    parser.word_instances_list = mock_enumerate_word(question_two)
+    parser.word_instances_list = emulate_enumerate_word(question_two)
     parser.enumerate_nexts_words()
     verifications(question_two)
 
 
 def test_start_position_with_providing_word_instances(
-            question_one, question_two, question_three, question_four):
+        question_one, question_two, question_three, question_four):
     """Function that test start position method with providing
     Word instances for seeing if the the start position of the wanted parsed
     question is set to the expected  word.
@@ -344,27 +344,27 @@ def test_start_position_with_providing_word_instances(
 
     # Test with one question
     parser = Parser()
-    parser.word_instances_list = mock_enumerate_word(question_one)
+    parser.word_instances_list = emulate_enumerate_word(question_one)
     parser.start_position()
-    assert parser.start_index == question_one[4][0]
+    assert parser.boundaries_index["start"] == question_one[4][0]
 
     # The same test but with another question
     parser = Parser()
-    parser.word_instances_list = mock_enumerate_word(question_two)
+    parser.word_instances_list = emulate_enumerate_word(question_two)
     parser.start_position()
-    assert parser.start_index == question_two[5][0]
+    assert parser.boundaries_index["start"] == question_two[5][0]
 
     # The same test but with another question
     parser = Parser()
-    parser.word_instances_list = mock_enumerate_word(question_three)
+    parser.word_instances_list = emulate_enumerate_word(question_three)
     parser.start_position()
-    assert parser.start_index == question_three[7][0]
+    assert parser.boundaries_index["start"] == question_three[7][0]
 
     # The same test but with another question
     parser = Parser()
-    parser.word_instances_list = mock_enumerate_word(question_four)
+    parser.word_instances_list = emulate_enumerate_word(question_four)
     parser.start_position()
-    assert parser.start_index == question_four[3][0]
+    assert parser.boundaries_index["start"] == question_four[3][0]
 
 
 def test_end_position_with_providing_word_instances(
@@ -376,69 +376,69 @@ def test_end_position_with_providing_word_instances(
 
     # Test with one question
     parser = Parser()
-    parser.word_instances_list = mock_enumerate_nexts_words(question_one)
-    parser.start_index = question_one[4][0]
+    parser.word_instances_list = emulate_enumerate_nexts_words(question_one)
+    parser.boundaries_index["start"] = question_one[4][0]
     parser.end_position()
-    assert parser.end_index == question_one[5][0]
+    assert parser.boundaries_index["end"] == question_one[5][0]
 
     # The same test but with another question
     parser = Parser()
-    parser.word_instances_list = mock_enumerate_nexts_words(question_two)
-    parser.start_index = question_two[5][0]
+    parser.word_instances_list = emulate_enumerate_nexts_words(question_two)
+    parser.boundaries_index["start"] = question_two[5][0]
     parser.end_position()
-    assert parser.end_index == question_two[9][0]
+    assert parser.boundaries_index["end"] == question_two[9][0]
 
     # The same test but with another question
     parser = Parser()
-    parser.word_instances_list = mock_enumerate_nexts_words(question_three)
-    parser.start_index = question_three[7][0]
+    parser.word_instances_list = emulate_enumerate_nexts_words(question_three)
+    parser.boundaries_index["start"] = question_three[7][0]
     parser.end_position()
-    assert parser.end_index == question_three[7][0]
+    assert parser.boundaries_index["end"] == question_three[7][0]
 
     # The same test but with another question
     parser = Parser()
-    parser.word_instances_list = mock_enumerate_nexts_words(question_four)
-    parser.start_index = question_four[3][0]
+    parser.word_instances_list = emulate_enumerate_nexts_words(question_four)
+    parser.boundaries_index["start"] = question_four[3][0]
     parser.end_position()
-    assert parser.end_index == question_four[3][0]
+    assert parser.boundaries_index["end"] == question_four[3][0]
 
 
 def test_generate_parsed_chain_with_providing_word_instances(
-            question_one, question_two, question_three,
-            question_four, parsed_chain):
+        question_one, question_two, question_three, question_four,
+        parsed_chain):
     """Function that test generate_parsed_chain method with providing
     Word instances for seeing if the parsed chain is set as expected.
     """
 
     # Test with one question
     parser = Parser()
-    parser.word_instances_list = mock_enumerate_nexts_words(question_one)
-    parser.start_index = question_one[4][0]
-    parser.end_index = question_one[5][0]
+    parser.word_instances_list = emulate_enumerate_nexts_words(question_one)
+    parser.boundaries_index["start"] = question_one[4][0]
+    parser.boundaries_index["end"] = question_one[5][0]
     parser.generate_parsed_chain()
     assert parser.parsed_chain == parsed_chain[0][0]
 
     # The same test but with another question
     parser = Parser()
-    parser.word_instances_list = mock_enumerate_nexts_words(question_two)
-    parser.start_index = question_two[5][0]
-    parser.end_index = question_two[9][0]
+    parser.word_instances_list = emulate_enumerate_nexts_words(question_two)
+    parser.boundaries_index["start"] = question_two[5][0]
+    parser.boundaries_index["end"] = question_two[9][0]
     parser.generate_parsed_chain()
     assert parser.parsed_chain == parsed_chain[1][0]
 
     # The same test but with another question
     parser = Parser()
-    parser.word_instances_list = mock_enumerate_nexts_words(question_three)
-    parser.start_index = question_three[7][0]
-    parser.end_index = question_three[7][0]
+    parser.word_instances_list = emulate_enumerate_nexts_words(question_three)
+    parser.boundaries_index["start"] = question_three[7][0]
+    parser.boundaries_index["end"] = question_three[7][0]
     parser.generate_parsed_chain()
     assert parser.parsed_chain == parsed_chain[4][0]
     print(parser.parsed_chain)
 
     # The same test but with another question
     parser = Parser()
-    parser.word_instances_list = mock_enumerate_nexts_words(question_four)
-    parser.start_index = question_four[3][0]
-    parser.end_index = question_four[3][0]
+    parser.word_instances_list = emulate_enumerate_nexts_words(question_four)
+    parser.boundaries_index["start"] = question_four[3][0]
+    parser.boundaries_index["end"] = question_four[3][0]
     parser.generate_parsed_chain()
     assert parser.parsed_chain == parsed_chain[5][0]

@@ -13,20 +13,17 @@ class Parser:
         self.stop_words_list = STOPWORDS
         self.key_words_list = KEYWORDS
         self.question = ""
-        self.question_strip = ""
-        self.words_list = None
         self.word_instances_list = []
-        self.keyword_present = False
-        self.start_index = 0
-        self.end_index = 0
+        self.boundaries_index = {
+                "start": 0, "end": 0}
         self.parsed_chain = ""
-        self.status = True
+        self.status = False
 
     def parse(self):
         """Method that performs the entire parsin action on the user
         question.
         """
-        self.split_question()
+        self.normalize_question()
         self.lower_lists()
         self.create_word()
         self.enumerate_word()
@@ -35,22 +32,22 @@ class Parser:
         self.end_position()
         self.generate_parsed_chain()
 
-    def split_question(self):
-        """Method that split the user question into individuals word
-        and put them into a list.
+    def normalize_question(self):
+        """Method that normalize the user question and make a list of
+        word out of it.
         """
-        self.question_strip = self.question.strip(" ,.?!")
-        self.question_strip = sub("[,.?!']", " ", self.question_strip)
-        while "  " in self.question_strip:
-            self.question_strip = self.question_strip.replace("  ", " ")
-        self.words_list = split(" ", self.question_strip)
+        self.question = self.question.strip(" ,.?!")
+        self.question = sub("[,.?!']", " ", self.question)
+        while "  " in self.question:
+            self.question = self.question.replace("  ", " ")
+        self.question = split(" ", self.question)
 
     def lower_lists(self):
-        """Method normalizing (lower letters) ueser question but also the
+        """Method lowers user question but also the
         stop word and key word list.
         """
-        self.words_list = [
-                question_word.lower() for question_word in self.words_list]
+        self.question = [
+                question_word.lower() for question_word in self.question]
         self.stop_words_list = [
                 stop_word.lower() for stop_word in self.stop_words_list]
         self.key_words_list = [
@@ -60,7 +57,7 @@ class Parser:
         """Method creating Word instances and put them into a list.
         """
         counter = 0
-        for word_in_list in self.words_list:
+        for word_in_list in self.question:
             word = Word()
             word.index = counter
             word.name = word_in_list
@@ -118,37 +115,37 @@ class Parser:
         creating the parsed chain i.e. the word(s) chain to send to the
         different APIs.
         """
+        keyword_present = False
         for word in self.word_instances_list:
             if word.enum == "2":
-                self.keyword_present = True
+                keyword_present = True
         starts_analysis = False
         for word in self.word_instances_list:
-            if self.keyword_present:
+            if keyword_present:
                 if word.enum == "2":
                     starts_analysis = True
                 if starts_analysis and word.enum == "1":
-                    self.start_index = word.index
+                    self.boundaries_index["start"] = word.index
                     starts_analysis = False
             else:
-                if word.enum == "1" and\
-                        word.min_two_enum != "1" and\
-                        word.plus_one_enum is not None and\
-                        word.plus_two_enum is not None and\
-                        word.plus_three_enum is None:
-                    self.start_index = word.index
-                elif word.enum == "1" and\
-                        word.min_one_enum != "1" and\
-                        word.plus_one_enum is not None and\
-                        word.plus_two_enum is None and\
-                        word.plus_three_enum is None:
-                    self.start_index = word.index
-                elif word.enum == "1" and\
-                        word.min_two_enum != "1" and\
-                        word.min_one_enum != "1" and\
-                        word.plus_one_enum is None and\
-                        word.plus_two_enum is None and\
-                        word.plus_three_enum is None:
-                    self.start_index = word.index
+                if (
+                            word.enum == "1" and
+                            word.plus_one_enum is not None and
+                            word.plus_two_enum is not None and
+                            word.plus_three_enum is None):
+                    self.boundaries_index["start"] = word.index
+                elif (
+                            word.enum == "1" and
+                            word.min_one_enum != "1" and
+                            word.plus_one_enum is not None and
+                            word.plus_two_enum is None):
+                    self.boundaries_index["start"] = word.index
+                elif (
+                            word.enum == "1" and
+                            word.min_two_enum != "1" and
+                            word.min_one_enum != "1" and
+                            word.plus_one_enum is None):
+                    self.boundaries_index["start"] = word.index
 
     def end_position(self):
         """Method that define which word is the ending word in the list for
@@ -157,22 +154,25 @@ class Parser:
         """
         continue_analysis = True
         for word in self.word_instances_list:
-            if word.index >= self.start_index and\
+            if word.index >= self.boundaries_index["start"] and\
                     continue_analysis:
-                if word.enum == "1" and \
-                        word.plus_one_enum is None and\
-                        word.plus_two_enum is None:
-                    self.end_index = word.index
+                if (
+                        word.enum == "1" and
+                        word.plus_one_enum is None and
+                        word.plus_two_enum is None):
+                    self.boundaries_index["end"] = word.index
                     continue_analysis = False
-                elif word.enum == "1" and \
-                        word.plus_one_enum == "0" and\
-                        word.plus_two_enum is None:
-                    self.end_index = word.index
+                elif (
+                        word.enum == "1" and
+                        word.plus_one_enum == "0" and
+                        word.plus_two_enum is None):
+                    self.boundaries_index["end"] = word.index
                     continue_analysis = False
-                elif word.enum == "1" and \
-                        word.plus_one_enum == "0" and\
-                        word.plus_two_enum == "0":
-                    self.end_index = word.index
+                elif (
+                        word.enum == "1" and
+                        word.plus_one_enum == "0" and
+                        word.plus_two_enum == "0"):
+                    self.boundaries_index["end"] = word.index
                     continue_analysis = False
 
     def generate_parsed_chain(self):
@@ -181,8 +181,9 @@ class Parser:
         """
         parsed_list = []
         for word in self.word_instances_list:
-            if word.index >= self.start_index and \
-                    word.index <= self.end_index:
+            if (
+                    word.index >= self.boundaries_index["start"] and
+                    word.index <= self.boundaries_index["end"]):
                 parsed_list.append(word.name)
         if len(parsed_list) != 0:
             self.status = True
