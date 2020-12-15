@@ -1,5 +1,10 @@
+# pylint: disable=too-few-public-methods
+
+
 """Test Place module
 """
+
+
 from grandpy.apiclients.place import Place
 
 
@@ -17,7 +22,7 @@ def test_get_place_with_an_existing_place(monkeypatch):
     class MockResponse:
         """MockResponse class
         """
-        def __init__(self, endpoint, params=None):
+        def __init__(self, endpoint=None, params=None):
             self.endpoint = endpoint
             self.params = params
             self.response = None

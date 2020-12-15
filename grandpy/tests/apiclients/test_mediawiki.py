@@ -1,5 +1,10 @@
+# pylint: disable=too-few-public-methods
+
+
 """Test mediawiki module
 """
+
+
 from grandpy.apiclients.mediawiki import MediaWiki
 
 

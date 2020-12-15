@@ -1,5 +1,10 @@
+# pylint: disable=too-few-public-methods
+
+
 """Test parser module
 """
+
+
 import pytest
 
 from grandpy.parser.parser import Parser
