@@ -25,7 +25,7 @@ Download/clone this repository on your system, at the location that suits you be
 
 ### 3.2. Python 3 install.
 Make sure you have Python 3 installed.
-> python3 --version
+> python --version
 
 If not, you can download it and install it from the [python official website](https://www.python.org/). You will find the necessary documentation there.
 
