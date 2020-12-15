@@ -57,7 +57,7 @@ Please refer to [Requests certified documentation](https://requests.readthedocs.
     * SECRET_KEY = your environnement variable system secret key.
     * GG_API_KEY = your Google API key.
 
-For more information details on application settings, please check *4.1. env.py* section bellow.
+For more detailed informations on application settings, please check *4.1. env.py* section bellow.
 
 ### 3.7. Start the programm "GrandPy".
 To start the programm, type the following in your bash.
@@ -81,55 +81,52 @@ If you want to uninstall the program, simply delete the complete repository form
 Located in **configuration/** package.
 
 #### 4.1.1. SECRET_KEY.
-DESCRIPTION: Secret key required for proper Flask usage.
-MANDATORY: Yes.
-DEFAULT SETTINGS: os.environ.get("SECRET_KEY") or "you-will-never-guess"
-CUSTOM SETTINGS: You must repalce the default "you-will-never-guess"
-with a string of yours own knowledge.
+DESCRIPTION: Secret key required for proper Flask usage.  
+MANDATORY: Yes.  
+DEFAULT SETTINGS: os.environ.get("SECRET_KEY") or "you-will-never-guess".  
+CUSTOM SETTINGS: You must repalce the default "you-will-never-guess" with a string of yours own knowledge.  
 
 #### 4.1.2. GG_API_KEY.
-DESCRIPTION: Google API key required for usage of google APIs.
-MANDATORY: Yes.
-DEFAULT SETTINGS: "your-google-api-key"
-CUSTOM SETTINGS: You must replace the default key with your own google api key. Fore more informations, please check "https://developersgoogle.com/maps/gmp-get-started"
+DESCRIPTION: Google API key required for usage of google APIs.  
+MANDATORY: Yes.  
+DEFAULT SETTINGS: "your-google-api-key".  
+CUSTOM SETTINGS: You must replace the default key with your own google api key. Fore more informations, please check "https://developersgoogle.com/maps/gmp-get-started".  
 
 
 ### 4.2. config.py.
 Located in **configuration/** package.
 
 #### 4.2.1. CONNECTION_ERROR
-DESCRIPTION: Message dispalyed when connection to client API is failing.
-MANDATORY: Yes.
-DEFAULT SETTINGS: (
-               "Un problème de connection est apparu. Ré-essaayez plus"
-               " tard ou contacter le propriétaire de l'application")
-CUSTOM SETTINGS: Can be modified but there is no real sense to do so.
+DESCRIPTION: Message dispalyed when connection to client API is failing.  
+MANDATORY: Yes.  
+DEFAULT SETTINGS: (  
+               "Un problème de connection est apparu. Ré-essaayez plus"  
+               " tard ou contacter le propriétaire de l'application")  
+CUSTOM SETTINGS: Can be modified but there is no real sense to do so.  
 
 #### 4.2.2. COUNTRY
-DESCRIPTION: Google Map parameters used to define the default map view.
-MANDATORY: Yes.
-DEFAULT SETTINGS: "France"
-CUSTOM SETTINGS: Can be modified at will. Make sure to update accordingly the LOCATION_BIAS variable as well. For more information, please check "https://developers.google.com/maps/documentation/embed/get-started".
+DESCRIPTION: Google Map parameters used to define the default map view.  
+MANDATORY: Yes.  
+DEFAULT SETTINGS: "France".  
+CUSTOM SETTINGS: Can be modified at will. Make sure to update accordingly the LOCATION_BIAS variable as well. For more information, please check "https://developers.google.com/maps/documentation/embed/get-started".  
 
 #### 4.2.3. KEYWORDS
-DESCRIPTION: List of words of important usage. Used to analyze which words are imortant for question parsing.
-MANDATORY: Yes.
-DEFAULT SETTINGS: ["adresse", "trouve"]
+DESCRIPTION: List of words of important usage. Used to analyze which words are imortant for question parsing.  
+MANDATORY: Yes.  
+DEFAULT SETTINGS: ["adresse", "trouve"].  
 CUSTOM SETTINGS: Modifying this list is not required unless you see that other words should be added to improve parsing analysis.
 
 #### 4.2.4. LOCATION_BIAS
-DESCRIPTION: Google Map parameters used to define the bounding box for places finding. Represent the bouding box south west and north east corners. In the default case, the bouding box covers all France (metropole).
-MANDATORY: Yes.
-DEFAULT SETTINGS: "rectangle:42.224,-4.727|51.4796,8.3926"
-CUSTOM SETTINGS: Can be modified at will. Make sure it to update accordingly the COUNTRY variable as well.
+DESCRIPTION: Google Map parameters used to define the bounding box for places finding. Represent the bouding box south west and north east corners. In the default case, the bouding box covers all France (metropole).  
+MANDATORY: Yes.  
+DEFAULT SETTINGS: "rectangle:42.224,-4.727|51.4796,8.3926".  
+CUSTOM SETTINGS: Can be modified at will. Make sure it to update accordingly the COUNTRY variable as well.  
 
 #### 4.2.4. STOPWORDS
-DESCRIPTION: List of words of common usage. Used
-to analyze which words are imortant or not
-for question parsing.
-MANDATORY: Yes.
-DEFAULT SETTINGS: Default list is available at "https://github.com/6/stopwords-json/blob/master/dist/fr.json".
-CUSTOM SETTINGS: Modifying this list is not required unless you forseas that some other words should be added to improve parsing analysis.
+DESCRIPTION: List of words of common usage. Used to analyze which words are imortant or not for question parsing.  
+MANDATORY: Yes.  
+DEFAULT SETTINGS: Default list is available at "https://github.com/6/stopwords-json/blob/master/dist/fr.json".  
+CUSTOM SETTINGS: Modifying this list is not required unless you forseas that some other words should be added to improve parsing analysis.  
 
 ## 5. Users' guide.
 
