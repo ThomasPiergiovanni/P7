@@ -2,6 +2,8 @@
 """
 import requests
 
+from configuration.config import CONNECTION_ERROR
+
 
 class MediaWiki:
     """ MediaWiki class
@@ -29,13 +31,9 @@ class MediaWiki:
             response_api = requests.get(self.endpoint, params=self.parameters)
             self.response = response_api.json()
         except requests.ConnectionError:
-            print(
-                    "Un problème de connection est apparu. Ré-essaayez plus"
-                    " tard ou contacter le propriétaire de l'application")
+            print(CONNECTION_ERROR)
         except requests.Timeout:
-            print(
-                    "Un problème de connection est apparu. Ré-essaayez plus"
-                    " tard ou contacter le propriétaire de l'application")
+            print(CONNECTION_ERROR)
 
     def set_attribute(self):
         """Method that sets attributes values with informations

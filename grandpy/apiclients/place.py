@@ -2,7 +2,7 @@
 """
 import requests
 
-from configuration.config import LOCATION_BIAS
+from configuration.config import CONNECTION_ERROR, LOCATION_BIAS
 from configuration.env import Env
 
 
@@ -34,13 +34,9 @@ class Place:
             response_api = requests.get(self.endpoint, params=self.parameters)
             self.place_api_answer = response_api.json()
         except requests.ConnectionError:
-            print(
-                    "Un problème de connection est apparu. Ré-essaayez plus"
-                    " tard ou contacter le propriétaire de l'application")
+            print(CONNECTION_ERROR)
         except requests.Timeout:
-            print(
-                    "Un problème de connection est apparu. Ré-essaayez plus"
-                    " tard ou contacter le propriétaire de l'application")
+            print(CONNECTION_ERROR)
 
     def set_attribute(self):
         """Method that sets attributes values with informations

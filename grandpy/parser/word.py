@@ -1,6 +1,4 @@
 # pylint: disable=too-few-public-methods
-
-
 """Word module
 """
 

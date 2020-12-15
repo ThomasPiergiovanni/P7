@@ -1,10 +1,6 @@
 # pylint: disable=too-few-public-methods
-
-
 """Test Place module
 """
-
-
 from grandpy.apiclients.place import Place
 
 
@@ -12,28 +8,26 @@ def test_get_place_with_an_existing_place(monkeypatch):
     """Method that test get_place method by providing an existing place
     """
     parsed_chain_ok = "Bourg-la-Reine"
-    response_ok = {
-        'candidates': [{
-            'formatted_address': '92340 Bourg-la-Reine, France',
-            'name': 'Bourg-la-Reine',
-            'place_id': 'ChIJBY5REypx5kcRgD6LaMOCCwQ'}],
-        'status': 'OK'}
 
-    class MockResponse:
-        """MockResponse class
+    class EmulateResponse:
+        """EmulateResponse class
         """
         def __init__(self, endpoint=None, params=None):
             self.endpoint = endpoint
             self.params = params
-            self.response = None
+            self.response = {
+                    'candidates': [{
+                        'formatted_address': '92340 Bourg-la-Reine, France',
+                        'name': 'Bourg-la-Reine',
+                        'place_id': 'ChIJBY5REypx5kcRgD6LaMOCCwQ'}],
+                    'status': 'OK'}
 
         def json(self):
             """Method returning a json object
             """
-            self.response = response_ok
             return self.response
 
-    monkeypatch.setattr("requests.get", MockResponse)
+    monkeypatch.setattr("requests.get", EmulateResponse)
     place = Place(parsed_chain_ok)
     place.get_place()
     assert place.place_api_answer["status"] == 'OK'
@@ -43,25 +37,23 @@ def test_get_place_an_unexisting_place(monkeypatch):
     """Method that test get_place method by providing an unexisting place
     """
     parsed_chain_nok = "Brg-la-Rine"
-    response_nok = {
-            'candidates': [],
-            'status': 'ZERO_RESULTS'}
 
-    class MockResponse:
-        """MockResponse class
+    class EmulateResponse:
+        """EmulateResponse class
         """
         def __init__(self, endpoint, params=None):
             self.endpoint = endpoint
             self.params = params
-            self.response = None
+            self.response = {
+                    'candidates': [],
+                    'status': 'ZERO_RESULTS'}
 
         def json(self):
             """Method returning a json object
             """
-            self.response = response_nok
             return self.response
 
-    monkeypatch.setattr("requests.get", MockResponse)
+    monkeypatch.setattr("requests.get", EmulateResponse)
     place = Place(parsed_chain_nok)
     place.get_place()
     assert place.place_api_answer["status"] == 'ZERO_RESULTS'

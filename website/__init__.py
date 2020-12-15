@@ -1,3 +1,5 @@
+# flake8: noqa
+# pylint: skip-file
 """Init module
 """
 from flask import Flask
