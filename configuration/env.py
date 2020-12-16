@@ -20,7 +20,7 @@ class Env:
     # CUSTOM SETTINGS: You must replace the default key with your own
     # google api key. Fore more informations, please check "https://developers
     # .google.com/maps/gmp-get-started"
-    GG_API_KEY_RESTRICTED = os.environ.get("GG_API_KEY_BACK")
+    GG_API_KEY_RESTRICTED = os.environ.get("GG_API_KEY_RESTRICTED")
 
     # DESCRIPTION: Google API key required for usage of google APIs.
     # MANDATORY: Yes.
