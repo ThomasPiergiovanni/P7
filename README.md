@@ -46,7 +46,7 @@ Documentation is also available on the [python official website](https://www.pyt
 
 ### 3.5. Flask and Requests install
 Install Flask and Requests on you virtual environement using the requirements.txt file.
-    pip install -r requirements.txt
+>pip install -r requirements.txt
 
 Please refer to [Flask documention](https://flask.palletsprojects.com/en/1.1.x/) for more informations.
 Please refer to [Requests certified documentation](https://requests.readthedocs.io/en/master/) for more informations.
@@ -68,6 +68,10 @@ The programm is now ready to be used. Please check *5. Users' guide* section bel
 ### 3.8. Deactivate the virtual environment.
 Once you're done using the program, you should leave the virtual environment. Simply type the following statement in your bash.
 > deactivate
+
+### 3.10. Test.
+If you want to modify the code, you can run unit test using pytest for testing.
+> pytest grandpy/
 
 ### 3.9. Uninstall.
 If you want to uninstall the program, simply delete the complete repository form your device.
