@@ -2,7 +2,7 @@
 env/
 
 # file containing private settings
-configuration/env.py
+# configuration/env.py
 
 #  pychache repos
 __pycache__/
