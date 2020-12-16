@@ -37,10 +37,10 @@ If you  don't have a Google API key, you'll need to get one. Go to Google Cloud 
 In order to avoid system conflicts:
 
 1. Go into your local repository and create a virtual environment using venv package.
-> python3 -m venv env
+> python -m venv env
 
 2. Activate the virtual environment.
-> source env/Scripts/activate
+> source env/scripts/activate
 
 Documentation is also available on the [python official website](https://www.python.org/).
 
