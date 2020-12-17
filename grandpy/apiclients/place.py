@@ -18,7 +18,7 @@ class Place:
                 "inputtype": "textquery",
                 "fields": "place_id,name,formatted_address",
                 "locationbias": LOCATION_BIAS,
-                "key": Env.GG_API_KEY
+                "key": Env.GG_API_KEY_BACKEND
                 }
         self.place_api_answer = None
         self.status = False

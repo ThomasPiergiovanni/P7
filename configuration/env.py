@@ -23,7 +23,8 @@ class Env:
     # with a string of yours own knowledge.
     SECRET_KEY = os.environ.get("SECRET_KEY")
 
-    # DESCRIPTION: Google API key required for usage of Google APIs. This key
+    # DESCRIPTION: Google API key required for usage of Google APIs
+    # (Backend calls).
     # is not restricted
     # MANDATORY: Yes.
     # DEFAULT SETTINGS: "xxxxxx"
@@ -31,10 +32,11 @@ class Env:
     # google api key. Fore more informations, please check "https://developers
     # .google.com/maps/gmp-get-started".You also need to create an
     # environnment variable of that name and with the value provided by GG.
-    GG_API_KEY = os.environ.get("GG_API_KEY_RESTRICTED")
+    GG_API_KEY_BACKEND = os.environ.get("GG_API_KEY")
+
 
     # DESCRIPTION: Google API key for usage of Google Map API. This key 
-    # must be restricted to its server IP or referent (http) if deployed
+    # must be restricted to its referent (http) if deployed
     # on the web. 
     # MANDATORY: Yes.
     # DEFAULT SETTINGS: "xxxxxx"
@@ -44,6 +46,10 @@ class Env:
     # You also need to create an environnment variable of that name
     # and with the value provided by GG. Note that if the app is used
     # localy, you'll use the
-    GG_API_KEY_RESTRICTED = os.environ.get("GG_API_KEY_RESTRICTED")
+    if LOCAL: 
+        GG_API_KEY_FRONTEND = os.environ.get("GG_API_KEY")
+    else:
+        GG_API_KEY_FRONTEND = os.environ.get("GG_API_KEY_RESTRICTED")
+
 
 

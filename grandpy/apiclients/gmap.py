@@ -15,7 +15,7 @@ class Gmap:
         """
         self.url = (
                 "https://www.google.com/maps/embed/v1/place?key=" +
-                Env.GG_API_KEY_RESTRICTED + "&q=" + COUNTRY + "&zoom=5")
+                Env.GG_API_KEY_FRONTEND + "&q=" + COUNTRY + "&zoom=5")
 
     def set_place_location(self, place_id):
         """Method that sets the correct url to get the wanted map. place_id
@@ -24,4 +24,4 @@ class Gmap:
         """
         self.url = (
                 "https://www.google.com/maps/embed/v1/place?key=" +
-                Env.GG_API_KEY_RESTRICTED + "&q=place_id:" + place_id)
+                Env.GG_API_KEY_FRONTEND + "&q=place_id:" + place_id)
