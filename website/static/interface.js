@@ -8,20 +8,23 @@ class FormElement{
     }
 };
 
-class AttributeSetter{
+class HtmlCreator{
+    createDiv(elements) { 
+        return document.createElement("div");   
+    };
+
     setClassRow(elements) { 
         for (let i = 0; i < elements.lenght; ++i){
             return elements[i].setAttribute("class", "row")
         }
-    }
-}
+    };
+};
 
 // UserHtmlElement class. Class used for creating DOM objects for user
 // questions.
 class UserHtmlElement{
     constructor(){
         this.divUser = document.createElement("div");
-        this.divUserRow = document.createElement("div");
         this.divUserCol = document.createElement("div");
         this.divUserColRow1 = document.createElement("div");
         this.divUserColRow2 = document.createElement("div");
@@ -32,23 +35,21 @@ class UserHtmlElement{
 
     // Method that set attribute and attribute values.
     defineAttribute() {
-        this.divUser.setAttribute("class", "mb-2");
-        this.divUserRow.setAttribute("class", "row");
-        this.divUserCol.setAttribute("class", "col-10");
-        this.divUserColRow1.setAttribute("class", "row");
-        this.divUserColRow2.setAttribute("class", "row");
+        this.divUser.setAttribute("class", "row mt-4 mb-4");
+        this.divUserCol.setAttribute("class", "col border border-dark rounded ml-3 mr-5");
+        this.divUserColRow1.setAttribute("class", "row pl-1 text-white text-align-justify bg-dark talk");
+        this.divUserColRow2.setAttribute("class", "row pl-1 text-light text-align-justify bg-success");
         this.spanUserPrefix.textContent = "# Utilisateur ";
         this.spanUserPrefix.setAttribute("class", "font-weight-bold");
         this.time = new Date();
         this.spanTime.textContent = "[" + this.time.getHours() + ":" + this.time.getMinutes() + ":" + this.time.getSeconds() + "]";
         this.spanQuestion.textContent = formElement.inputQuestion.value;
-        this.spanQuestion.setAttribute("class", "text-align-justify");
+        this.spanQuestion.setAttribute("class", "text-align-justify font-weight-bold");
     }
 
     // Method that set build the DOM.
     buildHtml(){
-        this.divUser.append(this.divUserRow);
-        this.divUserRow.append(this.divUserCol);
+        this.divUser.append(this.divUserCol);
         this.divUserCol.append(this.divUserColRow1);
         this.divUserCol.append(this.divUserColRow2);
         this.divUserColRow1.append(this.spanUserPrefix);
@@ -64,12 +65,10 @@ class UserHtmlElement{
 class GrandPyHtmlElement{
     constructor(){
         this.divGrandPy = document.createElement("div");
-        this.divGrandPyRow = document.createElement("div");
-        this.divGrandPyCol1= document.createElement("div");
-        this.divGrandPyCol2= document.createElement("div");
-        this.divGrandPyCol2Row1= document.createElement("div");
-        this.divGrandPyCol2Row2= document.createElement("div");
-        this.divGrandPyCol2Row3= document.createElement("div");
+        this.divGrandPyCol = document.createElement("div");
+        this.divGrandPyColRow1 = document.createElement("div");
+        this.divGrandPyColRow2 = document.createElement("div");
+        this.divGrandPyColRow3 = document.createElement("div");
         this.spanGrandpyPrefix = document.createElement("span");
         this.spanTime = document.createElement("span");
         this.spanGrandpyPrefixAddress = document.createElement("span");
@@ -82,43 +81,45 @@ class GrandPyHtmlElement{
     // Method that set attribute and attribute values.
 
     defineAttribute(addressPrefix, addressData, wikiPrefix, wikiData, wikiLink) {
-        attributeSetter = AttributeSetter();
-
-        this.divGrandPy.setAttribute("class", "mb-4");
-        this.divGrandPyRow.setAttribute("class", "row");
-        this.divGrandPyCol1.setAttribute("class", "col-2");
-        this.divGrandPyCol2.setAttribute("class", "col-10");
-        attributeSetter.setClassRow(
-                this.divGrandPyCol2Row1, this.divGrandPyCol2Row2, divGrandPyCol2Row3);
+        function setClassRow(elements) { 
+            for (let i = 0; i < elements.lenght; ++i){
+                return elements[i].setAttribute("class", "row")
+            }
+        };
+        // let htmlll = new HtmlCreator();
+        this.divGrandPy.setAttribute("class", "row");
+        this.divGrandPyCol.setAttribute("class", "col border border-dark rounded ml-5 mr-3");
+        this.divGrandPyColRow1.setAttribute("class", "row pl-1 text-white text-align-justify bg-dark");
+        this.divGrandPyColRow2.setAttribute("class", "row pl-1 text-light text-align-justify bg-info");
+        this.divGrandPyColRow3.setAttribute("class", "row pl-1 text-light text-align-justify bg-info");
         this.spanGrandpyPrefix.textContent = "# Grandpy";
         this.spanGrandpyPrefix.setAttribute("class", "font-weight-bold");
         this.time = new Date();
         this.spanTime.textContent = "[" + this.time.getHours() + ":" + this.time.getMinutes() + ":" + this.time.getSeconds() + "]";
         this.spanGrandpyPrefixAddress.textContent = addressPrefix;
         this.spanGrandpyAddress.textContent = addressData;
-        this.spanGrandpyAddress.setAttribute("class", "font-italic text-align-justify");
+        this.spanGrandpyAddress.setAttribute("class", "font-weight-bold");
         this.spanGrandpyPrefixWiki.textContent = wikiPrefix;
         this.spanGrandpyWiki.textContent = wikiData;
-        this.spanGrandpyWiki.setAttribute("class", "font-italic text-align-justify");
+        this.spanGrandpyWiki.setAttribute("class", "font-weight-bold");
         this.spanGrandpyWikiLink.textContent = "[En savoir plus sur WikiPedia]";
         this.spanGrandpyWikiLink.setAttribute("href", wikiLink);
+        this.spanGrandpyWikiLink.setAttribute("class", "font-weight-normal text-light");
     }
 
     // Method that set build the DOM.
     buildHtml(){
-        this.divGrandPy.append(this.divGrandPyRow);
-        this.divGrandPyRow.append(this.divGrandPyCol1);
-        this.divGrandPyRow.append(this.divGrandPyCol2);
-        this.divGrandPyCol2.append(this.divGrandPyCol2Row1);
-        this.divGrandPyCol2.append(this.divGrandPyCol2Row2);
-        this.divGrandPyCol2.append(this.divGrandPyCol2Row3);
-        this.divGrandPyCol2Row1.append(this.spanGrandpyPrefix);
-        this.divGrandPyCol2Row1.append(this.spanTime);
-        this.divGrandPyCol2Row2.append(this.spanGrandpyPrefixAddress);
-        this.divGrandPyCol2Row2.append(this.spanGrandpyAddress);
-        this.divGrandPyCol2Row3.append(this.spanGrandpyPrefixWiki);
-        this.divGrandPyCol2Row3.append(this.spanGrandpyWiki);
-        this.divGrandPyCol2Row3.append(this.spanGrandpyWikiLink);
+        this.divGrandPy.append(this.divGrandPyCol);
+        this.divGrandPyCol.append(this.divGrandPyColRow1);
+        this.divGrandPyCol.append(this.divGrandPyColRow2);
+        this.divGrandPyCol.append(this.divGrandPyColRow3);
+        this.divGrandPyColRow1.append(this.spanGrandpyPrefix);
+        this.divGrandPyColRow1.append(this.spanTime);
+        this.divGrandPyColRow2.append(this.spanGrandpyPrefixAddress);
+        this.divGrandPyColRow2.append(this.spanGrandpyAddress);
+        this.divGrandPyColRow3.append(this.spanGrandpyPrefixWiki);
+        this.divGrandPyColRow3.append(this.spanGrandpyWiki);
+        this.spanGrandpyWiki.append(this.spanGrandpyWikiLink);
     }
 };
 
