@@ -8,6 +8,13 @@ class FormElement{
     }
 };
 
+class AttributeSetter{
+    setClassRow(elements) { 
+        for (let i = 0; i < elements.lenght; ++i){
+            return elements[i].setAttribute("class", "row")
+        }
+    }
+}
 
 // UserHtmlElement class. Class used for creating DOM objects for user
 // questions.
@@ -73,14 +80,16 @@ class GrandPyHtmlElement{
     };
 
     // Method that set attribute and attribute values.
+
     defineAttribute(addressPrefix, addressData, wikiPrefix, wikiData, wikiLink) {
+        attributeSetter = AttributeSetter();
+
         this.divGrandPy.setAttribute("class", "mb-4");
         this.divGrandPyRow.setAttribute("class", "row");
         this.divGrandPyCol1.setAttribute("class", "col-2");
         this.divGrandPyCol2.setAttribute("class", "col-10");
-        this.divGrandPyCol2Row1.setAttribute("class", "row");
-        this.divGrandPyCol2Row2.setAttribute("class", "row");
-        this.divGrandPyCol2Row3.setAttribute("class", "row");
+        attributeSetter.setClassRow(
+                this.divGrandPyCol2Row1, this.divGrandPyCol2Row2, divGrandPyCol2Row3);
         this.spanGrandpyPrefix.textContent = "# Grandpy";
         this.spanGrandpyPrefix.setAttribute("class", "font-weight-bold");
         this.time = new Date();
@@ -91,7 +100,7 @@ class GrandPyHtmlElement{
         this.spanGrandpyPrefixWiki.textContent = wikiPrefix;
         this.spanGrandpyWiki.textContent = wikiData;
         this.spanGrandpyWiki.setAttribute("class", "font-italic text-align-justify");
-        this.spanGrandpyWikiLink.textContent = "[En savoir pklus sur WikiPedia]";
+        this.spanGrandpyWikiLink.textContent = "[En savoir plus sur WikiPedia]";
         this.spanGrandpyWikiLink.setAttribute("href", wikiLink);
     }
 
