@@ -14,7 +14,7 @@ class Env:
     # DEFAULT SETTINGS: False"
     # CUSTOM SETTINGS: You must repalce the default "you-will-never-guess"
     # with a string of yours own knowledge.
-    LOCAL = False
+    LOCAL = True
 
     # DESCRIPTION: Secret key required for proper Flask usage.
     # MANDATORY: Yes.
@@ -50,6 +50,3 @@ class Env:
         GG_API_KEY_FRONTEND = os.environ.get("GG_API_KEY")
     else:
         GG_API_KEY_FRONTEND = os.environ.get("GG_API_KEY_RESTRICTED")
-
-
-

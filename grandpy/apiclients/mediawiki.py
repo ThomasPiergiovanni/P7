@@ -21,6 +21,7 @@ class MediaWiki:
                 }
         self.response = None
         self.information = None
+        self.wikipedia_url = None
         self.status = False
 
     def get_mediawiki(self):
@@ -35,7 +36,7 @@ class MediaWiki:
         except requests.Timeout:
             print(CONNECTION_ERROR)
 
-    def set_attribute(self):
+    def set_attribute(self, parsed_chain):
         """Method that sets attributes values with informations
         from the api response.
         """
@@ -44,5 +45,6 @@ class MediaWiki:
                 self.status = True
                 self.information = (
                         self.response["query"]["pages"][key]["extract"])
+                self.wikipedia_url = "https://fr.wikipedia.org/wiki/" + parsed_chain
         except KeyError:
             self.status = False

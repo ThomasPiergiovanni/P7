@@ -69,10 +69,11 @@ class GrandPyHtmlElement{
         this.spanGrandpyAddress = document.createElement("span");
         this.spanGrandpyPrefixWiki = document.createElement("span");
         this.spanGrandpyWiki = document.createElement("span");
+        this.spanGrandpyWikiLink = document.createElement("a");
     };
 
     // Method that set attribute and attribute values.
-    defineAttribute(addressPrefix, addressData, wikiPrefix, wikiData) {
+    defineAttribute(addressPrefix, addressData, wikiPrefix, wikiData, wikiLink) {
         this.divGrandPy.setAttribute("class", "mb-4");
         this.divGrandPyRow.setAttribute("class", "row");
         this.divGrandPyCol1.setAttribute("class", "col-2");
@@ -90,6 +91,8 @@ class GrandPyHtmlElement{
         this.spanGrandpyPrefixWiki.textContent = wikiPrefix;
         this.spanGrandpyWiki.textContent = wikiData;
         this.spanGrandpyWiki.setAttribute("class", "font-italic text-align-justify");
+        this.spanGrandpyWikiLink.textContent = "[En savoir pklus sur WikiPedia]";
+        this.spanGrandpyWikiLink.setAttribute("href", wikiLink);
     }
 
     // Method that set build the DOM.
@@ -106,6 +109,7 @@ class GrandPyHtmlElement{
         this.divGrandPyCol2Row2.append(this.spanGrandpyAddress);
         this.divGrandPyCol2Row3.append(this.spanGrandpyPrefixWiki);
         this.divGrandPyCol2Row3.append(this.spanGrandpyWiki);
+        this.divGrandPyCol2Row3.append(this.spanGrandpyWikiLink);
     }
 };
 
@@ -124,7 +128,7 @@ fetch(`${window.origin}/index/get-url`, {
         return;
     }
     response.json().then(function(data) {
-        formElement.grandpyMap.setAttribute("src", data.url);
+        formElement.grandpyMap.setAttribute("src", data.gmap_url);
     });
 })
 .catch(function(error) {
@@ -184,30 +188,34 @@ formElement.askButton.addEventListener('click', function(event) {
                 let addressData = null
                 let wikiPrefix = null
                 let wikiData = null
-                grandPyHtml.defineAttribute(addressPrefix, addressData, wikiPrefix, wikiData);
+                let wikiLink = null
+                grandPyHtml.defineAttribute(addressPrefix, addressData, wikiPrefix, wikiData, wikiLink);
             } else if (data.parser_status && !data.address_status) {
                 let addressPrefix = "Désolé, je ne connais pas cet endroit"
                 let addressData = null
                 let wikiPrefix = null
                 let wikiData = null
-                grandPyHtml.defineAttribute(addressPrefix, addressData, wikiPrefix, wikiData);
+                let wikiLink = null
+                grandPyHtml.defineAttribute(addressPrefix, addressData, wikiPrefix, wikiData, wikiLink);
             } else if (data.parser_status && data.address_status && !data.information_status) {
                 let addressPrefix = "L'adresse de l'endroit recherché est ..."
                 let addressData = data.address;
                 let wikiPrefix = "... Par contre, je ne sais rien de cet endroit ..."
                 let wikiData = null
-                grandPyHtml.defineAttribute(addressPrefix, addressData, wikiPrefix, wikiData);
+                let wikiLink = null
+                grandPyHtml.defineAttribute(addressPrefix, addressData, wikiPrefix, wikiData, wikiLink);
             } else {
                 let addressPrefix = "L'adresse de l'endroit recherché est ..."
                 let addressData = data.address;
                 let wikiPrefix = "... Et savais tu que... "
                 let wikiData = data.information;
-                grandPyHtml.defineAttribute(addressPrefix, addressData, wikiPrefix, wikiData);
+                let wikiLink = data.wikipedia_url;
+                grandPyHtml.defineAttribute(addressPrefix, addressData, wikiPrefix, wikiData, wikiLink);
             };
             grandPyHtml.buildHtml();
             formElement.chat.prepend(grandPyHtml.divGrandPy);
             formElement.chat.prepend(userHtml.divUser);
-            formElement.grandpyMap.setAttribute("src", data.url);
+            formElement.grandpyMap.setAttribute("src", data.gmap_url);
         });
     })
 

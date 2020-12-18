@@ -8,12 +8,12 @@ class Gmap:
     """ Google map class
     """
     def __init__(self):
-        self.url = None
+        self.gmap_url = None
 
     def set_default_location(self):
         """Method that sets the default url to get the default map.
         """
-        self.url = (
+        self.gmap_url = (
                 "https://www.google.com/maps/embed/v1/place?key=" +
                 Env.GG_API_KEY_FRONTEND + "&q=" + COUNTRY + "&zoom=5")
 
@@ -22,6 +22,6 @@ class Gmap:
         is obtained from Google Place API response. This after
         user question & parsing.
         """
-        self.url = (
+        self.gmap_url = (
                 "https://www.google.com/maps/embed/v1/place?key=" +
                 Env.GG_API_KEY_FRONTEND + "&q=place_id:" + place_id)
