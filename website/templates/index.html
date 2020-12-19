@@ -14,25 +14,25 @@
     </head>
     <body>
         <div class="bg-dark">
-            <div class="container">            
+            <div class="container my-font">            
                 <div class="row pt-5 pb-2">
                     <div class="col-1 col-md-2"></div>
-                    <div class="col-10 col-md-8 text-justify text-light my-title-text">
+                    <div class="col-10 col-md-8 text-justify text-light my-title-text text-wrap">
                         <img src="../static/images/robot.png" class="my-title-image" alt="robot image"/>
-                        Pose ta question à GrandPy!
+                        Demande l'adresse à Grandpy!
                     </div>
                     <div class="col-1 col-md-2"></div>
                 </div>  
             </div>
         </div>                                  
-        <div class="container">
+        <div class="container my-question">
             <div class="row">
                 <div class="col-1 col-md-2"></div>
                     <div class="col-10 col-md-8">
                         <form action="index.html" method="post" novalidate>
                             <div class="form-group">
                                 <div class="border border-secondary mt-4 rounded">
-                                    <input type="text" id="question" class="form-control font-italic" value="Ta question ici..." required>
+                                    <input type="text" id="question" class="my-question form-control" value="Ta question ici..." required>
                                 </div>
                                 <div class="text-right">
                                     <button type="button" id="ask_button" class="btn btn-primary mt-2">Demande</button>
@@ -43,7 +43,7 @@
                 <div class="col-1 col-md-2"></div>
             </div>
         </div>
-        <div class="container">
+        <div class="container my-font">
             <div class="row align-items-center mt-3">
                 <div class="col-1 col-md-2"></div>
                 <div class="col-10 col-md-8">
@@ -59,7 +59,7 @@
                 <div class="col-10 col-md-8">
                     <div class="embed-responsive embed-responsive-4by3">
                         <iframe
-                            class="embed-responsive-item border border-secondary" 
+                            class="embed-responsive-item border rounded border-secondary" 
                             id="grandpy_map" allowfullscreen>
                         </iframe>
                     </div>
@@ -68,7 +68,7 @@
             </div>
         </div>
         <div class="bg-dark">
-            <div class="container">
+            <div class="container my-font">
                 <div class="row pt-3 pb-5 text-secondary">
                     <div class="col">
                         <ul class="list-inline text-center">

@@ -3,6 +3,12 @@
 	font-size:3vw;
 }
 
+.my-question
+{
+	font-family: Verdana;
+	font-style: italic;
+}
+
 .my-title-image
 {
 	width: 10%;
@@ -13,4 +19,9 @@
 	min-height: 200px;
 	max-height: 400px;
 	overflow-y: scroll
+}
+
+.my-font
+{
+	font-family: Verdana;
 }
