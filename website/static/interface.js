@@ -8,17 +8,6 @@ class FormElement{
     }
 };
 
-class HtmlCreator{
-    createDiv(elements) { 
-        return document.createElement("div");   
-    };
-
-    setClassRow(elements) { 
-        for (let i = 0; i < elements.lenght; ++i){
-            return elements[i].setAttribute("class", "row")
-        }
-    };
-};
 
 // UserHtmlElement class. Class used for creating DOM objects for user
 // questions.
@@ -79,14 +68,7 @@ class GrandPyHtmlElement{
     };
 
     // Method that set attribute and attribute values.
-
     defineAttribute(addressPrefix, addressData, wikiPrefix, wikiData, wikiLink) {
-        function setClassRow(elements) { 
-            for (let i = 0; i < elements.lenght; ++i){
-                return elements[i].setAttribute("class", "row")
-            }
-        };
-        // let htmlll = new HtmlCreator();
         this.divGrandPy.setAttribute("class", "row");
         this.divGrandPyCol.setAttribute("class", "col border border-dark rounded ml-5 mr-3");
         this.divGrandPyColRow1.setAttribute("class", "row pl-1 text-white text-align-justify bg-dark");
