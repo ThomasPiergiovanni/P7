@@ -24,8 +24,7 @@ def get_url():
     gmap = Gmap()
     gmap.set_default_location()
     answer = {
-            "gmap_url": gmap.gmap_url
-    }
+            "gmap_url": gmap.gmap_url}
     response = make_response(jsonify(answer), 200)
     return response
 
@@ -39,27 +38,40 @@ def create_entry():
     parser = Parser()
     parser.question = demand["question"]
     parser.parse()
-    place = Place(parser.parsed_chain)
-    place.get_place()
-    place.set_attribute()
-    mediawiki = MediaWiki(place.name)
-    mediawiki.get_mediawiki()
-    mediawiki.set_attribute(place.name)
-    if place.status:
-        gmap = Gmap()
-        gmap.set_place_location(place.place_id)
+    place = Place()
+    place.set_request(parser.parsed_chain)
+    place.get_response()
+    if place.connection_failure:
+        answer = {
+            "place_connection_failure": place.connection_failure}
+        response = make_response(jsonify(answer), 200)
+        return response
     else:
-        gmap = Gmap()
-        gmap.set_default_location()
-    answer = {
-            "parser_status": parser.status,
-            "parsed_chain": parser.parsed_chain,
-            "address_status": place.status,
-            "address": place.address,
-            "information_status": mediawiki.status,
-            "information": mediawiki.information,
-            "wikipedia_url": mediawiki.wikipedia_url,
-            "gmap_url": gmap.gmap_url
-    }
-    response = make_response(jsonify(answer), 200)
-    return response
+        place.set_attribute()
+        mediawiki = MediaWiki()
+        mediawiki.set_request(place.name)
+        mediawiki.get_response()
+        if mediawiki.connection_failure:
+            answer = {
+                "mediawiki_connection_failure": mediawiki.connection_failure}
+            response = make_response(jsonify(answer), 200)
+            return response
+        else:
+            mediawiki.set_attribute(place.name)
+            if place.status:
+                gmap = Gmap()
+                gmap.set_place_location(place.place_id)
+            else:
+                gmap = Gmap()
+                gmap.set_default_location()
+            answer = {
+                    "parser_status": parser.status,
+                    "parsed_chain": parser.parsed_chain,
+                    "address_status": place.status,
+                    "address": place.address,
+                    "information_status": mediawiki.status,
+                    "information": mediawiki.information,
+                    "wikipedia_url": mediawiki.wikipedia_url,
+                    "gmap_url": gmap.gmap_url}
+            response = make_response(jsonify(answer), 200)
+            return response

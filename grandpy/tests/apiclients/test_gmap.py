@@ -11,6 +11,6 @@ def test_set_place_location_with_place_id_provided():
     place_id = "ChIJLU7jZClu5kcR4PcOOO6p3I0"
     gmap = Gmap()
     gmap.set_place_location(place_id)
-    assert gmap.url == (
+    assert gmap.gmap_url == (
             "https://www.google.com/maps/embed/v1/place?key=" +
             Env.GG_API_KEY_FRONTEND + "&q=place_id:" + place_id)

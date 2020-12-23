@@ -4,61 +4,6 @@
 from grandpy.apiclients.place import Place
 
 
-def test_get_place_with_an_existing_place(monkeypatch):
-    """Method that test get_place method by providing an existing place
-    """
-    parsed_chain_ok = "Bourg-la-Reine"
-
-    class EmulateResponse:
-        """EmulateResponse class
-        """
-        def __init__(self, endpoint=None, params=None):
-            self.endpoint = endpoint
-            self.params = params
-            self.response = {
-                    'candidates': [{
-                        'formatted_address': '92340 Bourg-la-Reine, France',
-                        'name': 'Bourg-la-Reine',
-                        'place_id': 'ChIJBY5REypx5kcRgD6LaMOCCwQ'}],
-                    'status': 'OK'}
-
-        def json(self):
-            """Method returning a json object
-            """
-            return self.response
-
-    monkeypatch.setattr("requests.get", EmulateResponse)
-    place = Place(parsed_chain_ok)
-    place.get_place()
-    assert place.place_api_answer["status"] == 'OK'
-
-
-def test_get_place_an_unexisting_place(monkeypatch):
-    """Method that test get_place method by providing an unexisting place
-    """
-    parsed_chain_nok = "Brg-la-Rine"
-
-    class EmulateResponse:
-        """EmulateResponse class
-        """
-        def __init__(self, endpoint, params=None):
-            self.endpoint = endpoint
-            self.params = params
-            self.response = {
-                    'candidates': [],
-                    'status': 'ZERO_RESULTS'}
-
-        def json(self):
-            """Method returning a json object
-            """
-            return self.response
-
-    monkeypatch.setattr("requests.get", EmulateResponse)
-    place = Place(parsed_chain_nok)
-    place.get_place()
-    assert place.place_api_answer["status"] == 'ZERO_RESULTS'
-
-
 def test_set_attribute_with_response_returning_place():
     """Function that test set_attribute method by providing a
     response returning an existing object
@@ -70,8 +15,8 @@ def test_set_attribute_with_response_returning_place():
             'name': 'Bourg-la-Reine',
             'place_id': 'ChIJBY5REypx5kcRgD6LaMOCCwQ'}],
         'status': 'OK'}
-    place = Place(parsed_chain_ok)
-    place.place_api_answer = response_ok
+    place = Place()
+    place.response = response_ok
     place.set_attribute()
     assert place.status is True
     assert place.place_id == "ChIJBY5REypx5kcRgD6LaMOCCwQ"
@@ -87,10 +32,10 @@ def test_set_attribute_with_response_returning_no_place():
     response_nok = {
             'candidates': [],
             'status': 'ZERO_RESULTS'}
-    place = Place(parsed_chain_nok)
-    place.place_api_answer = response_nok
+    place = Place()
+    place.response = response_nok
     place.set_attribute()
-    assert place.status is False
+    assert place.status is not True
     assert place.place_id == ""
     assert place.name == ""
     assert place.address == ""

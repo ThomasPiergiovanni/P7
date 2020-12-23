@@ -1,14 +1,19 @@
 """MediaWiki module.
 """
-import requests
+from grandpy.apiclients.api_generic import ApiGeneric
 
-from configuration.config import CONNECTION_ERROR
-
-
-class MediaWiki:
+class MediaWiki(ApiGeneric):
     """ MediaWiki class
     """
-    def __init__(self, parsed_chain):
+    def __init__(self):
+        super().__init__()
+        self.information = None
+        self.wikipedia_url = None
+
+    def set_request(self, parsed_chain):
+        """Method that sets endpoint and parameters for request to Media Wiki
+        API.
+        """
         self.endpoint = "https://fr.wikipedia.org/w/api.php"
         self.parameters = {
                 "action": "query",
@@ -17,24 +22,7 @@ class MediaWiki:
                 "exintro": 0,
                 "explaintext": 0,
                 "redirects": 1,
-                "titles": parsed_chain
-                }
-        self.response = None
-        self.information = None
-        self.wikipedia_url = None
-        self.status = False
-
-    def get_mediawiki(self):
-        """Method that makes a parameterized request to Media WIki API and get
-        a response object back.
-        """
-        try:
-            response_api = requests.get(self.endpoint, params=self.parameters)
-            self.response = response_api.json()
-        except requests.ConnectionError:
-            print(CONNECTION_ERROR)
-        except requests.Timeout:
-            print(CONNECTION_ERROR)
+                "titles": parsed_chain}
 
     def set_attribute(self, parsed_chain):
         """Method that sets attributes values with informations

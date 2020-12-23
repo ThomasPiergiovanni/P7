@@ -1,15 +1,23 @@
 """Place module.
 """
-import requests
-
-from configuration.config import CONNECTION_ERROR, LOCATION_BIAS
+from configuration.config import LOCATION_BIAS
 from configuration.env import Env
+from grandpy.apiclients.api_generic import ApiGeneric
 
 
-class Place:
+class Place(ApiGeneric):
     """ Place class
     """
-    def __init__(self, parsed_chain):
+    def __init__(self):
+        super().__init__()
+        self.place_id = ""
+        self.name = ""
+        self.address = ""
+
+    def set_request(self, parsed_chain):
+        """Method that sets endpoint and parameters for request to Place
+        API.
+        """
         self.endpoint = (
                 "https://maps.googleapis.com/maps/api/place/"
                 "findplacefromtext/json?")
@@ -18,33 +26,15 @@ class Place:
                 "inputtype": "textquery",
                 "fields": "place_id,name,formatted_address",
                 "locationbias": LOCATION_BIAS,
-                "key": Env.GG_API_KEY_BACKEND
-                }
-        self.place_api_answer = None
-        self.status = False
-        self.place_id = ""
-        self.name = ""
-        self.address = ""
-
-    def get_place(self):
-        """Method that makes a parameterized request to Google
-        Place API and get a response object back.
-        """
-        try:
-            response_api = requests.get(self.endpoint, params=self.parameters)
-            self.place_api_answer = response_api.json()
-        except requests.ConnectionError:
-            print(CONNECTION_ERROR)
-        except requests.Timeout:
-            print(CONNECTION_ERROR)
+                "key": Env.GG_API_KEY_BACKEND}
 
     def set_attribute(self):
         """Method that sets attributes values with informations
         from the api response.
         """
-        if self.place_api_answer["status"] == "OK":
+        if self.response["status"] == "OK":
             self.status = True
-            candidates = self.place_api_answer["candidates"]
+            candidates = self.response["candidates"]
             for candidate in candidates:
                 self.place_id = candidate["place_id"]
                 self.name = candidate["name"]

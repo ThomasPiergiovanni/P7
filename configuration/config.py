@@ -2,17 +2,6 @@
 """Program configuration module
 """
 
-# DESCRIPTION: Message dispalyed when connection to client API is failing.
-# MANDATORY: Yes.
-# DEFAULT SETTINGS: (
-#               "Un problème de connection est apparu. Ré-essaayez plus"
-#               " tard ou contacter le propriétaire de l'application")
-# CUSTOM SETTINGS: Can be modified but there is no real sense to do
-# so.
-CONNECTION_ERROR = (
-                "Un problème de connection est apparu. Ré-essaayez plus"
-                " tard ou contacter le propriétaire de l'application")
-
 # DESCRIPTION: Google Map parameters used to define the default
 # map view.
 # MANDATORY: Yes.

@@ -9,6 +9,44 @@ class FormElement{
 };
 
 
+// ConnectionIssue class.
+class ConnectionIssueHtmlElement{
+    constructor(){
+        this.divError = document.createElement("div");
+        this.divErrorCol = document.createElement("div");
+        this.divErrorColRow1 = document.createElement("div");
+        this.divErrorColRow2 = document.createElement("div");
+        this.spanErrorPrefix = document.createElement("span");
+        this.spanTime = document.createElement("span");
+        this.spanMessage = document.createElement("span");
+    }
+
+    // Method that set attribute and attribute values.
+    defineAttribute(connectionMessage) {
+        this.divError.setAttribute("class", "row mt-4 mb-4");
+        this.divErrorCol.setAttribute("class", "col border border-dark rounded ml-3 mr-3");
+        this.divErrorColRow1.setAttribute("class", "row pl-1 text-white text-align-justify bg-dark talk");
+        this.divErrorColRow2.setAttribute("class", "row pl-1 text-light text-align-justify bg-white");
+        this.spanErrorPrefix.textContent = "# Système ";
+        this.spanErrorPrefix.setAttribute("class", "font-weight-bold");
+        this.time = new Date();
+        this.spanTime.textContent = "[" + this.time.getHours() + ":" + this.time.getMinutes() + ":" + this.time.getSeconds() + "]";
+        this.spanMessage.textContent = connectionMessage;
+        this.spanMessage.setAttribute("class", "text-align-justify text-danger");
+    };
+
+    // Method that  build the DOM.
+    buildHtml(){
+        this.divError.append(this.divErrorCol);
+        this.divErrorCol.append(this.divErrorColRow1);
+        this.divErrorCol.append(this.divErrorColRow2);
+        this.divErrorColRow1.append(this.spanErrorPrefix);
+        this.divErrorColRow1.append(this.spanTime);
+        this.divErrorColRow2.append(this.spanMessage);
+    }
+};
+
+
 // UserHtmlElement class. Class used for creating DOM objects for user
 // questions.
 class UserHtmlElement{
@@ -66,6 +104,7 @@ class GrandPyHtmlElement{
         this.spanGrandpyWiki = document.createElement("span");
         this.spanGrandpyWikiLink = document.createElement("a");
     };
+
 
     // Method that set attribute and attribute values.
     defineAttribute(addressPrefix, addressData, wikiPrefix, wikiData, wikiLink) {
@@ -170,44 +209,52 @@ formElement.askButton.addEventListener('click', function(event) {
         }
         response.json().then(function(data) {
 
+            let connectionIssue = new ConnectionIssueHtmlElement();
             let userHtml = new UserHtmlElement();
             let grandPyHtml = new GrandPyHtmlElement();
-            userHtml.defineAttribute();
-            userHtml.buildHtml();
 
-            if (!data.parser_status) {
-                let addressPrefix = "Désolé, je n'ai pas compris la question"
-                let addressData = null
-                let wikiPrefix = null
-                let wikiData = null
-                let wikiLink = null
-                grandPyHtml.defineAttribute(addressPrefix, addressData, wikiPrefix, wikiData, wikiLink);
-            } else if (data.parser_status && !data.address_status) {
-                let addressPrefix = "Désolé, je ne connais pas cet endroit"
-                let addressData = null
-                let wikiPrefix = null
-                let wikiData = null
-                let wikiLink = null
-                grandPyHtml.defineAttribute(addressPrefix, addressData, wikiPrefix, wikiData, wikiLink);
-            } else if (data.parser_status && data.address_status && !data.information_status) {
-                let addressPrefix = "L'adresse de l'endroit recherché est ..."
-                let addressData = data.address;
-                let wikiPrefix = "... Par contre, je ne sais rien de cet endroit ..."
-                let wikiData = null
-                let wikiLink = null
-                grandPyHtml.defineAttribute(addressPrefix, addressData, wikiPrefix, wikiData, wikiLink);
+            if (data.place_connection_failure || data.mediawiki_connection_failure) {
+                let connectionMessage = "Un problème de connection est apparu. Ré-essaayez plus tard ou contacter le propriétaire de l'application";
+                connectionIssue.defineAttribute(connectionMessage);
+                connectionIssue.buildHtml()
+                formElement.chat.prepend(connectionIssue.divError);
             } else {
-                let addressPrefix = "L'adresse de l'endroit recherché est ..."
-                let addressData = data.address;
-                let wikiPrefix = "... Et savais tu que... "
-                let wikiData = data.information;
-                let wikiLink = data.wikipedia_url;
-                grandPyHtml.defineAttribute(addressPrefix, addressData, wikiPrefix, wikiData, wikiLink);
+                userHtml.defineAttribute();
+                userHtml.buildHtml();
+                if (!data.parser_status) {
+                    let addressPrefix = "Désolé, je n'ai pas compris la question"
+                    let addressData = null
+                    let wikiPrefix = null
+                    let wikiData = null
+                    let wikiLink = null
+                    grandPyHtml.defineAttribute(addressPrefix, addressData, wikiPrefix, wikiData, wikiLink);
+                } else if (data.parser_status && !data.address_status) {
+                    let addressPrefix = "Désolé, je ne connais pas cet endroit"
+                    let addressData = null
+                    let wikiPrefix = null
+                    let wikiData = null
+                    let wikiLink = null
+                    grandPyHtml.defineAttribute(addressPrefix, addressData, wikiPrefix, wikiData, wikiLink);
+                } else if (data.parser_status && data.address_status && !data.information_status) {
+                    let addressPrefix = "L'adresse de l'endroit recherché est ..."
+                    let addressData = data.address;
+                    let wikiPrefix = "... Par contre, je ne sais rien de cet endroit ..."
+                    let wikiData = null
+                    let wikiLink = null
+                    grandPyHtml.defineAttribute(addressPrefix, addressData, wikiPrefix, wikiData, wikiLink);
+                } else {
+                    let addressPrefix = "L'adresse de l'endroit recherché est ..."
+                    let addressData = data.address;
+                    let wikiPrefix = "... Et savais tu que... "
+                    let wikiData = data.information;
+                    let wikiLink = data.wikipedia_url;
+                    grandPyHtml.defineAttribute(addressPrefix, addressData, wikiPrefix, wikiData, wikiLink);
+                };
+                grandPyHtml.buildHtml();
+                formElement.chat.prepend(grandPyHtml.divGrandPy);
+                formElement.chat.prepend(userHtml.divUser);
+                formElement.grandpyMap.setAttribute("src", data.gmap_url);
             };
-            grandPyHtml.buildHtml();
-            formElement.chat.prepend(grandPyHtml.divGrandPy);
-            formElement.chat.prepend(userHtml.divUser);
-            formElement.grandpyMap.setAttribute("src", data.gmap_url);
         });
     })
 
