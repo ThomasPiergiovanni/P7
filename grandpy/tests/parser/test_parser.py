@@ -1,8 +1,10 @@
+# pylint: disable=too-few-public-methods
 """Test parser module
 """
 import pytest
 
 from grandpy.parser.parser import Parser
+from grandpy.parser.word import Word
 
 
 @pytest.fixture(name="questions_list")
@@ -139,21 +141,6 @@ def fixture_question_four():
     return tuple_four
 
 
-class EmulateWord:
-    """EmulateWord class
-    """
-    def __init__(self):
-        self.index = None
-        self.name = None
-        self.enum = {
-                "min_two": None,
-                "min_one": None,
-                "self": None,
-                "plus_one": None,
-                "plus_two": None,
-                "plus_three": None}
-
-
 def emulate_words_list(question_tuple):
     """Function that emulate words list
     """
@@ -168,7 +155,7 @@ def emulate_word_instances_list(question_tuple):
     """
     word_instances_list = []
     for element in question_tuple:
-        emulate_word = EmulateWord()
+        emulate_word = Word()
         emulate_word.index = element[0]
         emulate_word.name = element[1]
         word_instances_list.append(emulate_word)
@@ -180,7 +167,7 @@ def emulate_enumerate_word(question_tuple):
     """
     word_instances_list = []
     for element in question_tuple:
-        emulate_word = EmulateWord()
+        emulate_word = Word()
         emulate_word.index = element[0]
         emulate_word.name = element[1]
         emulate_word.enum["self"] = element[4]
@@ -193,7 +180,7 @@ def emulate_enumerate_nexts_words(question_tuple):
     """
     word_list = []
     for element in question_tuple:
-        emulate_word = EmulateWord()
+        emulate_word = Word()
         emulate_word.index = element[0]
         emulate_word.name = element[1]
         emulate_word.enum["min_two"] = element[2]

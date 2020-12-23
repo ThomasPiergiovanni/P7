@@ -8,7 +8,6 @@ def test_set_attribute_with_response_returning_place():
     """Function that test set_attribute method by providing a
     response returning an existing object
     """
-    parsed_chain_ok = "Bourg-la-Reine"
     response_ok = {
         'candidates': [{
             'formatted_address': '92340 Bourg-la-Reine, France',
@@ -28,7 +27,6 @@ def test_set_attribute_with_response_returning_no_place():
     """Function that test set_attribute method by providing a
     response returning an unexisting object
     """
-    parsed_chain_nok = "Brg-la-Rine"
     response_nok = {
             'candidates': [],
             'status': 'ZERO_RESULTS'}

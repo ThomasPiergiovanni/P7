@@ -40,7 +40,7 @@ def create_entry():
     parser.parse()
     place = Place()
     place.set_request(parser.parsed_chain)
-    place.get_response()
+    place.get_request()
     if place.connection_failure:
         answer = {
             "place_connection_failure": place.connection_failure}
@@ -50,7 +50,7 @@ def create_entry():
         place.set_attribute()
         mediawiki = MediaWiki()
         mediawiki.set_request(place.name)
-        mediawiki.get_response()
+        mediawiki.get_request()
         if mediawiki.connection_failure:
             answer = {
                 "mediawiki_connection_failure": mediawiki.connection_failure}

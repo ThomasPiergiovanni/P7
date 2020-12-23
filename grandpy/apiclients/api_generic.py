@@ -1,6 +1,6 @@
+# pylint: disable=too-few-public-methods
 """API Generic module.
 """
-
 import requests
 
 
@@ -14,7 +14,7 @@ class ApiGeneric:
         self.connection_failure = False
         self.status = None
 
-    def get_response(self):
+    def get_request(self):
         """Method that makes a parameterized requests to APIs and get
         a response object back.
         """
@@ -23,5 +23,5 @@ class ApiGeneric:
             self.response = response_api.json()
         except (
                 requests.ConnectionError,
-                requests.Timeout) :
+                requests.Timeout):
             self.connection_failure = True

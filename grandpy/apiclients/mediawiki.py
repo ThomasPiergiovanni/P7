@@ -2,6 +2,7 @@
 """
 from grandpy.apiclients.api_generic import ApiGeneric
 
+
 class MediaWiki(ApiGeneric):
     """ MediaWiki class
     """
@@ -33,6 +34,7 @@ class MediaWiki(ApiGeneric):
                 self.status = True
                 self.information = (
                         self.response["query"]["pages"][key]["extract"])
-                self.wikipedia_url = "https://fr.wikipedia.org/wiki/" + parsed_chain
+                self.wikipedia_url = (
+                        "https://fr.wikipedia.org/wiki/" + parsed_chain)
         except KeyError:
             self.status = False
