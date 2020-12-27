@@ -1,14 +1,12 @@
 # P7 - Create GrandPy Bot, the old robot!
 
-## !!!! WORK IN PROGRESS!!!!
-
 ## 1. Introduction.
 
-This programm is named "grandpy". It's a web programm that returns places address and wikipedia informations based on a user question. Question such as *Hi Grandpy, do you know what's the adress of the Eiffel Tower?* are handled by this programm. The programm can get the important information of question like that and provide an answer for it. 
-Concretely, the app present a form where the user can type its question. When submitting the form, the question is sent for parsing. The parsed chain is pushed to Google Place, Map and WikiMedia APIs. The question is then displayed on a chat box along with the programm answer, i.e. the address and the wikimedia infos. A map pointing on that place is also dispalyed.  
+This programm is named "grandpy". It's a web programm that returns places address and wikipedia informations based on a user question. Question such as *Hi Grandpy, do you know what's the adress of the Eiffel Tower?* are handled by this programm. The programm can get the important information of a question like that and provide an answer for it. 
+Concretely, the app shows a form where the user can type its question. When submitting the form, the question is sent for parsing. The parsed chain is pushed to Google Place, Map and WikiMedia APIs. The question is then displayed on a chat box along with the programm answer, i.e. the address and the wikimedia infos. A map pointing on that place is also dispalyed.  
 Note that this program supports only french language. Question must therefore be in french.  
 
-Vist mine : https://thpi-grandpyapp.herokuapp.com
+Vist my programm : https://thpi-grandpyapp.herokuapp.com
 
 ## 2. Prerequisite.
 This program requires the following components:
@@ -53,10 +51,13 @@ Please refer to [Flask documention](https://flask.palletsprojects.com/en/1.1.x/)
 Please refer to [Requests certified documentation](https://requests.readthedocs.io/en/master/) for more informations.
 
 ### 3.6. Application mandatory settings.
-1. Rename **configuration/env.py.example** file into **configuration/env.py**.
-2. Change constants with the appropriate value into **env.py**:
+1. Change constants with the appropriate value into **env.py**:
+    * LOCAL = True or False depending if you deploy it locally or not.
     * SECRET_KEY = your environnement variable system secret key.
-    * GG_API_KEY = your Google API key.
+    * GG_API_KEY_BACKEND = An unrestricted Google API key.
+    * GG_API_KEY_FRONTEND = An restricted Google API key.
+
+*Note that Google Key restriction is really deployment related. In my case, deploying my app on Heroku servers make that my website IP address is constantly changing. I could therefore not use only one key with Restriction to my app url. I needed to use two, one without restriction, used for backend querries(not visible to user) and one with restriction for front usage. That way I could manage risk of having key stolen by others and have my app running properly*.
 
 For more detailed informations on application settings, please check *4.1. env.py* section bellow.
 
@@ -85,43 +86,49 @@ If you want to uninstall the program, simply delete the complete repository form
 ### 4.1. env.py.
 Located in **configuration/** package.
 
-#### 4.1.1. SECRET_KEY.
+#### 4.1.1. LOCAL.
+DESCRIPTION: Variable stating whether the programm is deployed locally or not.  
+MANDATORY: Yes.  
+DEFAULT SETTINGS: True.  
+CUSTOM SETTINGS: You can replace the default setting depending on the deployment environnement.  
+
+#### 4.1.2. SECRET_KEY.
 DESCRIPTION: Secret key required for proper Flask usage.  
 MANDATORY: Yes.  
-DEFAULT SETTINGS: os.environ.get("SECRET_KEY") or "you-will-never-guess".  
-CUSTOM SETTINGS: You must repalce the default "you-will-never-guess" with a string of yours own knowledge.  
+DEFAULT SETTINGS: os.environ.get("SECRET_KEY").  
+CUSTOM SETTINGS: You need to create environnment variable of that name, i.e.SECRET_KEY, with your a secret value(only known to you).
 
-#### 4.1.2. GG_API_KEY.
-DESCRIPTION: Google API key required for usage of google APIs.  
+#### 4.1.3. GG_API_KEY_BACKEND.
+DESCRIPTION: Google API key required for usage of Google APIs (Backend calls). This key must not restricted.  
 MANDATORY: Yes.  
-DEFAULT SETTINGS: "your-google-api-key".  
-CUSTOM SETTINGS: You must replace the default key with your own google api key. Fore more informations, please check "https://developersgoogle.com/maps/gmp-get-started".  
+DEFAULT SETTINGS: os.environ.get("GG_API_KEY").  
+CUSTOM SETTINGS: You need to create an environnment variable of that name in your system i.e."GG_API_KEY" and with the value of an API key provided by Google.That key must not be restircted on Google API Plateform. To get a Google API key or for more info on Google APIs, please check "https://developers.google.com/maps/gmp-get-started".  
 
+
+#### 4.1.4. GG_API_KEY_FRONTEND.
+DESCRIPTION: Google API key for usage of Google Map API (Backend calls). This key must be restricted to its referent (http) if deployed on the web.  
+MANDATORY: Yes.   
+DEFAULT SETTINGS(if deployment is done locally): os.environ.get("GG_API_KEY").  
+DEFAULT SETTINGS(if deployment is done on web): os.environ.get("GG_API_KEY_RESTRICTED").  
+CUSTOM SETTINGS: You need to create a environnment variables of those name in your system i.e."GG_API_KEY" and "GG_API_KEY_RESTRICTED" with the value of an API key provided by Google."GG_API_KEY" don't need to be restircted on Google API Plateform but "GG_API_KEY_RESTRICTED" must. This "GG_API_KEY_RESTRICTED" key is the one used on your production environnment. To get a Google API key or for more info on Google APIs, please check "https://developers.google.com/maps/gmp-get-started".
 
 ### 4.2. config.py.
 Located in **configuration/** package.
 
-#### 4.2.1. CONNECTION_ERROR
-DESCRIPTION: Message dispalyed when connection to client API is failing.  
-MANDATORY: Yes.  
-DEFAULT SETTINGS: (  
-               "Un problème de connection est apparu. Ré-essaayez plus"  
-               " tard ou contacter le propriétaire de l'application")  
-CUSTOM SETTINGS: Can be modified but there is no real sense to do so.  
 
-#### 4.2.2. COUNTRY
+#### 4.2.1. COUNTRY
 DESCRIPTION: Google Map parameters used to define the default map view.  
 MANDATORY: Yes.  
 DEFAULT SETTINGS: "France".  
 CUSTOM SETTINGS: Can be modified at will. Make sure to update accordingly the LOCATION_BIAS variable as well. For more information, please check "https://developers.google.com/maps/documentation/embed/get-started".  
 
-#### 4.2.3. KEYWORDS
+#### 4.2.2. KEYWORDS
 DESCRIPTION: List of words of important usage. Used to analyze which words are imortant for question parsing.  
 MANDATORY: Yes.  
 DEFAULT SETTINGS: ["adresse", "trouve"].  
 CUSTOM SETTINGS: Modifying this list is not required unless you see that other words should be added to improve parsing analysis.
 
-#### 4.2.4. LOCATION_BIAS
+#### 4.2.3. LOCATION_BIAS
 DESCRIPTION: Google Map parameters used to define the bounding box for places finding. Represent the bouding box south west and north east corners. In the default case, the bouding box covers all France (metropole).  
 MANDATORY: Yes.  
 DEFAULT SETTINGS: "rectangle:42.224,-4.727|51.4796,8.3926".  
