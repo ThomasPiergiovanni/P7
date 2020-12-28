@@ -20,6 +20,7 @@ This program requires the following components:
 
 ### 3.1. Download.
 Download/clone this repository on your system, at the location that suits you best.
+> git clone https://github.com/ThomasPiergiovanni/P7.git
 
 ### 3.2. Python 3 install.
 Make sure you have Python 3 installed.
@@ -49,7 +50,7 @@ Please refer to [Flask documentation](https://flask.palletsprojects.com/en/1.1.x
 Please refer to [Requests certified documentation](https://requests.readthedocs.io/en/master/) for more information.  
 
 ### 3.6. Application mandatory settings.
-1. Change constants with the appropriate value into **env.py**:
+1. Change constants with the appropriate value into **configuration/env.py** :
     * LOCAL = True or False depending if you deploy it locally or not.
     * SECRET_KEY = your environment variable system secret key.
     * GG_API_KEY_BACKEND = An unrestricted Google API key.
@@ -73,16 +74,16 @@ Once you're done using the program, you should leave the virtual environment. Si
 
 ### 3.9. Test.
 If you want to modify the code, you can run unit test using pytest for testing.  
-> pytest grandpy/
+> pytest
 
-*Note that you shouldn't deactivate the virtual env if you want to process pytest.*
+*Note that you shouldn't deactivate the virtual environment if you want to process pytest.*
 
 ### 3.10. Uninstall.
 If you want to uninstall the program, simply delete the complete repository form your device.
 
 ## 4. Settings.
-* Changing settings **must be** done in **env.py** file. Make sure to read *3.6. Application mandatory settings*.
-* Changing settings **can be** done in **config.py** file.
+* Changing settings **must be** done in **configuration/env.py** file. Make sure to read *3.6. Application mandatory settings*.
+* Changing settings **can be** done in **configuration/config.py** file.
 
 ### 4.1. env.py.
 Located in **configuration/** package.
@@ -108,8 +109,8 @@ CUSTOM SETTINGS: You need to create an environment variable of that name in your
 #### 4.1.4. GG_API_KEY_FRONTEND.
 DESCRIPTION: Google API key for usage of Google Map API (Backend calls). This key must be restricted to its referent (http) if deployed on the web.  
 MANDATORY: Yes.   
-DEFAULT SETTINGS(if deployment is done locally): os.environ.get("GG_API_KEY").  
-DEFAULT SETTINGS(if deployment is done on web): os.environ.get("GG_API_KEY_RESTRICTED").  
+DEFAULT SETTINGS(1) (if deployment is done locally): os.environ.get("GG_API_KEY").  
+DEFAULT SETTINGS(2) (if deployment is done on web): os.environ.get("GG_API_KEY_RESTRICTED").  
 CUSTOM SETTINGS: You need to create a environment variables of those name in your system i.e. "GG_API_KEY" and "GG_API_KEY_RESTRICTED" with the value of an API key provided by Google. "GG_API_KEY" don't need to be restricted on Google API Plateform but "GG_API_KEY_RESTRICTED" must. This "GG_API_KEY_RESTRICTED" key is the one used on your production environment. To get a Google API key or for more info on Google APIs, please check "https://developers.google.com/maps/gmp-get-started".
 
 ### 4.2. config.py.
@@ -147,5 +148,5 @@ This program provides the following functionalities:
 
 ### 5.2. How to.
 * Go to the app url e.g. http://localhost:5000/ if deployed locally.  
-* Type your question in the text box e.g. "Salut Grandpy, connais tu l'adresse de la Tour Eiffel?". Your question and the program answer will be displayed in the chat box. A map will also dispaly that location if the program found it.
+* Type your question in the text box e.g. "Salut Grandpy, connais tu l'adresse de la Tour Eiffel?" or "Sais-tu ou se trouve l'Arc de Triomphe?". Your question and the program answer will be displayed in the chat box. A map will also dispaly that location if the program found it.
 * You can ask questions, till you get bored.
