@@ -148,5 +148,5 @@ This program provides the following functionalities:
 
 ### 5.2. How to.
 * Go to the app url e.g. http://localhost:5000/ if deployed locally.  
-* Type your question in the text box e.g. "Salut Grandpy, connais tu l'adresse de la Tour Eiffel?" or "Sais-tu ou se trouve l'Arc de Triomphe?". Your question and the program answer will be displayed in the chat box. A map will also dispaly that location if the program found it.
+* Type your question in the text box e.g. "Salut Grandpy, connais tu l'adresse de la Tour Eiffel?" or "Sais-tu ou se trouve l'Arc de Triomphe?". Your question and the program answer will be displayed in the chat box. A map will also display that location if the program found it.
 * You can ask questions, till you get bored.

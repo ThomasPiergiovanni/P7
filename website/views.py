@@ -45,7 +45,6 @@ def create_entry():
         answer = {
             "place_connection_failure": place.connection_failure}
         response = make_response(jsonify(answer), 200)
-        return response
     else:
         place.set_attribute()
         mediawiki = MediaWiki()
@@ -55,7 +54,6 @@ def create_entry():
             answer = {
                 "mediawiki_connection_failure": mediawiki.connection_failure}
             response = make_response(jsonify(answer), 200)
-            return response
         else:
             mediawiki.set_attribute(place.name)
             if place.status:
@@ -74,4 +72,4 @@ def create_entry():
                     "wikipedia_url": mediawiki.wikipedia_url,
                     "gmap_url": gmap.gmap_url}
             response = make_response(jsonify(answer), 200)
-            return response
+    return response
