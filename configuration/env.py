@@ -13,7 +13,7 @@ class Env:
     # DEFAULT SETTINGS: False"
     # CUSTOM SETTINGS: You can replace the default setting depending on
     # the app usage.
-    LOCAL = True
+    LOCAL = False
 
     # DESCRIPTION: Secret key required for proper Flask usage.
     # MANDATORY: Yes.
