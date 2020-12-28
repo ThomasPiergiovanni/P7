@@ -24,6 +24,7 @@ class Place(ApiGeneric):
         self.parameters = {
                 "input": parsed_chain,
                 "inputtype": "textquery",
+                "language": "fr",
                 "fields": "place_id,name,formatted_address",
                 "locationbias": LOCATION_BIAS,
                 "key": Env.GG_API_KEY_BACKEND}

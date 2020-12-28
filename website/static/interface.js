@@ -118,14 +118,18 @@ class GrandPyHtmlElement{
         this.time = new Date();
         this.spanTime.textContent = "[" + this.time.getHours() + ":" + this.time.getMinutes() + ":" + this.time.getSeconds() + "]";
         this.spanGrandpyPrefixAddress.textContent = addressPrefix;
-        this.spanGrandpyAddress.textContent = addressData;
-        this.spanGrandpyAddress.setAttribute("class", "font-weight-bold");
-        this.spanGrandpyPrefixWiki.textContent = wikiPrefix;
-        this.spanGrandpyWiki.textContent = wikiData;
-        this.spanGrandpyWiki.setAttribute("class", "font-weight-bold");
-        this.spanGrandpyWikiLink.textContent = "[En savoir plus sur WikiPedia]";
-        this.spanGrandpyWikiLink.setAttribute("href", wikiLink);
-        this.spanGrandpyWikiLink.setAttribute("class", "font-weight-normal text-light");
+        if (addressData){
+            this.spanGrandpyAddress.textContent = addressData;
+            this.spanGrandpyAddress.setAttribute("class", "font-weight-bold");
+            this.spanGrandpyPrefixWiki.textContent = wikiPrefix;
+        }
+        if(wikiData){
+            this.spanGrandpyWiki.textContent = wikiData;
+            this.spanGrandpyWiki.setAttribute("class", "font-weight-bold");
+            this.spanGrandpyWikiLink.textContent = "[En savoir plus sur WikiPedia]";
+            this.spanGrandpyWikiLink.setAttribute("href", wikiLink);
+            this.spanGrandpyWikiLink.setAttribute("class", "font-weight-normal text-light"); 
+        }
     }
 
     // Method that set build the DOM.
@@ -227,7 +231,7 @@ formElement.askButton.addEventListener('click', function(event) {
                     let wikiPrefix = null
                     let wikiData = null
                     let wikiLink = null
-                    grandPyHtml.defineAttribute(addressPrefix, addressData, wikiPrefix, wikiData, wikiLink);
+                    grandPyHtml.answerPlaceNotFound();
                 } else if (data.parser_status && !data.address_status) {
                     let addressPrefix = "Désolé, je ne connais pas cet endroit"
                     let addressData = null
