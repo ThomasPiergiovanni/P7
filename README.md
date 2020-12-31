@@ -6,7 +6,7 @@ This program is named "grandpy". It's a web program that returns places address 
 Concretely, the app shows a form where the user can type its question. When submitting the form, the question is sent for parsing. The parsed chain is pushed to Google Place, Map and Wikimedia APIs. The question is then displayed on a chat box along with the program answer, i.e. the address and the Wikimedia info. A map pointing on that place is also displayed.  
 Note that this program supports only French language. Question must therefore be in French.  
  
-Vist my program : https://thpi-grandpyapp.herokuapp.com
+Visit my program : https://thpi-grandpyapp.herokuapp.com
 
 ## 2. Prerequisite.
 This program requires the following components:
